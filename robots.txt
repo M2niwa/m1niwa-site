@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://m2niwa.pages.dev/sitemap.xml
+Sitemap: https://m1niwa.com/sitemap.xml
