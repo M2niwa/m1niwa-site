@@ -931,3 +931,122 @@ body { cursor: none; }
   .gallery-card { grid-template-columns: 1fr; gap: 16px; }
   .gallery-thumb { aspect-ratio: 21 / 9; }
 }
+
+/* ============================================================
+   2026-09 横向卷轴版（v4-horizontal）
+   整站排成一条横向长卷：滚轮 -> 向右滚
+   ============================================================ */
+
+body.hscroll-body { overflow: hidden; height: 100vh; }
+
+.hscroll {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: auto;                 /* 由 JS 做平滑，避免和 rAF 打架 */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.hscroll::-webkit-scrollbar { height: 6px; }
+.hscroll::-webkit-scrollbar-track { background: transparent; }
+.hscroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.hscroll::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+
+.panel {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100vw;
+  min-width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 92px clamp(28px, 7vw, 110px) 64px;
+  opacity: 0;
+  animation: panelIn 0.5s var(--ease) forwards;
+  animation-delay: var(--pd, 0s);
+}
+@keyframes panelIn { from { opacity: 0; } to { opacity: 1; } }
+
+.panel .container {
+  width: 100%; max-width: 1180px;
+  transform: translate3d(var(--px, 0), 0, 0);   /* 滚动视差，由 JS 写 --px */
+}
+
+/* 左下角面板编号 */
+.panel::after {
+  content: attr(data-idx);
+  position: absolute;
+  left: clamp(28px, 7vw, 110px);
+  bottom: 26px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--text-tertiary);
+  opacity: 0.55;
+}
+
+/* 横向进度条（顶部，header 下方） */
+.hscroll-progress {
+  position: fixed; top: 64px; left: 0; height: 1.5px; width: 0;
+  background: linear-gradient(90deg, var(--blue), var(--amber));
+  z-index: 99; pointer-events: none;
+}
+
+/* hero 面板：竖排更紧凑 */
+.panel#hero .hero { gap: 32px; }
+.panel#hero .hero-name { font-size: clamp(38px, 6vw, 62px); }
+
+/* 项目：面板内改为横向卡片行（6 张卡一屏放不下，横排更合横向卷轴的语感） */
+.panel .projects-grid {
+  display: flex;
+  gap: 16px;
+  perspective: none;
+  margin-top: 8px;
+}
+.panel .project-card {
+  flex: 0 0 clamp(240px, 22vw, 300px);
+  transform: none !important;            /* 横向移动时 3D 倾斜会晕，关掉 */
+}
+.panel .project-card:nth-child(n+5) { display: none; }   /* 只展示前 4 个，其余去 /#projects 看 */
+
+/* 博客与兴趣：限制高度，避免面板内溢出 */
+.panel .blog-grid,
+.panel .technote-list { margin-top: 8px; }
+.panel#technotes .blog-card:nth-child(n+4) { display: none; }   /* 精选 3 篇 */
+
+/* 简历面板：两列不变，纵向居中对齐 */
+.panel#resume .resume-split { margin-top: 18px; }
+
+/* 页脚作为最后一个面板的一部分（窄一些） */
+.hscroll > .footer { flex: 0 0 auto; width: 100vw; min-width: 100vw; align-self: stretch; display: flex; align-items: center; }
+
+/* 回到开头按钮：横向模式下变成「←」 */
+.hscroll-body .scroll-top.visible { opacity: 1; }
+.hscroll-body .scroll-top { border-radius: 50%; }
+
+/* 移动端回退：普通纵向滚动（横向滑动在手机上很难用） */
+@media (max-width: 768px) {
+  body.hscroll-body { overflow: auto; height: auto; }
+  .hscroll {
+    flex-direction: column; height: auto; width: auto;
+    overflow: visible; display: block;
+  }
+  .panel {
+    width: 100%; min-width: 0; height: auto; min-height: 0;
+    padding: 84px 24px 56px; opacity: 1; animation: none;
+  }
+  .panel::after { display: none; }
+  .hscroll-progress { display: none; }
+  .panel .projects-grid { display: grid; perspective: 1200px; }
+  .panel .project-card { flex: initial; transform: none; }
+  .panel .project-card:nth-child(n+5) { display: block; }
+  .panel#technotes .blog-card:nth-child(n+4) { display: block; }
+  .hscroll > .footer { display: block; width: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel { opacity: 1; animation: none; }
+}
