@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN" id="rootHtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M1NIWA — 版本 D · 横向卷轴</title>
+<meta name="description" content="霍凌志（M1NIWA）的个人网站：AI 开发、游戏策划、嵌入式 DIY，含 30 篇技术博客与精选作品集。">
+<meta name="theme-color" content="#1a1210">
+<link rel="canonical" href="https://m1niwa.com/v4-horizontal.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a1210'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='700' text-anchor='middle' fill='%23d4a040' font-family='system-ui,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="M1NIWA — 霍凌志 · AI 开发 & 游戏策划">
+<meta property="og:description" content="AI 开发、游戏策划、嵌入式 DIY 个人站，30 篇技术博客与精选作品集。">
+<meta property="og:url" content="https://m1niwa.com/">
+<meta name="twitter:card" content="summary">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
+<noscript><style>body{cursor:auto}#bgCanvas{display:none}.slash-overlay{display:none}</style></noscript>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "霍凌志 (M1NIWA)",
+  "url": "https://m1niwa.com/",
+  "email": "mailto:miniwakazeha@outlook.com",
+  "jobTitle": "AI Developer / Game Designer",
+  "sameAs": ["https://github.com/M2niwa"]
+}
+</script>
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body class="hscroll-body">
+
+<a class="skip-link" href="#navhub">跳到主要内容</a>
+
+<!-- Ambient particle canvas -->
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+<!-- ===== SLASH LOADING INTRO ===== -->
+<div class="slash-overlay" id="slashOverlay" aria-hidden="true">
+  <div class="slash-bg"></div>
+  <svg class="slash-katana" id="slashKatana" viewBox="0 0 68.49 760">
+    <path d="M26.03,760H0C20.47,552.92,26.96,357.12,21.24,185.46h0C19.06,119.86,15.09,57.81,9.44,0c7.79,6.36,14.78,13.62,20.84,21.6,4.54,43.21,8.12,88.85,10.69,136.61h0c9.52,176.77,5.29,382.63-14.94,601.79Z"/>
+    <path d="M68.49,384.66c0,117.73-5.36,244.02-16.6,375.34H26.03c20.23-219.16,24.46-425.02,14.94-601.78h0c-2.57-47.77-6.15-93.41-10.69-136.62,13.66,18.01,22.54,39.66,25.05,62.92.08.75.16,1.5.22,2.26,8.49,90.41,12.94,190.6,12.94,297.88Z"/>
+  </svg>
+  <div class="slash-mask slash-mask-up" id="slashMaskUp"></div>
+  <div class="slash-mask slash-mask-down" id="slashMaskDown"></div>
+</div>
+
+<!-- Magnetic cursor -->
+<div class="mag-cross" id="magCross" aria-hidden="true"></div>
+<div class="mag-pointer" id="magPointer" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="#hero" class="header-logo">M<span>1</span>NIWA</a>
+    <nav class="header-nav" id="headerNav">
+      <a href="#hero" class="active" data-en="About">关于</a>
+      <a href="/skills.html" data-en="Skills">技能</a>
+      <a href="#technotes" data-en="Blog">博客</a>
+      <a href="#projects" data-en="Projects">项目</a>
+      <a href="/games.html" data-en="Games">游戏</a>
+      <a href="#lifestyle" data-en="Lifestyle">兴趣</a>
+      <a href="/diy.html" data-en="DIY">DIY</a>
+      <a href="#contact" data-en="Contact">联系</a>
+    </nav>
+    <div class="header-social">
+      <a href="https://github.com/m2niwa" target="_blank" rel="noopener" title="GitHub">🐙</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="菜单" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hscroll-progress" id="hProgress" aria-hidden="true"></div>
+
+<main class="hscroll" id="hscroll">
+
+<section class="panel" id="hero" data-idx="01 / ABOUT">
+  <div class="container">
+    <div class="hero">
+      <div class="hero-avatar">M</div>
+      <div class="hero-content">
+        <div class="lang-switch-wrap">
+          <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
+            <span class="lang-option active" data-lang="zh">中</span>
+            <span class="lang-option" data-lang="en">EN</span>
+            <span class="lang-slider"></span>
+          </button>
+        </div>
+        <h1 class="hero-name" data-en="M1NIWA">M1NIWA</h1>
+        <p class="hero-bio">
+          <span data-en="Huo Lingzhi · AI Dev & Game Designer">霍凌志 · AI 开发 & 游戏策划</span><br>
+          <span data-en="DIY Enthusiast · Olfactory Explorer">DIY 爱好者 · 嗅觉探索者</span>
+        </p>
+        <div class="hero-tags">
+          <span class="tag">Agent</span>
+          <span class="tag">LLM & LoRA</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Workflow</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">CV</span>
+          <span class="tag">电子竞技</span>
+          <span class="tag"data-en="Docker">Docker</span>
+          <span class="tag">n8n / Coze</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT / SKILLS ===== -->
+
+<!-- ===== TECH BLOG ===== -->
+<section class="panel" id="navhub" data-idx="02 / INDEX">
+  <div class="container">
+    <h2 class="section-title" data-en="Index">站点索引</h2>
+    <p class="section-desc navhub-desc" data-en="Pick a direction. Scroll right to keep moving.">挑一个方向进去。滚轮往下滚，页面往右走。</p>
+    <div class="hub-bento">
+    <a class="hub-tile sp3" href="/skills.html">
+      <span class="hub-idx">01</span>
+      <div>
+        <div class="hub-name" data-en="Skills">技能与能力</div>
+      </div>
+      <span class="hub-stat">4 groups</span>
+    </a>
+    <a class="hub-tile sp3" href="#projects">
+      <span class="hub-idx">02</span>
+      <div>
+        <div class="hub-name" data-en="Projects">精选项目</div>
+      </div>
+      <span class="hub-stat">6 projects</span>
+    </a>
+    <a class="hub-tile sp3" href="/blog/">
+      <span class="hub-idx">03</span>
+      <div>
+        <div class="hub-name" data-en="Blog">技术博客</div>
+      </div>
+      <span class="hub-stat">30 posts</span>
+    </a>
+    <a class="hub-tile sp3" href="/games.html">
+      <span class="hub-idx">04</span>
+      <div>
+        <div class="hub-name" data-en="Games">小游戏</div>
+      </div>
+      <span class="hub-stat">2 games</span>
+    </a>
+    <a class="hub-tile sp3" href="#lifestyle">
+      <span class="hub-idx">05</span>
+      <div>
+        <div class="hub-name" data-en="Beyond Work">工作之外</div>
+      </div>
+      <span class="hub-stat">18 bottles</span>
+    </a>
+    <a class="hub-tile sp3" href="/diy.html">
+      <span class="hub-idx">06</span>
+      <div>
+        <div class="hub-name" data-en="DIY Log">DIY 日志</div>
+      </div>
+      <span class="hub-stat">terminal</span>
+    </a>
+    <a class="hub-tile sp3" href="#resume">
+      <span class="hub-idx">07</span>
+      <div>
+        <div class="hub-name" data-en="Résumé">简历</div>
+      </div>
+      <span class="hub-stat">PDF</span>
+    </a>
+    <a class="hub-tile sp3" href="#contact">
+      <span class="hub-idx">08</span>
+      <div>
+        <div class="hub-name" data-en="Contact">联系我</div>
+      </div>
+      <span class="hub-stat">3 ways</span>
+    </a>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="technotes" data-idx="03 / BLOG">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Writing</div>
+      <h2 class="section-title" data-en="Tech Blog">技术博客</h2>
+      <p class="section-desc" data-en="Bugs survived, problems untangled">踩过的坑，想过的问题</p>
+    </div>
+    <div class="blog-featured" id="blogFeatured">
+      <!-- JS renders 4 featured posts -->
+    </div>
+    <div class="blog-more-wrap">
+      <a href="/blog/index.html" class="blog-more-btn" data-en="View all 33 posts →">查看全部 33 篇文章 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section class="panel" id="projects" data-idx="04 / PROJECTS">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Projects</div>
+      <h2 class="section-title" data-en="Featured Projects">精选项目</h2>
+      <p class="section-desc" data-en="AI · Gaming · Embedded · Tooling">AI · 游戏 · 嵌入式 · 工具开发</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3 data-en="📁 Portfolio">📁 作品集</h3>
+        <p data-en="Game design docs, system design drafts, creative writing — a curated collection of work across disciplines.">游戏策划案、系统设计稿、创意写作——跨领域的作品归档。</p>
+        <div class="project-tags">
+          <span class="tag">设计文档</span>
+          <span class="tag">策划案</span>
+        </div>
+        <a class="project-link" href="/portfolio.pdf" target="_blank" data-en="View →">查看 →</a>
+        <a class="project-link" href="/portfolio.pdf" download style="margin-left:16px" data-en="Download ↓">下载 ↓</a>
+      </div>
+      <div class="project-card">
+        <h3 data-en="🐱 Pet Face Recognition System">🐱 宠物面部识别系统</h3>
+        <p data-en="Lightweight pet recognition with MobileNet-V3. F1 96%, accuracy 82%, 20+ fps on edge devices. Awarded Excellent Thesis.">基于 MobileNet-V3 的轻量化宠物个体特征识别。F1 96%、识别率 82%，边缘设备 20+ fps。获评优秀毕设。</p>
+        <div class="project-tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">MobileNet</span>
+          <span class="tag">CV</span>
+        </div>
+        <a class="project-link" href="https://github.com/M2niwa/petface-recognition-with-mobilenet" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+      <div class="project-card">
+        <h3 data-en="🎮 Fashion Crush">🎮 Fashion Crush</h3>
+        <p data-en="Dress-up + interactive story game for Western women aged 20-65. Cocos engine + JSON config, 5 iterations shipped.">海外发行换装+互动故事游戏，面向 20-65 岁欧美女性。Cocos + JSON 关卡配置，已迭代 5 个版本。</p>
+        <div class="project-tags">
+          <span class="tag">AI辅助美术</span>
+          <span class="tag">Cocos</span>
+          <span class="tag">JSON</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <h3 data-en="📱 HarmonyOS Health Assistant">📱 鸿蒙健康助手</h3>
+        <p data-en="ArkTS-based smart wearable frontend. Bauhaus industrial design, 7 main + 23 sub pages. Approved for store.">基于 ArkTS 的智能穿戴前端应用。包豪斯工业风，7类主页面+23子页面，已过审。</p>
+        <div class="project-tags">
+          <span class="tag">ArkTS</span>
+          <span class="tag">HarmonyOS</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <h3 data-en="🌱 STM32 Smart Hydroponics">🌱 STM32 智能水培槽</h3>
+        <p data-en="Aluminum frame + STM32 automated hydroponics. PID closed-loop water/light/nutrients. iCAN National Second Prize.">铝型材 + STM32 自动化水培系统，PID 闭环水位/光照/营养。iCAN 国家级二等奖。</p>
+        <div class="project-tags">
+          <span class="tag">STM32</span>
+          <span class="tag">PID</span>
+          <span class="tag">CAD</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <h3 data-en="📝 Grade Evaluation Agent">📝 综测成绩 Agent</h3>
+        <p data-en="Automated grade processing agent. Prompt engineering + toolchain. One-click analysis.">自动化综测成绩处理 Agent，Prompt 工程 + 工具链，一键汇总分析。</p>
+        <div class="project-tags">
+          <span class="tag">Agent</span>
+          <span class="tag">Prompt工程</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <h3 data-en="🌐 Script Translator">🌐 Script Translator</h3>
+        <p data-en="AI multi-language script translation table generator with automated workflow.">AI 多语言剧本翻译表格生成器，自动化翻译工作流处理。</p>
+        <div class="project-tags">
+          <span class="tag">LLM</span>
+          <span class="tag">Python</span>
+          <span class="tag">Workflow</span>
+        </div>
+        <a class="project-link" href="https://github.com/M2niwa/script-translator" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MINI GAMES ===== -->
+
+<!-- ===== LIFESTYLE (Wine + Esports merged) ===== -->
+<section class="panel" id="lifestyle" data-idx="05 / BEYOND WORK">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Lifestyle</div>
+      <h2 class="section-title" data-en="Beyond Work">工作之外</h2>
+      <p class="section-desc" data-en="Whisky tasting · Craft beer · Strategy gamer">威士忌品鉴 · 精酿收藏 · 深度策略玩家</p>
+    </div>
+    <div class="lifestyle-grid">
+      <div class="lifestyle-col">
+        <h3 class="lifestyle-subtitle" data-en="🥃 Wine Picks">🥃 酒柜精选</h3>
+        <div class="wine-compact" id="wineCompact">
+          <!-- JS renders 4 items -->
+        </div>
+        <button class="wine-shuffle-btn" id="wineShuffle" title="换一批">
+          <span class="shuffle-icon">🎲</span> <span data-en="Shuffle">换一批</span>
+        </button>
+      </div>
+      <div class="lifestyle-col">
+        <h3 class="lifestyle-subtitle" data-en="🎮 Gaming & Esports">🎮 游戏与竞技</h3>
+        <p class="lifestyle-text" data-en="Six years in game design, 1000+ hours in strategy games. OW amateur competition experience, team coach. Skilled in number crunching and competitive analysis.">六年游戏策划视角，超千小时策略游戏积累。守望先锋业余赛事经历，兼任校队教练。擅长数值框架拆解、竞品分析。</p>
+        <p class="lifestyle-text" data-en="Deep into casual games too — pursuing aesthetic harmony and satisfying gameplay loops." style="margin-top:-8px;">休闲游戏亦有深度浸淫，同时追求审美对应与体验循环。</p>
+        <div class="chips-grid">
+          <div class="game-chip" data-en="Overwatch">守望先锋</div><div class="game-chip" data-en="DOTA2">DOTA2</div>
+          <div class="game-chip" data-en="CS">CS</div><div class="game-chip" data-en="APEX">APEX</div>
+          <div class="game-chip" data-en="StarCraft II">星际争霸2</div><div class="game-chip" data-en="Civilization">文明</div>
+          <div class="game-chip" data-en="Stellaris">群星</div><div class="game-chip" data-en="Escape from Tarkov">逃离塔科夫</div>
+          <div class="game-chip" data-en="Starsector">远行星号</div>
+        </div>
+        <div class="chips-grid" style="margin-top:10px;">
+          <div class="game-chip casual" data-en="Stardew Valley">星露谷物语</div><div class="game-chip casual" data-en="Timberborn">海狸浮生记</div>
+          <div class="game-chip casual" data-en="BattleBlock Theater">战斗方块剧场</div><div class="game-chip casual" data-en="Starbound">星界边境</div>
+          <div class="game-chip casual" data-en="NIKKI UP TO U">暖暖</div><div class="game-chip casual" data-en="Onmyoji">阴阳师</div>
+          <div class="game-chip casual" data-en="Factorio">异星工场</div><div class="game-chip casual" data-en="Surviving Mars">火星求生</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIY ===== -->
+
+<!-- ===== CONTACT ===== -->
+<section class="panel" id="resume" data-idx="06 / RÉSUMÉ">
+  <div class="container">
+    <h2 class="section-title" data-en="Résumé">简历</h2>
+    <p class="section-desc" data-en="One-page PDF. Built for engineering roles in AI / backend / game.">一页 PDF，面向 AI 开发 / 后端 / 游戏方向的工程岗。</p>
+    <div class="resume-split">
+      <div class="resume-info">
+        <p class="resume-lead" data-en="Four years of hands-on work across CV models, edge inference, agent tooling and shipped game prototypes. The PDF below is the full version; this page keeps the short form.">四年里做过 CV 模型训练、边缘端推理、Agent 工具链和已上线的游戏原型。下面这份 PDF 是完整版，本页只留摘要。</p>
+        <ul class="resume-points">
+          <li data-en="Computer Vision — underwater saliency detection (SG-JEDNet), pet face recognition on RK3588">计算机视觉 —— 水下显著性检测（SG-JEDNet）、RK3588 上的宠物面部识别</li>
+          <li data-en="Backend &amp; tooling — FastAPI services, WebSocket dashboards, LLM agent workflows">后端与工具链 —— FastAPI 服务、WebSocket 仪表盘、LLM Agent 工作流</li>
+          <li data-en="Game — Canvas 2D naval combat prototype with a full customization system">游戏 —— Canvas 2D 海战原型，含完整舰船改装系统</li>
+          <li data-en="Currently based in Shenzhen, open to internships nationwide">现居深圳，可接受全国范围的实习</li>
+        </ul>
+      </div>
+      <div class="resume-actions">
+        <a href="/resume.pdf" target="_blank" class="hero-btn" data-en="View Résumé →">查看简历 →</a>
+        <a href="/resume.pdf" download class="hero-btn hero-btn-outline" data-en="Download PDF ↓">下载 PDF ↓</a>
+        <span class="resume-meta">PDF · updated 2026-07</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="contact" data-idx="07 / CONTACT">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Connect</div>
+      <h2 class="section-title" data-en="Contact Me">联系我</h2>
+      <p class="section-desc" data-en="Open to tech talks, collaboration, or grabbing a drink">欢迎技术交流、项目合作、或一起喝一杯</p>
+    </div>
+    <div class="contact-grid">
+      <a class="contact-card" href="https://github.com/m2niwa" target="_blank" rel="noopener">
+        <div class="contact-icon">🐙</div>
+        <div class="contact-label" data-en="GitHub">GitHub</div>
+        <div class="contact-value">m2niwa</div>
+      </a>
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label" data-en="Email">Email</div>
+        <div class="contact-value">miniwakazeha@outlook.com</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🌍</div>
+        <div class="contact-label" data-en="Location">所在地</div>
+        <div class="contact-value" data-en="Shenzhen / Wuhan, China">中国 · 深圳 / 武汉</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">💼</div>
+        <div class="contact-label" data-en="Role">职位方向</div>
+        <div class="contact-value" data-en="AI Dev / Game Design">AI 开发 / 游戏策划</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 M1NIWA · 霍凌志</p>
+    <div class="powered">
+      <span class="tag">FastAPI</span>
+      <span class="tag">Canvas</span>
+      <span class="tag">WebSocket</span>
+      <span class="tag">Uvicorn</span>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scrollTop" title="回到开头">←</button>
+
+<script>
+/* ===== SCROLL TO TOP ===== */
+const scrollTopBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
+});
+scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ===== HEADER NAV ACTIVE STATE ===== */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.header-nav a');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+  });
+}
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+
+/* ===== MOBILE MENU ===== */
+const menuToggle = document.getElementById('menuToggle');
+const headerNav = document.getElementById('headerNav');
+menuToggle.addEventListener('click', () => {
+  headerNav.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', headerNav.classList.contains('open'));
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && headerNav.classList.contains('open')) {
+    headerNav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+headerNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => headerNav.classList.remove('open'));
+});
+/* ===== WINE DATA ===== */
+const wines = [
+  { name:'Kavalan 经典雪莉桶', emoji:'🥃', notes:'台湾噶玛兰酒厂代表作。Oloroso雪莉桶熟成，深琥珀色泽，黑巧克力、熟莓果、淡淡肉桂辛香，尾韵悠长甜美。' },
+  { name:'泰斯卡十年', emoji:'🥃', notes:'苏格兰斯凯岛单一麦芽。标志性海盐烟熏，黑胡椒辛香与蜂蜜甜感交织，海浪拍岸般的粗犷与温暖平衡。' },
+  { name:'Botanist 金酒', emoji:'🍸', notes:'苏格兰艾雷岛手工金酒。萃取22种岛上植物，花香轻盈、薄荷清凉、柑橘明亮，如漫步于赫布里底群岛的植物园。' },
+  { name:'明石蓝标', emoji:'🥃', notes:'日本兵库县白橡木蒸馏所调和威士忌。轻井泽风格的低调优雅，蜂蜜、谷物甜香，柔顺易饮的日常之选。' },
+  { name:'梦乃寒梅 古酒', emoji:'🍶', notes:'日本新潟县梦之酒造出品，长期熟成清酒。多年陈酿呈琥珀色，雪利酒般的坚果、焦糖与干果气息，醇厚圆润，余韵深邃。' },
+  { name:'小猫三只 IPA', emoji:'🍺', notes:'伊势角屋的三倍干投浑浊IPA。Mosaic与CATS酒花叠加出葡萄柚、热带水果的奢华香气，稠滑酒体、泡沫持久——"超越小猫两只"的狂野版。(10% ABV，酒花儿评分 76)' },
+  { name:'海河 Gose', emoji:'🍺', notes:'楚门津酿以天津母亲河命名的德式古斯：极简麦芽配比，乳酸微酸恰到好处，芫荽与海盐勾勒出海河般的清爽——酒花儿标签：乳酸、清爽、海水。(4.7% ABV)' },
+  { name:'深喉 IPA', emoji:'🍺', notes:'楚门的双倍IPA。巨大酒花投放带来强而有力的松脂与柑橘香，焦糖麦芽压住苦度，琥珀色酒体结实直击喉咙。(8.4% ABV · IBU 90)' },
+  { name:'西楚霸王 IPA', emoji:'🍺', notes:'楚门津酿拳头产品——单一西楚(Citra)酒花、高发酵度艾尔酵母的帝国IPA。酒花清新醇厚、口感柔顺，14.2%酒精度被平衡得几乎感受不到。"帝王千百位，霸王只一人"。' },
+  { name:'跳东湖 IPA', emoji:'🍺', notes:'武汉十八号酒馆为2011年"跳东湖"活动而生的一款美式IPA。金色清澈酒体，柑橘与热带果香打头，苦度干净利落、收口干爽。(6.2% ABV · IBU 60)' },
+  { name:'百花深处 IPA', emoji:'🍺', notes:'北平机器的中秋限定西海岸IPA。大量新西兰酒花带来猛烈饱满的热带果香，琥珀色酒体、干爽悠长——名字取自北京"百花深处"胡同。(6.1% ABV · IBU 65)' },
+  { name:'猴拳 IPA', emoji:'🍺', notes:'悠航(Slow Boat)的招牌IPA：干净爽口，酒花香浓郁带芒果气息，柑橘与松脂收尾，泡沫丰富、适合入门。(6.2% ABV · IBU 50)' },
+  { name:'格兰利威12年', emoji:'🥃', notes:'苏格兰斯佩塞单一麦芽威士忌。菠萝、梨子、香草荚的清新花果香，柔顺丝滑，是全球销量最高的单一麦芽之一。' },
+  { name:'百年孤独 本格烧酒', emoji:'🍶', notes:'日本宫崎县黑木本店麦烧酎，酒名致敬马尔克斯。大麦蒸馏后橡木桶熟成，烤麦、香草与木质香交织，温润深邃。' },
+  { name:'尊尼获加 黑标', emoji:'🥃', notes:'苏格兰经典调和威士忌12年。四十余种基酒调和，烟熏、太妃糖、香草与辛香料交织，威士忌爱好者的日常口粮。' },
+  { name:'Jameson', emoji:'🥃', notes:'爱尔兰三次蒸馏调和威士忌。如丝绸般顺滑，蜂蜜、烤木、淡淡花香，不泥煤的温和风格，入门与老手皆宜。' },
+  { name:'六代目百合', emoji:'🍶', notes:'鹿儿岛芋烧酎。甘薯蒸馏，酒体醇厚浓烈，入口有炙烤红薯的焦香与泥土感，尾韵温暖有力。六代传承的匠心之作。' },
+  { name:'秩父百花 蜂蜜酒', emoji:'🍯', notes:'日本埼玉秩父蒸馏所限定款。以当地百花蜂蜜发酵酿制，甜而不腻，花香馥郁，似液体的春日花园，小批次珍品。' },
+  { name:'小江户 COEDO 琉璃', emoji:'🍺', notes:'小江户酒造(COEDO)的皮尔森。日本文化里"琉璃"是晴空般的湛蓝——酒体通透清澈、雪白头冠，微苦而平衡，极佳适饮性几乎能搭配任何菜品。(5.0% ABV，酒花儿标签：浅黄/清澈/微苦)' },
+  { name:'酿酒狗 Punk IPA', emoji:'🍺', notes:'酿酒狗的朋克宣言：以 Punk IPA 配方为底，Citra 等新世界酒花注入活力，松脂与热带果香直白叛逆，酒花罐里的"反叛者"。(6.5% ABV)' },
+];
+
+const winesEn = [
+  { name:'Kavalan Classic Sherry Oak', emoji:'🥃', notes:'Taiwan\'s Kavalan Distillery. Oloroso sherry cask matured, deep amber, dark chocolate, dried berries, cinnamon spice, long sweet finish.' },
+  { name:'Talisker 10 Year', emoji:'🥃', notes:'Isle of Skye single malt. Signature sea-salt smoke, black pepper spice meets honey sweetness — rugged yet balanced, like waves crashing on shore.' },
+  { name:'Botanist Gin', emoji:'🍸', notes:'Islay handcrafted gin. 22 local botanicals, delicate floral notes, cool mint, bright citrus — a walk through Hebridean gardens in a glass.' },
+  { name:'Akashi Blue Label', emoji:'🥃', notes:'Hyogo Prefecture blended whisky. Karuizawa-esque understated elegance, honey, grain sweetness, smooth daily sipper from Japan.' },
+  { name:'Yumeno Kankobai Koshu', emoji:'🍶', notes:'Niigata aged sake. Amber hue from years of aging, sherry-like nuts, caramel and dried fruit. Rich, round, profound finish.' },
+  { name:'Three Kittens IPA', emoji:'🍺', notes:'Ise Kadoya (Japan) American IPA. Bursting citrus and tropical fruit, moderate bitterness, crisp and clean. Cute kittens, serious brew.' },
+  { name:'Haihe Gose', emoji:'🍺', notes:'Tianjin Truman Brewing Gose. Lactic acidity meets coriander and sea salt — bright, slightly savory, the ultimate summer thirst-quencher.' },
+  { name:'Deep Throat IPA', emoji:'🍺', notes:'Heavyweight Chinese IPA. Massive hop load — pine needles, grapefruit, resin. Bitter punch straight to the throat. For hop veterans only.' },
+  { name:'Citra Overlord IPA', emoji:'🍺', notes:'Single-hop Citra showcase. Lychee, mango, passionfruit explosion. Clean bitter finish. Bold name, bold brew.' },
+  { name:'Tiaodonghu IPA', emoji:'🍺', notes:'NE-style hazy IPA, orange-juice body. Tropical fruit bomb — pineapple and mango. Low bitterness, silky mouthfeel. Wuhan craft icon.' },
+  { name:'Baihua Shendu IPA', emoji:'🍺', notes:'Beijing Jing-A classic. Named after a hutong alley. Passionfruit, lychee, citrus — bright bitterness, pine and herbal layers. China craft benchmark.' },
+  { name:'Monkey Fist IPA', emoji:'🍺', notes:'Classic American IPA gateway. Caramel malt base with Cascade hops — citrus and pine. Balanced bitterness. Straightforward like a monkey\'s punch.' },
+  { name:'Glenlivet 12 Year', emoji:'🥃', notes:'Speyside single malt. Pineapple, pear, vanilla pod — fresh fruit and floral elegance. Smooth and silky. The world\'s best-selling single malt.' },
+  { name:'100 Years of Solitude Shochu', emoji:'🍶', notes:'Miyazaki Kuroki Honten barley shochu. Named after Marquez. Oak-aged with roasted barley, vanilla, and wood. Warm and profound.' },
+  { name:'Johnnie Walker Black Label', emoji:'🥃', notes:'Classic 12-year blended Scotch. 40+ whiskies — smoke, toffee, vanilla, spice layered together. The daily dram of whisky lovers worldwide.' },
+  { name:'Jameson', emoji:'🥃', notes:'Triple-distilled Irish blend whiskey. Silk-smooth, honey, toasted wood, subtle florals. No peat, all warmth. Perfect for beginners and veterans alike.' },
+  { name:'Rokudaime Yuri', emoji:'🍶', notes:'Kagoshima sweet potato shochu. Bold and intense, roasted sweet potato char, earthy depth. Warm powerful finish. Six generations of mastery.' },
+  { name:'Chichibu Hyakka Mead', emoji:'🍯', notes:'Saitama Chichibu Distillery limited release. Local wildflower honey fermented — sweet but not cloying, floral bouquet. Liquid spring garden in a bottle.' },
+  { name:'COEDO Ruri Pilsner', emoji:'🍺', notes:'Ruri means sky-blue in Japanese — a crystal-clear pilsner with a snowy head, subtle balanced bitterness and great drinkability. Pairs with almost any dish. (5.0% ABV)' },
+  { name:'BrewDog Punk IPA', emoji:'🍺', notes:'BrewDog\'s punk manifesto: a Punk IPA base charged with Citra and other new-world hops — direct, rebellious pine and tropical fruit. (6.5% ABV)' },
+];
+
+let shuffledWines = [];
+
+function shuffleWines() {
+  const arr = [...getWines()];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.slice(0, 4);
+}
+
+function getWines() { return document.documentElement.lang === 'en' ? winesEn : wines; }
+
+const TYPE_BY_EMOJI = { '🥃': 'whisky', '🍺': 'beer', '🍶': 'sake', '🍸': 'gin', '🍯': 'mead' };
+
+/* Wine card photos: real bottle/glass shots from Wikimedia Commons (free licenses,
+   attribution in assets/wines/CREDITS.md). Falls back to a type image by emoji. */
+const WINE_IMG = ['kavalan','talisker10','botanist','akashi','yumeno-kankobai','ise-kadoya-ipa','haihe-gose','','','tiaodonghu-ipa','','monkey-fist-ipa','glenlivet12','','jw-black','jameson','rokudaime-yuri','chichibu-hyakka','coedo-ruri','punk-ipa'];
+wines.forEach((w, i) => { w.img = WINE_IMG[i] || ''; });
+winesEn.forEach((w, i) => { w.img = WINE_IMG[i] || ''; });
+
+function renderWines(items) {
+  const container = document.getElementById('wineCompact');
+  if (!container) return;
+  const show = items || (shuffledWines.length ? shuffledWines : (shuffledWines = shuffleWines()));
+  container.innerHTML = show.map(w => `
+    <div class="wine-mini">
+      <span class="wm-type">${w.emoji}</span>
+      ${w.img ? `<div class="wm-art"><img src="/assets/wines/${w.img}.jpg" alt="" loading="lazy" decoding="async"></div>` : ''}
+      <div class="wm-name">${w.name}</div>
+      <div class="wm-notes">${w.notes}</div>
+    </div>
+  `).join('');
+}
+
+function doShuffle() {
+  const btn = document.getElementById('wineShuffle');
+  btn.classList.add('shuffling');
+  shuffledWines = shuffleWines();
+  renderWines(shuffledWines);
+  setTimeout(() => btn.classList.remove('shuffling'), 500);
+}
+
+document.getElementById('wineShuffle').addEventListener('click', doShuffle);
+renderWines();
+
+/* ===== TECH NOTES ===== */
+const techNotes = [
+  { title:'FastAPI + PostgreSQL 性能调优：索引策略与连接池优化', summary:'从索引设计、查询优化和连接池配置三个维度，拆解 FastAPI 项目中 PostgreSQL 性能调优的实战经验。', url:'/blog/blog-1.html', date:'2026-07-05', tags:['FastAPI','PostgreSQL','性能'] },
+  { title:'个人站上 Cloudflare Pages：网络路径与 SPA 回退配置', summary:'从 GitHub Pages 迁到 Cloudflare Pages 的网络观察——Anycast 边缘节点、大陆可达性，以及 _redirects/_headers 里值得抄的两条静态站配置。', url:'/blog/blog-33.html', date:'2026-04-08', tags:['DevOps','建站','网络'] },
+  { title:'断线重连策略：从 3 秒轮询到指数退避', summary:'固定间隔重连为何伤害服务器；带抖动的指数退避公式、应用层心跳和 visibilitychange 处理——来自实时仪表盘的踩坑实录。', url:'/blog/blog-31.html', date:'2025-08-25', tags:['WebSocket','前端','网络'] },
+  { title:'ComfyUI 本地部署：国内网络下的镜像源与模型复用', summary:'多 Python 与 CUDA torch 对齐、torchaudio DLL 兼容、Gitee 镜像与清华源，以及模型下载的格式陷阱与秋叶包复用。', url:'/blog/blog-32.html', date:'2025-07-08', tags:['ComfyUI','AI','工具'] },
+];
+
+const techNotesEn = [
+  { title:'FastAPI + PostgreSQL Performance: Indexing & Connection Pooling', summary:'Deep dive into PostgreSQL performance tuning for FastAPI — index design, query optimization, and connection pool configuration from real project experience.', url:'/blog/blog-1.html', date:'2026-07-05', tags:['FastAPI','PostgreSQL','Perf'] },
+  { title:'Moving to Cloudflare Pages: Network Path & SPA Fallback', summary:'From GitHub Pages to Cloudflare Pages — Anycast edges, mainland reachability, and two static-site configs worth stealing from _redirects/_headers.', url:'/blog/blog-33.html', date:'2026-04-08', tags:['DevOps','Hosting','Network'] },
+  { title:'Reconnect Strategy: From 3s Polling to Exponential Backoff', summary:'Why fixed-interval reconnects hurt your server; a jittered exponential backoff, app-level heartbeat, and visibilitychange handling from a live dashboard.', url:'/blog/blog-31.html', date:'2025-08-25', tags:['WebSocket','Frontend','Network'] },
+  { title:'ComfyUI on a Budget GPU: Mirrors & Model Reuse in China', summary:'Aligning multiple Pythons with CUDA torch, torchaudio DLL fixes, Gitee/tuna mirrors, and the model-format traps behind hf-mirror and ModelScope.', url:'/blog/blog-32.html', date:'2025-07-08', tags:['ComfyUI','AI','Tools'] },
+];
+
+function renderTechNotes() {
+  const container = document.getElementById('blogFeatured');
+  if (!container) return;
+  const notes = document.documentElement.lang === 'en' ? techNotesEn : techNotes;
+  container.innerHTML = notes.map((n, i) => `
+    <a class="technote-item" href="${n.url}" style="animation: fadeUp 0.4s ease ${i*0.08}s both;">
+      <div class="technote-title">${n.title}</div>
+      <div class="technote-summary">${n.summary}</div>
+      <div class="technote-meta">
+        <span class="technote-date">${n.date}</span>
+        ${n.tags.map(t => `<span class="tag" style="font-size:10px;padding:3px 9px">${t}</span>`).join(' ')}
+        <span class="technote-arrow">→</span>
+      </div>
+    </a>
+  `).join('');
+}
+renderTechNotes();
+
+/* ===== FADE UP ANIMATION ===== */
+const style = document.createElement('style');
+style.textContent = '@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }';
+document.head.appendChild(style);
+
+/* ===== LANGUAGE SWITCH ===== */
+(function() {
+  const root = document.getElementById('rootHtml');
+  const sw = document.getElementById('langSwitch');
+  let lang = localStorage.getItem('lang') || 'zh';
+
+  function applyLang(l) {
+    root.lang = l;
+    root.classList.toggle('en', l === 'en');
+    sw.classList.toggle('en', l === 'en');
+    sw.querySelectorAll('.lang-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.lang === l);
+    });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (l === 'en' && el.dataset.en) {
+        if (!el.dataset.zh) el.dataset.zh = el.textContent;
+        el.textContent = el.dataset.en;
+      } else if (el.dataset.zh) {
+        el.textContent = el.dataset.zh;
+      }
+    });
+    if (typeof renderWines === 'function') {
+      shuffledWines = [];
+      renderWines();
+    }
+    if (typeof renderTechNotes === 'function') renderTechNotes();
+    localStorage.setItem('lang', l);
+  }
+
+  sw.addEventListener('click', () => {
+    lang = lang === 'zh' ? 'en' : 'zh';
+    applyLang(lang);
+  });
+
+  if (lang === 'en') applyLang('en');
+})();
+
+/* ===== AMBIENT PARTICLE CANVAS ===== */
+(function() {
+  var canvas = document.getElementById('bgCanvas');
+  if (!canvas) return;
+  // Respect reduced motion — skip the particle field entirely
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, particles = [];
+  var mouse = { x: -1000, y: -1000 };
+  var scrollY = 0;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('scroll', function() { scrollY = window.scrollY; }, { passive: true });
+
+  // Create particles
+  var colors = [
+    'rgba(212,160,64,',   // amber
+    'rgba(232,192,80,',   // gold
+    'rgba(180,130,60,',   // bronze
+  ];
+  for (var i = 0; i < 100; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 2.5 + 1.2,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -Math.random() * 0.4 - 0.1,
+      alpha: Math.random() * 0.4 + 0.1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      phase: Math.random() * Math.PI * 2,
+      depth: Math.random() * 0.8 + 0.2  // parallax depth factor
+    });
+  }
+
+  window.addEventListener('mousemove', function(e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }, { passive: true });
+
+  function draw() {
+    // Skip frame work while the tab is hidden (saves CPU/battery)
+    if (!document.hidden) {
+      ctx.clearRect(0, 0, W, H);
+      var sy = scrollY * 0.3; // base parallax offset
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+
+        // Gentle mouse repulsion
+        var dx = p.x - mouse.x;
+        var dy = p.y - (mouse.y - sy * p.depth);
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120 && dist > 0) {
+          var force = (120 - dist) / 120 * 0.4;
+          p.vx += dx / dist * force * 0.1;
+          p.vy += dy / dist * force * 0.1;
+        }
+
+        // Drift + sine wobble
+        p.x += p.vx + Math.sin(p.phase + performance.now() * 0.0005) * 0.15;
+        p.y += p.vy;
+        p.phase += 0.01;
+
+        // Dampen velocity
+        p.vx *= 0.99;
+        p.vy *= 0.99;
+
+        // Wrap around edges
+        if (p.x < -10) p.x = W + 10;
+        if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H + 10;
+        if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; }
+
+        // Draw with parallax offset
+        var py = p.y + sy * p.depth;
+        if (py > H + 20) py -= H + 40;
+        if (py < -20) py += H + 40;
+        ctx.beginPath();
+        ctx.arc(p.x, py, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.alpha + ')';
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ===== CARD 3D TILT + SCROLL REVEAL ===== */
+(function() {
+  // 3D tilt on project cards
+  var cards = document.querySelectorAll('.project-card');
+  cards.forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 8) + 'deg) translateZ(4px)';
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+    });
+  });
+
+  // Scroll reveal — fade in only (no transform to avoid conflict with tilt/hover)
+  var revealEls = document.querySelectorAll('.section-header, .project-card, .wine-mini, .lifestyle-col, .contact-card, .technote-item, .game-chip, .skill-group, .wine-compact');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  revealEls.forEach(function(el, i) {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.5s ease-out ' + (i % 3) * 0.1 + 's';
+    observer.observe(el);
+  });
+
+  // Scroll progress bar
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function() {
+    var scrollH = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollH <= 0) return;
+    var pct = Math.min(100, window.scrollY / scrollH * 100);
+    header.style.setProperty('--progress', pct + '%');
+  }, { passive: true });
+
+  // Pulse skill bars on hover
+  document.querySelectorAll('.skill-track').forEach(function(track) {
+    track.addEventListener('mouseenter', function() {
+      var fill = this.querySelector('.skill-fill');
+      if (fill) { fill.style.boxShadow = '0 0 10px var(--blue), 0 0 20px var(--blue)'; fill.style.filter = 'brightness(1.3)'; }
+    });
+    track.addEventListener('mouseleave', function() {
+      var fill = this.querySelector('.skill-fill');
+      if (fill) { fill.style.boxShadow = ''; fill.style.filter = ''; }
+    });
+  });
+
+  // Section title parallax (disabled with reduced motion)
+  var titles = document.querySelectorAll('.section-title');
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener('scroll', function() {
+      titles.forEach(function(title) {
+        var rect = title.getBoundingClientRect();
+        var center = rect.top + rect.height / 2;
+        var screenCenter = window.innerHeight / 2;
+        var offset = (center - screenCenter) / screenCenter * 8;
+        title.style.transform = 'translateY(' + offset + 'px)';
+      });
+    }, { passive: true });
+  }
+})();
+
+/* ===== MAGNETIC CURSOR ===== */
+(function() {
+  var pointer = document.getElementById('magPointer');
+  var cross = document.getElementById('magCross');
+  if (!pointer || !cross || window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+
+  var currentTarget = null;
+
+  // Elements that attract the cursor
+  var magnetic = '.header-nav a, .header-social a, .technote-item, .project-card, ' +
+    '.blog-more-btn, .lang-switch, .wine-shuffle-btn, .scroll-top, .contact-card, .hero-btn, .skill-group';
+
+  // Cross always follows exact mouse position
+  window.addEventListener('mousemove', function(e) {
+    cross.style.left = e.clientX + 'px';
+    cross.style.top = e.clientY + 'px';
+  }, { passive: true });
+
+  // Magnetic corners lerp toward target
+  function move(e) {
+    var x = e.clientX, y = e.clientY;
+    if (currentTarget) {
+      var rect = currentTarget.getBoundingClientRect();
+      x = rect.left + rect.width / 2 + (x - rect.left - rect.width / 2) * 0.15;
+      y = rect.top + rect.height / 2 + (y - rect.top - rect.height / 2) * 0.15;
+    }
+    pointer.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+  }
+
+  window.addEventListener('mousemove', move, { passive: true });
+
+  document.addEventListener('mouseover', function(e) {
+    var el = e.target.closest(magnetic);
+    if (!el) return;
+    currentTarget = el;
+    var rect = el.getBoundingClientRect();
+    pointer.style.setProperty('--w', (rect.width + 12) + 'px');
+    pointer.style.setProperty('--h', (rect.height + 12) + 'px');
+  });
+
+  document.addEventListener('mouseout', function(e) {
+    var el = e.target.closest(magnetic);
+    if (!el) return;
+    // Only reset if leaving the magnetic element entirely
+    if (!e.relatedTarget || !e.relatedTarget.closest(magnetic)) {
+      currentTarget = null;
+      pointer.style.setProperty('--w', '');
+      pointer.style.setProperty('--h', '');
+    }
+  });
+})();
+
+/* ===== HORIZONTAL SCROLL ENGINE ===== */
+(function () {
+  var wrap = document.getElementById('hscroll');
+  if (!wrap) return;
+
+  var bar = document.getElementById('hProgress');
+  var panels = Array.prototype.slice.call(wrap.querySelectorAll('.panel'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.header-nav a'));
+  var isMobile = function () { return window.innerWidth <= 768; };
+  var target = 0, raf = null, lastRaf = 0;
+
+  function maxScroll() { return Math.max(0, wrap.scrollWidth - wrap.clientWidth); }
+
+  function animate() {
+    var diff = target - wrap.scrollLeft;
+    if (Math.abs(diff) < 0.6) { wrap.scrollLeft = target; lastRaf = wrap.scrollLeft; raf = null; return; }
+    wrap.scrollLeft += diff * 0.16;
+    lastRaf = wrap.scrollLeft;
+    raf = requestAnimationFrame(animate);
+  }
+  function goTo(v) {
+    target = Math.max(0, Math.min(v, maxScroll()));
+    if (!raf) raf = requestAnimationFrame(animate);
+  }
+
+  // 滚轮：纵向增量映射为横向位移
+  wrap.addEventListener('wheel', function (e) {
+    if (isMobile()) return;
+    if (e.ctrlKey) return;                        // 交给浏览器缩放
+    var d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    if (!d) return;
+    e.preventDefault();
+    goTo(target + d);
+  }, { passive: false });
+
+  // 触控板的横向手势也能自然工作（不拦截时浏览器已处理，这里兜住纵向）
+  window.addEventListener('wheel', function (e) {
+    if (isMobile()) return;
+    if (e.target.closest('.hscroll')) return;     // 已在上面的监听里处理
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); goTo(target + e.deltaY); }
+  }, { passive: false });
+
+  // 键盘
+  window.addEventListener('keydown', function (e) {
+    if (isMobile()) return;
+    var w = wrap.clientWidth;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); goTo(target + w * 0.86); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); goTo(target - w * 0.86); }
+    else if (k === 'Home') { e.preventDefault(); goTo(0); }
+    else if (k === 'End') { e.preventDefault(); goTo(maxScroll()); }
+  });
+
+  // 导航与页内锚点点击 -> 横滚（移动端保持原生纵向跳转）
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (ev) {
+      if (isMobile()) return;
+      var id = a.getAttribute('href');
+      if (!id || id === '#') return;
+      var el = document.querySelector(id);
+      if (!el) return;
+      var panel = el.closest('.panel');
+      if (!panel) return;
+      ev.preventDefault();
+      goTo(panel.offsetLeft);
+      history.replaceState(null, '', id);
+      document.querySelectorAll('.header-nav a').forEach(function (x) {
+        x.classList.toggle('active', x.getAttribute('href') === id);
+      });
+    });
+  });
+
+  // 位置同步：进度条 + 导航高亮
+  function sync() {
+    var max = maxScroll();
+    if (bar) bar.style.width = (max > 0 ? (wrap.scrollLeft / max * 100) : 0).toFixed(2) + '%';
+    if (!raf) target = wrap.scrollLeft;           // 用户拖动滚动条 / 触控板时对齐
+    var probe = wrap.scrollLeft + wrap.clientWidth * 0.4;
+    var cur = panels[0];
+    panels.forEach(function (p) { if (p.offsetLeft <= probe) cur = p; });
+    navLinks.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + cur.id);
+    });
+  }
+  // 视差：面板内容随滚动做轻微反向位移，产生纵深（参考 wodniack.dev 那类滚动纵深）
+  function parallax() {
+    if (isMobile()) return;
+    var sl = wrap.scrollLeft, cw = wrap.clientWidth;
+    panels.forEach(function (p) {
+      var rel = p.offsetLeft - sl;
+      if (rel > cw || rel < -cw) return;          // 视口外的跳过，省掉无谓的样式写入
+      var t = rel / cw;                            // +1 在右侧 .. -1 在左侧
+      p.style.setProperty('--px', (t * -46).toFixed(1) + 'px');
+    });
+  }
+
+  wrap.addEventListener('scroll', function () {
+    // 外部滚动（拖动滚动条 / 浏览器恢复位置 / 锚点跳转）时让位，否则会被平滑动画拉回去
+    if (raf && Math.abs(wrap.scrollLeft - lastRaf) > 120) {
+      cancelAnimationFrame(raf); raf = null; target = wrap.scrollLeft;
+    } else if (!raf) {
+      target = wrap.scrollLeft;
+    }
+    requestAnimationFrame(function () { sync(); parallax(); });
+  }, { passive: true });
+  window.addEventListener('resize', function () { goTo(wrap.scrollLeft); sync(); parallax(); });
+  sync();
+  parallax();
+
+  // 首屏：面板逐个淡入，避免一进来全部同时出现
+  panels.forEach(function (p, i) { p.style.setProperty('--pd', (i * 0.04) + 's'); });
+})();
+</script>
+</body>
+</html>
