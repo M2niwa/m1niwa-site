@@ -3,11 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>首页重构预览 — M1NIWA</title>
-<meta name="description" content="M1NIWA 个人网站首页重构的三种方案预览。">
-<meta name="robots" content="noindex, nofollow">
+<title>技能与能力 — M1NIWA</title>
+<meta name="description" content="技能分布、熟练度与技术栈全表：AI 与深度学习、开发与工具、测试与质量。">
 <meta name="theme-color" content="#1a1210">
+<link rel="canonical" href="https://m1niwa.com/skills.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a1210'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='700' text-anchor='middle' fill='%23d4a040' font-family='system-ui,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="技能与能力 — M1NIWA">
+<meta property="og:description" content="技能分布、熟练度与技术栈全表：AI 与深度学习、开发与工具、测试与质量。">
+<meta property="og:url" content="https://m1niwa.com/skills.html">
 <link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 </head>
@@ -25,11 +30,14 @@
   <div class="header-inner">
     <a href="/" class="header-logo">M<span>1</span>NIWA</a>
     <nav class="header-nav" id="headerNav">
-      <a href="#main" class="active">版本</a>
-      <a href="/skills.html">技能</a>
-      <a href="/blog/">博客</a>
-      <a href="/games.html">游戏</a>
-      <a href="/diy.html">DIY</a>
+      <a href="/" data-en="Home">首页</a>
+      <a href="/skills.html" data-en="Skills">技能</a>
+      <a href="/#technotes" data-en="Blog">博客</a>
+      <a href="/#projects" data-en="Projects">项目</a>
+      <a href="/games.html" data-en="Games">游戏</a>
+      <a href="/#lifestyle" data-en="Lifestyle">兴趣</a>
+      <a href="/diy.html" data-en="DIY">DIY</a>
+      <a href="/#contact" data-en="Contact">联系</a>
     </nav>
     <div class="header-social">
       <a href="https://github.com/m2niwa" target="_blank" rel="noopener" title="GitHub">🐙</a>
@@ -41,9 +49,9 @@
 <main id="main">
   <section class="page-head">
     <div class="container">
-      <p class="page-kicker">M1NIWA / redesign preview</p>
-      <h1 class="page-title">首页重构 · 三个版本</h1>
-      <p class="gallery-lead">同一套内容和配色，三种首页组织方式。三个版本都把「导航中枢」提到首屏之后、把简历挪到页面最末，区别在于中枢的形态与信息密度。点进去逐个看，然后告诉我留哪个 —— 我会把它提升为正式首页，再推到 m1niwa.com。</p>
+      <p class="page-kicker">M1NIWA / skills</p>
+      <h1 class="page-title" data-en="Skills">技能与能力</h1>
+      <p class="page-sub" data-en="Full breakdown of the stack: AI &amp; deep learning, dev tooling, testing &amp; QA.">技能分布、熟练度与技术栈全表：AI 与深度学习、开发与工具、测试与质量。</p>
       <div class="lang-switch-wrap">
         <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
           <span class="lang-option active" data-lang="zh">中</span>
@@ -51,46 +59,51 @@
           <span class="lang-slider"></span>
         </button>
       </div>
+      <a class="page-back" href="/">← 回到首页</a>
     </div>
   </section>
 
-  <section class="section" id="variants">
-    <div class="container">
-      <div class="gallery-grid">
-  <a class="gallery-card" href="v1-editorial.html">
-    <div class="gallery-thumb">目录编号 01→08</div>
-    <div>
-      <div class="gallery-name">版本 A · 编辑式目录</div>
-      <div class="gallery-desc">把全站做成一份目录：编号 + 标题 + 一句话说明，横向条目排列。信息密度低、节奏平缓，滚动时像翻阅刊物目录。</div>
-      <div class="gallery-tags"><span class="tag">目录式布局</span><span class="tag">低密度</span><span class="tag">文字优先</span></div>
+<section class="section" id="skills">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Skills</div>
+      <h2 class="section-title" data-en="Tech Stack">技术栈与能力</h2>
+      <p class="section-desc" data-en="From deep learning to backend, from agents to hardware DIY">从深度学习到后端开发，从 Agent 构建到硬件 DIY</p>
     </div>
-    <span class="gallery-go">进入 →</span>
-  </a>
-  <a class="gallery-card" href="v2-console.html">
-    <div class="gallery-thumb">sp6 / sp3 / sp4 混排</div>
-    <div>
-      <div class="gallery-name">版本 B · 控制台磁贴</div>
-      <div class="gallery-desc">入口是尺寸错落的 bento 磁贴，每块带序号、统计和一个悬停辉光。技术感最强，跟站内已有的终端日志区气质一致。</div>
-      <div class="gallery-tags"><span class="tag">Bento 网格</span><span class="tag">错落尺寸</span><span class="tag">技术感</span></div>
-    </div>
-    <span class="gallery-go">进入 →</span>
-  </a>
-  <a class="gallery-card" href="v3-magazine.html">
-    <div class="gallery-thumb">2 列 + 通栏</div>
-    <div>
-      <div class="gallery-name">版本 C · 杂志大卡</div>
-      <div class="gallery-desc">每块内容一张大卡，两列封面式排布，首尾两行通栏。视觉分量最重，适合当作品集首页。</div>
-      <div class="gallery-tags"><span class="tag">封面大卡</span><span class="tag">两列</span><span class="tag">视觉优先</span></div>
-    </div>
-    <span class="gallery-go">进入 →</span>
-  </a>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title" data-en="AI & Deep Learning">AI & 深度学习</div>
+        <div class="skill-item"><span class="skill-name"data-en="CV / CV Models">CV / CV 模型</span><div class="skill-track"><div class="skill-fill" style="width:55%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Agent Development">Agent 构建</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Hermes / Agent Orchestration">Hermes / Agent 编排</span><div class="skill-track"><div class="skill-fill" style="width:40%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="LLM & LoRA">LLM / LoRA</span><div class="skill-track"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="AI Tool Integration">AI 调用工具固化</span><div class="skill-track"><div class="skill-fill" style="width:55%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="n8n / Coze / ComfyUI">n8n / Coze / ComfyUI</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="LangChain / Neo4j">LangChain / Neo4j</span><div class="skill-track"><div class="skill-fill" style="width:25%"></div></div></div>
       </div>
-      <div class="gallery-note">
-        <strong>关于这次重构：</strong>原来 8 个板块在同一页里纵向堆叠，其中 5 个是「标题 + 描述 + 网格」的同一套骨架，所以读起来像瀑布。现在把「技能全表 / 小游戏 / DIY 日志」三块拆成了独立页面（<a href="/skills.html">/skills.html</a>、<a href="/games.html">/games.html</a>、<a href="/diy.html">/diy.html</a> 三个版本的入口都能到），首页只保留导航中枢 + 精选内容，简历独立成区并放到联系方式之前。<br><br>
-        另外修掉了一个一直存在的 bug：页面里的字体 <code>&lt;link&gt;</code> 标签嵌套了另一个 link，导致 JetBrains Mono 的 @font-face 实际从未生效，现在已经修正并用上了真正的等宽字体。
+      <div class="skill-group">
+        <div class="skill-group-title" data-en="Dev & Tools">开发 & 工具</div>
+        <div class="skill-item"><span class="skill-name"data-en="Python">Python</span><div class="skill-track"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="React">React</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Flask / FastAPI">Flask / FastAPI</span><div class="skill-track"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Docker</span><div class="skill-track"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Harness / CI-CD">Harness / CI-CD</span><div class="skill-track"><div class="skill-fill" style="width:40%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="C / C++ / Java">C / C++ / Java</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="ArkTS">ArkTS</span><div class="skill-track"><div class="skill-fill" style="width:25%"></div></div></div>
+        <div class="skill-group-title" style="margin-top:28px" data-en="Tools & Collab">工具 & 协作</div>
+        <div class="skill-item"><span class="skill-name"data-en="SVN">SVN</span><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Git / GitHub">Git / GitHub</span><div class="skill-track"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Excel / Pivot Tables">Excel / 数据透视</span><div class="skill-track"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="SolidWorks / CAD">SolidWorks / CAD</span><div class="skill-track"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-group-title" style="margin-top:28px" data-en="Testing & QA">测试与质量</div>
+        <div class="skill-item"><span class="skill-name" data-en="pytest / unittest">pytest / unittest</span><div class="skill-track"><div class="skill-fill" style="width:50%"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-en="Postman / API Testing">Postman / API测试</span><div class="skill-track"><div class="skill-fill" style="width:55%"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-en="Selenium / Auto">Selenium / 自动化</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-en="Perf Benchmarking">性能基准测试</span><div class="skill-track"><div class="skill-fill" style="width:40%"></div></div></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 </main>
 
 <!-- ===== FOOTER ===== -->
@@ -98,8 +111,10 @@
   <div class="container">
     <p>© 2026 M1NIWA · 霍凌志</p>
     <div class="powered">
-      <span class="tag">preview</span>
-      <span class="tag">not deployed yet</span>
+      <span class="tag">FastAPI</span>
+      <span class="tag">Canvas</span>
+      <span class="tag">WebSocket</span>
+      <span class="tag">Uvicorn</span>
     </div>
   </div>
 </footer>
@@ -130,6 +145,7 @@ function updateActiveNav() {
 }
 window.addEventListener('scroll', updateActiveNav);
 updateActiveNav();
+
 /* ===== MOBILE MENU ===== */
 const menuToggle = document.getElementById('menuToggle');
 const headerNav = document.getElementById('headerNav');
