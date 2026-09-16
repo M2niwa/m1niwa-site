@@ -813,7 +813,10 @@ document.head.appendChild(style);
   });
 })();
 
-/* ===== HORIZONTAL SCROLL ENGINE ===== */
+/* ===== HORIZONTAL SCROLL ENGINE — 一次滚轮 = 翻一屏 =====
+   动画走浏览器原生 smooth scroll（scrollTo + behavior:'smooth'），
+   刻意不用 requestAnimationFrame：rAF 在标签页不可见时会被浏览器暂停，
+   一旦暂停，"正在翻屏"的锁就永远解不开，整个引擎卡死。 */
 (function () {
   var wrap = document.getElementById('hscroll');
   if (!wrap) return;
@@ -821,108 +824,159 @@ document.head.appendChild(style);
   var bar = document.getElementById('hProgress');
   var panels = Array.prototype.slice.call(wrap.querySelectorAll('.panel'));
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.header-nav a'));
+  if (!panels.length) return;
+
   var isMobile = function () { return window.innerWidth <= 768; };
-  var target = 0, raf = null, lastRaf = 0;
 
-  function maxScroll() { return Math.max(0, wrap.scrollWidth - wrap.clientWidth); }
+  var current = 0;
+  var animating = false;
+  var acc = 0;
+  var lastWheelTs = 0;
+  var animTimer = null;
+  var snapTimer = null;
+  var syncTimer = null;
 
-  function animate() {
-    var diff = target - wrap.scrollLeft;
-    if (Math.abs(diff) < 0.6) { wrap.scrollLeft = target; lastRaf = wrap.scrollLeft; raf = null; return; }
-    wrap.scrollLeft += diff * 0.16;
-    lastRaf = wrap.scrollLeft;
-    raf = requestAnimationFrame(animate);
+  var WHEEL_THRESHOLD = 22;   // 累积到这个量翻一屏（鼠标滚轮一次 deltaY 常 100+，触控板几次手势也够）
+  var WHEEL_GAP_MS = 200;     // 两次滚轮间隔超过它 → 视为新手势
+  var ANIM_LOCK_MS = 700;     // 翻屏锁定上限；到点还没就位就直接跳过去兜底
+
+  function clampIndex(i) { return Math.max(0, Math.min(i, panels.length - 1)); }
+  function panelX(i) { return panels[clampIndex(i)].offsetLeft; }
+
+  function unlock() {
+    animating = false;
+    if (animTimer) { clearTimeout(animTimer); animTimer = null; }
   }
-  function goTo(v) {
-    target = Math.max(0, Math.min(v, maxScroll()));
-    if (!raf) raf = requestAnimationFrame(animate);
+
+  function goToPanel(i, instant) {
+    i = clampIndex(i);
+    var x = panelX(i);
+
+    if (instant) {
+      unlock();
+      current = i;
+      wrap.scrollLeft = x;
+      return;
+    }
+    if (i === current && Math.abs(wrap.scrollLeft - x) < 2) return;
+
+    current = i;
+    animating = true;
+    wrap.scrollTo({ left: x, behavior: 'smooth' });
+
+    if (animTimer) clearTimeout(animTimer);
+    animTimer = setTimeout(function () {
+      animating = false;
+      animTimer = null;
+      // 兜底：若平滑滚动没生效（后台标签 / 浏览器不支持），直接落位
+      if (Math.abs(wrap.scrollLeft - x) > 3) wrap.scrollLeft = x;
+    }, ANIM_LOCK_MS);
   }
 
-  // 滚轮：纵向增量映射为横向位移
+  // 滚轮：一次手势只翻一屏
   wrap.addEventListener('wheel', function (e) {
-    if (isMobile()) return;
-    if (e.ctrlKey) return;                        // 交给浏览器缩放
+    if (isMobile() || e.ctrlKey) return;
     var d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
     if (!d) return;
     e.preventDefault();
-    goTo(target + d);
+
+    if (animating) { acc = 0; return; }              // 翻屏中忽略，避免一次手势连跳几屏
+
+    var now = Date.now();
+    if (now - lastWheelTs > WHEEL_GAP_MS) acc = 0;
+    lastWheelTs = now;
+    acc += d;
+
+    if (Math.abs(acc) < WHEEL_THRESHOLD) return;     // 触控板小步长：累积够了才翻
+    var dir = acc > 0 ? 1 : -1;
+    acc = 0;
+    goToPanel(current + dir);
   }, { passive: false });
 
-  // 触控板的横向手势也能自然工作（不拦截时浏览器已处理，这里兜住纵向）
-  window.addEventListener('wheel', function (e) {
-    if (isMobile()) return;
-    if (e.target.closest('.hscroll')) return;     // 已在上面的监听里处理
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); goTo(target + e.deltaY); }
-  }, { passive: false });
-
-  // 键盘
+  // 键盘：一次也是一屏
   window.addEventListener('keydown', function (e) {
     if (isMobile()) return;
-    var w = wrap.clientWidth;
     var k = e.key;
-    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); goTo(target + w * 0.86); }
-    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); goTo(target - w * 0.86); }
-    else if (k === 'Home') { e.preventDefault(); goTo(0); }
-    else if (k === 'End') { e.preventDefault(); goTo(maxScroll()); }
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); goToPanel(current + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); goToPanel(current - 1); }
+    else if (k === 'Home') { e.preventDefault(); goToPanel(0); }
+    else if (k === 'End') { e.preventDefault(); goToPanel(panels.length - 1); }
   });
 
-  // 导航与页内锚点点击 -> 横滚（移动端保持原生纵向跳转）
+  // 导航 / 页内锚点
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (ev) {
       if (isMobile()) return;
       var id = a.getAttribute('href');
       if (!id || id === '#') return;
       var el = document.querySelector(id);
-      if (!el) return;
-      var panel = el.closest('.panel');
+      var panel = el && el.closest ? el.closest('.panel') : null;
       if (!panel) return;
       ev.preventDefault();
-      goTo(panel.offsetLeft);
+      goToPanel(panels.indexOf(panel));
       history.replaceState(null, '', id);
-      document.querySelectorAll('.header-nav a').forEach(function (x) {
-        x.classList.toggle('active', x.getAttribute('href') === id);
-      });
     });
   });
 
-  // 位置同步：进度条 + 导航高亮
-  function sync() {
-    var max = maxScroll();
-    if (bar) bar.style.width = (max > 0 ? (wrap.scrollLeft / max * 100) : 0).toFixed(2) + '%';
-    if (!raf) target = wrap.scrollLeft;           // 用户拖动滚动条 / 触控板时对齐
-    var probe = wrap.scrollLeft + wrap.clientWidth * 0.4;
-    var cur = panels[0];
-    panels.forEach(function (p) { if (p.offsetLeft <= probe) cur = p; });
-    navLinks.forEach(function (a) {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + cur.id);
-    });
-  }
-  // 视差：面板内容随滚动做轻微反向位移，产生纵深（参考 wodniack.dev 那类滚动纵深）
   function parallax() {
     if (isMobile()) return;
     var sl = wrap.scrollLeft, cw = wrap.clientWidth;
     panels.forEach(function (p) {
       var rel = p.offsetLeft - sl;
-      if (rel > cw || rel < -cw) return;          // 视口外的跳过，省掉无谓的样式写入
-      var t = rel / cw;                            // +1 在右侧 .. -1 在左侧
-      p.style.setProperty('--px', (t * -46).toFixed(1) + 'px');
+      if (rel > cw || rel < -cw) return;
+      p.style.setProperty('--px', ((rel / cw) * -46).toFixed(1) + 'px');
     });
   }
 
-  wrap.addEventListener('scroll', function () {
-    // 外部滚动（拖动滚动条 / 浏览器恢复位置 / 锚点跳转）时让位，否则会被平滑动画拉回去
-    if (raf && Math.abs(wrap.scrollLeft - lastRaf) > 120) {
-      cancelAnimationFrame(raf); raf = null; target = wrap.scrollLeft;
-    } else if (!raf) {
-      target = wrap.scrollLeft;
-    }
-    requestAnimationFrame(function () { sync(); parallax(); });
-  }, { passive: true });
-  window.addEventListener('resize', function () { goTo(wrap.scrollLeft); sync(); parallax(); });
-  sync();
-  parallax();
+  function sync() {
+    var max = Math.max(1, wrap.scrollWidth - wrap.clientWidth);
+    if (bar) bar.style.width = (wrap.scrollLeft / max * 100).toFixed(2) + '%';
+    var probe = wrap.scrollLeft + wrap.clientWidth * 0.5;
+    var idx = 0;
+    panels.forEach(function (p, i) { if (p.offsetLeft <= probe) idx = i; });
+    if (!animating) current = idx;
+    navLinks.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + panels[current].id);
+    });
+    parallax();
+  }
 
-  // 首屏：面板逐个淡入，避免一进来全部同时出现
+  // 滚动同步用 setTimeout 节流（不用 rAF，理由同上）
+  wrap.addEventListener('scroll', function () {
+    if (!syncTimer) {
+      syncTimer = setTimeout(function () { syncTimer = null; sync(); }, 16);
+    }
+    if (animating && Math.abs(wrap.scrollLeft - panelX(current)) < 3) unlock();   // 到位即解锁，更跟手
+
+    if (!animating) {                                   // 拖滚动条停下后吸附到最近一屏
+      clearTimeout(snapTimer);
+      snapTimer = setTimeout(function () {
+        if (Math.abs(wrap.scrollLeft - panelX(current)) > 2) goToPanel(current);
+      }, 280);
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', function () { goToPanel(current, true); sync(); });
+
+  // 带 hash 进入时直接落到对应面板
+  var initIdx = 0;
+  if (location.hash) {
+    var hEl = document.querySelector(location.hash);
+    var hPanel = hEl && hEl.closest ? hEl.closest('.panel') : null;
+    if (hPanel) initIdx = panels.indexOf(hPanel);
+  }
+
+  // 调试接口（排查用，不影响正常使用）
+  window.__hs = {
+    get current() { return current; },
+    get animating() { return animating; },
+    get acc() { return acc; },
+    get scrollLeft() { return wrap.scrollLeft; },
+    go: goToPanel, panels: panels, wrap: wrap
+  };
+
+  goToPanel(initIdx, true);
+  sync();
   panels.forEach(function (p, i) { p.style.setProperty('--pd', (i * 0.04) + 's'); });
 })();
 </script>
