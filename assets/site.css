@@ -4,23 +4,23 @@
    ============================================================ */
 
 :root {
-  --bg: #1a1210;
-  --bg-elevated: #241c16;
-  --bg-card: #2a1f18;
-  --border: rgba(196, 156, 88, 0.10);
-  --border-hover: rgba(212, 168, 96, 0.30);
-  --text: #efe4cf;
-  --text-secondary: #b8a080;
-  --text-tertiary: #9c8465;
-  --blue: #d4a040;
-  --blue-hover: #e8c060;
-  --blue-bg: rgba(212, 160, 64, 0.10);
+  --bg: #f7f1e7;
+  --bg-elevated: #fffbf4;
+  --bg-card: #ffffff;
+  --border: rgba(150, 118, 72, 0.16);
+  --border-hover: rgba(168, 118, 31, 0.42);
+  --text: #2c2118;
+  --text-secondary: #6d5c4a;
+  --text-tertiary: #9b8a76;
+  --blue: #a8761f;
+  --blue-hover: #8d6116;
+  --blue-bg: rgba(168, 118, 31, 0.10);
   --indigo: #c8a878;
   --indigo-bg: rgba(200, 168, 120, 0.08);
   --green: #a0b870;
   --green-bg: rgba(160, 184, 112, 0.08);
-  --amber: #e8c860;
-  --amber-bg: rgba(232, 200, 96, 0.08);
+  --amber: #8d6116;
+  --amber-bg: rgba(168, 118, 31, 0.08);
   --red: #c86850;
   --radius: 14px;
   --radius-sm: 8px;
@@ -55,13 +55,13 @@ body::before {
   content: '';
   position: fixed; inset: 0; z-index: 9999; pointer-events: none;
   background:
-    repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(40,24,10,0.05) 2px, rgba(40,24,10,0.05) 4px),
-    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.02) 3px, rgba(0,0,0,0.02) 5px);
+    repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(120,90,50,0.028) 2px, rgba(120,90,50,0.028) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.010) 3px, rgba(0,0,0,0.010) 5px);
 }
 body::after {
   content: '';
   position: fixed; inset: 0; z-index: 9998; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 40%, transparent 50%, rgba(12,8,4,0.60) 100%);
+  background: radial-gradient(ellipse at 50% 45%, transparent 62%, rgba(120,90,50,0.13) 100%);
 }
 
 /* Custom scrollbar */
@@ -70,7 +70,7 @@ body::after {
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-::selection { background: rgba(212,160,64,0.35); color: #1a1210; }
+::selection { background: rgba(168,118,31,0.24); color: #2c2118; }
 
 /* ===== CONTAINER ===== */
 .container {
