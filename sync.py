@@ -28,6 +28,7 @@ PAGES = [
     "v2-console.html",
     "v3-magazine.html",
     "v4-horizontal.html",
+    "v5-rotate.html",
     "skills.html",
     "games.html",
     "diy.html",
