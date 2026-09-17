@@ -4,14 +4,14 @@
    ============================================================ */
 
 :root {
-  --bg: #1a1210;
-  --bg-elevated: #241c16;
-  --bg-card: #2a1f18;
-  --border: rgba(196, 156, 88, 0.10);
-  --border-hover: rgba(212, 168, 96, 0.30);
-  --text: #efe4cf;
-  --text-secondary: #b8a080;
-  --text-tertiary: #9c8465;
+  --bg: #2a1e18;
+  --bg-elevated: #362921;
+  --bg-card: #3f3128;
+  --border: rgba(214, 176, 110, 0.16);
+  --border-hover: rgba(212, 168, 96, 0.42);
+  --text: #f6ecda;
+  --text-secondary: #c9b193;
+  --text-tertiary: #a8906f;
   --blue: #d4a040;
   --blue-hover: #e8c060;
   --blue-bg: rgba(212, 160, 64, 0.10);
@@ -61,7 +61,7 @@ body::before {
 body::after {
   content: '';
   position: fixed; inset: 0; z-index: 9998; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 40%, transparent 50%, rgba(12,8,4,0.60) 100%);
+  background: radial-gradient(ellipse at 50% 45%, transparent 58%, rgba(12,8,4,0.34) 100%);
 }
 
 /* Custom scrollbar */
@@ -70,7 +70,7 @@ body::after {
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-::selection { background: rgba(212,160,64,0.35); color: #1a1210; }
+::selection { background: rgba(212,160,64,0.32); color: #2a1e18; }
 
 /* ===== CONTAINER ===== */
 .container {
@@ -1322,6 +1322,26 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
   .rotate-stage .panel::after { display: none; }
   .rotate-progress { display: none; }
 }
+
+/* ===== 浅色主题覆盖（body.is-light）===== */
+body.is-light::before {
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(120,90,50,0.028) 2px, rgba(120,90,50,0.028) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.010) 3px, rgba(0,0,0,0.010) 5px);
+}
+body.is-light::after {
+  background: radial-gradient(ellipse at 50% 45%, transparent 62%, rgba(120,90,50,0.13) 100%);
+}
+body.is-light .accent-picker {
+  background: rgba(255, 252, 246, 0.92);
+  border-color: rgba(150, 118, 72, 0.22);
+}
+body.is-light .accent-dot { border-color: rgba(0,0,0,0.12); }
+body.is-light .accent-dot.on { box-shadow: 0 0 0 2px #fff, 0 0 0 4px currentColor; }
+body.is-light .hnav-card { box-shadow: 0 1px 3px rgba(120, 90, 50, 0.07); }
+body.is-light .hero-side .hero-avatar { color: #fff8ec; }
+body.is-light .rotate-stage .panel::after { color: #9b8a76; }
+body.is-light ::selection { background: rgba(168, 118, 31, 0.24); color: #2c2118; }
 
 @media (prefers-reduced-motion: reduce) {
   .rotate-stage { transition: none; }
