@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN" id="rootHtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>首页重构预览 — M1NIWA</title>
+<meta name="description" content="M1NIWA 个人网站首页重构的三种方案预览。">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1a1210">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a1210'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='700' text-anchor='middle' fill='%23d4a040' font-family='system-ui,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+<div class="mag-cross" id="magCross" aria-hidden="true"></div>
+<div class="mag-pointer" id="magPointer" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="/" class="header-logo">M<span>1</span>NIWA</a>
+    <nav class="header-nav" id="headerNav">
+      <a href="#main" class="active">版本</a>
+      <a href="/skills.html">技能</a>
+      <a href="/blog/">博客</a>
+      <a href="/games.html">游戏</a>
+      <a href="/diy.html">DIY</a>
+    </nav>
+    <div class="header-social">
+      <a href="https://github.com/m2niwa" target="_blank" rel="noopener" title="GitHub">🐙</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="菜单" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-head">
+    <div class="container">
+      <p class="page-kicker">M1NIWA / redesign preview</p>
+      <h1 class="page-title">首页重构 · 五个版本</h1>
+      <p class="gallery-lead">同一套内容和配色，五种首页组织方式。前三个都是纵向页面，把「导航中枢」提到首屏之后、把简历挪到页面最末，区别在导航中枢的形态与信息密度；<strong>版本 D 换掉了滚动方向本身</strong> —— 滚轮往下滚，整页向右走。点进去逐个看，然后告诉我留哪个，我会把它提升为正式首页再推到 m1niwa.com。</p>
+      <div class="lang-switch-wrap">
+        <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
+          <span class="lang-option active" data-lang="zh">中</span>
+          <span class="lang-option" data-lang="en">EN</span>
+          <span class="lang-slider"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="variants">
+    <div class="container">
+      <div class="gallery-grid">
+  <a class="gallery-card" href="v1-editorial.html">
+    <div class="gallery-thumb">目录编号 01→08</div>
+    <div>
+      <div class="gallery-name">版本 A · 编辑式目录</div>
+      <div class="gallery-desc">把全站做成一份目录：编号 + 标题 + 一句话说明，横向条目排列。信息密度低、节奏平缓，滚动时像翻阅刊物目录。</div>
+      <div class="gallery-tags"><span class="tag">目录式布局</span><span class="tag">低密度</span><span class="tag">文字优先</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+  <a class="gallery-card" href="v2-console.html">
+    <div class="gallery-thumb">sp6 / sp3 / sp4 混排</div>
+    <div>
+      <div class="gallery-name">版本 B · 控制台磁贴</div>
+      <div class="gallery-desc">入口是尺寸错落的 bento 磁贴，每块带序号、统计和一个悬停辉光。技术感最强，跟站内已有的终端日志区气质一致。</div>
+      <div class="gallery-tags"><span class="tag">Bento 网格</span><span class="tag">错落尺寸</span><span class="tag">技术感</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+  <a class="gallery-card" href="v3-magazine.html">
+    <div class="gallery-thumb">2 列 + 通栏</div>
+    <div>
+      <div class="gallery-name">版本 C · 杂志大卡</div>
+      <div class="gallery-desc">每块内容一张大卡，两列封面式排布，首尾两行通栏。视觉分量最重，适合当作品集首页。</div>
+      <div class="gallery-tags"><span class="tag">封面大卡</span><span class="tag">两列</span><span class="tag">视觉优先</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+  <a class="gallery-card" href="v5-rotate.html">
+    <div class="gallery-thumb">8 屏 = 一圈 360°</div>
+    <div>
+      <div class="gallery-name">版本 E · 旋转转盘 ★★</div>
+      <div class="gallery-desc">整页做成一张光盘：滚动时以左上角为轴顺时针旋转 45° 切换下一屏（8 屏正好一圈）。每张面板在盘面上预旋转，转到正位时刚好回正，所以文字不会歪。Q 弹由旋转的过冲缓动实现。</div>
+      <div class="gallery-tags"><span class="tag">旋转切换</span><span class="tag">左上角为轴</span><span class="tag">转盘布局</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+  <a class="gallery-card" href="v4-horizontal.html">
+    <div class="gallery-thumb">100vw × 100vh 面板</div>
+    <div>
+      <div class="gallery-name">版本 D · 横向卷轴</div>
+      <div class="gallery-desc">滚轮往下滚，整页向右走 —— 所有板块排成一条横向长卷，每个板块一屏宽。带滚动视差、键盘 ←/→ 切换、顶部横向进度条；手机端自动回退成纵向。</div>
+      <div class="gallery-tags"><span class="tag">横向滚动</span><span class="tag">滚轮驱动</span><span class="tag">滚动视差</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+      </div>
+      <div class="gallery-note">
+        <strong>关于这次重构：</strong>原来 8 个板块在同一页里纵向堆叠，其中 5 个是「标题 + 描述 + 网格」的同一套骨架，所以读起来像瀑布。现在把「技能全表 / 小游戏 / DIY 日志」三块拆成了独立页面（<a href="/skills.html">/skills.html</a>、<a href="/games.html">/games.html</a>、<a href="/diy.html">/diy.html</a> 三个版本的入口都能到），首页只保留导航中枢 + 精选内容，简历独立成区并放到联系方式之前。<br><br>
+        另外修掉了一个一直存在的 bug：页面里的字体 <code>&lt;link&gt;</code> 标签嵌套了另一个 link，导致 JetBrains Mono 的 @font-face 实际从未生效，现在已经修正并用上了真正的等宽字体。
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 M1NIWA</p>
+    <div class="powered">
+      <span class="tag">preview</span>
+      <span class="tag">not deployed yet</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scrollTop" title="回到顶部">↑</button>
+
+<script>
+/* ===== SCROLL TO TOP ===== */
+const scrollTopBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
+});
+scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ===== HEADER NAV ACTIVE STATE ===== */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.header-nav a');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+  });
+}
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+/* ===== MOBILE MENU ===== */
+const menuToggle = document.getElementById('menuToggle');
+const headerNav = document.getElementById('headerNav');
+menuToggle.addEventListener('click', () => {
+  headerNav.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', headerNav.classList.contains('open'));
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && headerNav.classList.contains('open')) {
+    headerNav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+headerNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => headerNav.classList.remove('open'));
+});
+/* ===== FADE UP ANIMATION ===== */
+const style = document.createElement('style');
+style.textContent = '@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }';
+document.head.appendChild(style);
+
+/* ===== LANGUAGE SWITCH ===== */
+(function() {
+  const root = document.getElementById('rootHtml');
+  const sw = document.getElementById('langSwitch');
+  let lang = localStorage.getItem('lang') || 'zh';
+
+  function applyLang(l) {
+    root.lang = l;
+    root.classList.toggle('en', l === 'en');
+    sw.classList.toggle('en', l === 'en');
+    sw.querySelectorAll('.lang-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.lang === l);
+    });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (l === 'en' && el.dataset.en) {
+        if (!el.dataset.zh) el.dataset.zh = el.textContent;
+        el.textContent = el.dataset.en;
+      } else if (el.dataset.zh) {
+        el.textContent = el.dataset.zh;
+      }
+    });
+    if (typeof renderWines === 'function') {
+      shuffledWines = [];
+      renderWines();
+    }
+    if (typeof renderTechNotes === 'function') renderTechNotes();
+    localStorage.setItem('lang', l);
+  }
+
+  sw.addEventListener('click', () => {
+    lang = lang === 'zh' ? 'en' : 'zh';
+    applyLang(lang);
+  });
+
+  if (lang === 'en') applyLang('en');
+})();
+
+/* ===== AMBIENT PARTICLE CANVAS ===== */
+(function() {
+  var canvas = document.getElementById('bgCanvas');
+  if (!canvas) return;
+  // Respect reduced motion — skip the particle field entirely
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, particles = [];
+  var mouse = { x: -1000, y: -1000 };
+  var scrollY = 0;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('scroll', function() { scrollY = window.scrollY; }, { passive: true });
+
+  // Create particles
+  var colors = [
+    'rgba(212,160,64,',   // amber
+    'rgba(232,192,80,',   // gold
+    'rgba(180,130,60,',   // bronze
+  ];
+  for (var i = 0; i < 100; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 2.5 + 1.2,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -Math.random() * 0.4 - 0.1,
+      alpha: Math.random() * 0.4 + 0.1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      phase: Math.random() * Math.PI * 2,
+      depth: Math.random() * 0.8 + 0.2  // parallax depth factor
+    });
+  }
+
+  window.addEventListener('mousemove', function(e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }, { passive: true });
+
+  function draw() {
+    // Skip frame work while the tab is hidden (saves CPU/battery)
+    if (!document.hidden) {
+      ctx.clearRect(0, 0, W, H);
+      var sy = scrollY * 0.3; // base parallax offset
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+
+        // Gentle mouse repulsion
+        var dx = p.x - mouse.x;
+        var dy = p.y - (mouse.y - sy * p.depth);
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120 && dist > 0) {
+          var force = (120 - dist) / 120 * 0.4;
+          p.vx += dx / dist * force * 0.1;
+          p.vy += dy / dist * force * 0.1;
+        }
+
+        // Drift + sine wobble
+        p.x += p.vx + Math.sin(p.phase + performance.now() * 0.0005) * 0.15;
+        p.y += p.vy;
+        p.phase += 0.01;
+
+        // Dampen velocity
+        p.vx *= 0.99;
+        p.vy *= 0.99;
+
+        // Wrap around edges
+        if (p.x < -10) p.x = W + 10;
+        if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H + 10;
+        if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; }
+
+        // Draw with parallax offset
+        var py = p.y + sy * p.depth;
+        if (py > H + 20) py -= H + 40;
+        if (py < -20) py += H + 40;
+        ctx.beginPath();
+        ctx.arc(p.x, py, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.alpha + ')';
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ===== CARD 3D TILT + SCROLL REVEAL ===== */
+(function() {
+  // 3D tilt on project cards
+  var cards = document.querySelectorAll('.project-card');
+  cards.forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 8) + 'deg) translateZ(4px)';
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+    });
+  });
+
+  // Scroll reveal — fade in only (no transform to avoid conflict with tilt/hover)
+  var revealEls = document.querySelectorAll('.section-header, .project-card, .wine-mini, .lifestyle-col, .contact-card, .technote-item, .game-chip, .skill-group, .wine-compact');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  revealEls.forEach(function(el, i) {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.5s ease-out ' + (i % 3) * 0.1 + 's';
+    observer.observe(el);
+  });
+
+  // Scroll progress bar
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function() {
+    var scrollH = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollH <= 0) return;
+    var pct = Math.min(100, window.scrollY / scrollH * 100);
+    header.style.setProperty('--progress', pct + '%');
+  }, { passive: true });
+
+  // Pulse skill bars on hover
+  document.querySelectorAll('.skill-track').forEach(function(track) {
+    track.addEventListener('mouseenter', function() {
+      var fill = this.querySelector('.skill-fill');
+      if (fill) { fill.style.boxShadow = '0 0 10px var(--blue), 0 0 20px var(--blue)'; fill.style.filter = 'brightness(1.3)'; }
+    });
+    track.addEventListener('mouseleave', function() {
+      var fill = this.querySelector('.skill-fill');
+      if (fill) { fill.style.boxShadow = ''; fill.style.filter = ''; }
+    });
+  });
+
+  // Section title parallax (disabled with reduced motion)
+  var titles = document.querySelectorAll('.section-title');
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener('scroll', function() {
+      titles.forEach(function(title) {
+        var rect = title.getBoundingClientRect();
+        var center = rect.top + rect.height / 2;
+        var screenCenter = window.innerHeight / 2;
+        var offset = (center - screenCenter) / screenCenter * 8;
+        title.style.transform = 'translateY(' + offset + 'px)';
+      });
+    }, { passive: true });
+  }
+})();
+
+/* ===== MAGNETIC CURSOR ===== */
+(function() {
+  var pointer = document.getElementById('magPointer');
+  var cross = document.getElementById('magCross');
+  if (!pointer || !cross || window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+
+  var currentTarget = null;
+
+  // Elements that attract the cursor
+  var magnetic = '.header-nav a, .header-social a, .technote-item, .project-card, ' +
+    '.blog-more-btn, .lang-switch, .wine-shuffle-btn, .scroll-top, .contact-card, .hero-btn, .skill-group';
+
+  // Cross always follows exact mouse position
+  window.addEventListener('mousemove', function(e) {
+    cross.style.left = e.clientX + 'px';
+    cross.style.top = e.clientY + 'px';
+  }, { passive: true });
+
+  // Magnetic corners lerp toward target
+  function move(e) {
+    var x = e.clientX, y = e.clientY;
+    if (currentTarget) {
+      var rect = currentTarget.getBoundingClientRect();
+      x = rect.left + rect.width / 2 + (x - rect.left - rect.width / 2) * 0.15;
+      y = rect.top + rect.height / 2 + (y - rect.top - rect.height / 2) * 0.15;
+    }
+    pointer.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+  }
+
+  window.addEventListener('mousemove', move, { passive: true });
+
+  document.addEventListener('mouseover', function(e) {
+    var el = e.target.closest(magnetic);
+    if (!el) return;
+    currentTarget = el;
+    var rect = el.getBoundingClientRect();
+    pointer.style.setProperty('--w', (rect.width + 12) + 'px');
+    pointer.style.setProperty('--h', (rect.height + 12) + 'px');
+  });
+
+  document.addEventListener('mouseout', function(e) {
+    var el = e.target.closest(magnetic);
+    if (!el) return;
+    // Only reset if leaving the magnetic element entirely
+    if (!e.relatedTarget || !e.relatedTarget.closest(magnetic)) {
+      currentTarget = null;
+      pointer.style.setProperty('--w', '');
+      pointer.style.setProperty('--h', '');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

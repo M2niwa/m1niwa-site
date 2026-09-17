@@ -1,0 +1,8 @@
+正式首页上线: 旋转转盘版 + 版本画廊归档
+
+- index.html 提升为 v5 旋转转盘版(验收通过), 标题与 canonical 改为正式站
+- 版本画廊归档为 versions.html, 保留 A/B/C/D/E 五个候选供对比
+
+同步目标:
+- site -> M2niwa/m1niwa-site (m1niwa.com / www.m1niwa.com / m1niwa.pages.dev)
+- origin -> M2niwa/m2niwa.github.io (旧仓库, 随后私有化)
