@@ -206,8 +206,17 @@
 
   <!-- Header -->
   <header class="page-header">
-    <h1 class="page-title"><span class="bracket">「</span>技术博客<span class="bracket">」</span></h1>
-    <p class="page-subtitle">从深度学习到后端开发，记录项目中的工程思考</p>
+  <div class="lang-switch-wrap header-lang blog-lang">
+    <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
+      <span class="lang-option active" data-lang="zh">中</span>
+      <span class="lang-option" data-lang="en">EN</span>
+      <span class="lang-slider"></span>
+    </button>
+  </div>
+
+  
+    <h1 class="page-title" data-en="「Tech Blog」"><span class="bracket">「</span>技术博客<span class="bracket">」</span></h1>
+    <p class="page-subtitle" data-en="From deep learning to backend engineering — notes from real projects">从深度学习到后端开发，记录项目中的工程思考</p>
   </header>
 
   <!-- Blog List -->
@@ -215,12 +224,12 @@
   </div>
 
   <!-- No Results -->
-  <div class="no-results" id="noResults">没有匹配的文章</div>
+  <div class="no-results" id="noResults" data-en="No matching posts">没有匹配的文章</div>
 
   <!-- Filter Bar -->
   <div class="filter-bar" id="filterBar">
-    <span class="filter-label">筛选</span>
-    <button class="filter-tag active" data-tag="全部">全部</button>
+    <span class="filter-label" data-en="Filter">筛选</span>
+    <button class="filter-tag active" data-tag="全部" data-en="All">全部</button>
     <button class="filter-tag" data-tag="FastAPI">FastAPI</button>
     <button class="filter-tag" data-tag="Python">Python</button>
     <button class="filter-tag" data-tag="Docker">Docker</button>
@@ -239,39 +248,39 @@
 (function() {
   // ===== Article Data =====
   const articles = [
-    { date: '2026-07-05', title: 'FastAPI + PostgreSQL 性能调优：索引策略与连接池优化', tags: ['FastAPI', 'PostgreSQL', '性能'], url: '/blog/blog-1.html' },
-    { date: '2026-06-23', title: '两周速成 FastAPI：4个项目的真实踩坑记录', tags: ['FastAPI', 'Python', 'WebSocket'], url: '/blog/blog-2.html' },
-    { date: '2026-06-10', title: 'FastAPI + WebSocket 实时仪表盘：从零到部署', tags: ['FastAPI', 'WebSocket', '全栈'], url: '/blog/blog-3.html' },
-    { date: '2026-05-27', title: 'Python 生产级 Docker 镜像：从 1.2GB 到 120MB', tags: ['Docker', 'Python', 'DevOps'], url: '/blog/blog-4.html' },
-    { date: '2026-05-12', title: 'LLM 幻觉检测：零额外 token 开销的新思路', tags: ['LLM', 'AI', 'Python'], url: '/blog/blog-5.html' },
-    { date: '2026-04-28', title: '三应用合一：用 Docker Compose 把 AWS 账单从 $45 砍到 $8', tags: ['Docker', 'DevOps', 'AWS'], url: '/blog/blog-6.html' },
-    { date: '2026-04-15', title: '向量数据库在免费容器上挂了——基础设施复盘', tags: ['RAG', 'VectorDB', 'Python'], url: '/blog/blog-7.html' },
-    { date: '2026-04-08', title: '个人站上 Cloudflare Pages：网络路径与 SPA 回退配置', tags: ['DevOps', '建站', '网络'], url: '/blog/blog-33.html' },
-    { date: '2026-04-01', title: 'React 组件样式管理：借鉴 React Native 的 StyleSheet 思维', tags: ['React', 'TypeScript', 'CSS'], url: '/blog/blog-8.html' },
-    { date: '2026-03-19', title: '宠物面部识别边缘部署：RK3588 实测 48fps', tags: ['CV', 'MobileNet', '边缘部署'], url: '/blog/blog-9.html' },
-    { date: '2026-03-10', title: '从零学PyTorch：第一周的五个坑', tags: ['PyTorch', 'Python', '入门'], url: '/blog/blog-26.html' },
-    { date: '2026-02-28', title: '跨领域迁移学习：从CSOD到USOD的梯度解耦实践', tags: ['CV', 'PyTorch', '迁移学习'], url: '/blog/blog-10.html' },
-    { date: '2026-02-20', title: '理解Transformer：手推一遍Self-Attention', tags: ['Transformer', 'NLP', '深度学习'], url: '/blog/blog-27.html' },
-    { date: '2026-02-14', title: '轻量化水下检测网络：SG-JEDNet-Tiny 的设计与训练', tags: ['CV', 'PyTorch', '轻量化'], url: '/blog/blog-11.html' },
-    { date: '2026-01-27', title: '多光谱RGBT数据融合：水下场景的另一种解法', tags: ['CV', 'RGBT', '多模态'], url: '/blog/blog-12.html' },
-    { date: '2026-01-25', title: 'Linux生存指南：一个Windows用户的30天', tags: ['Linux', '命令行', '工具'], url: '/blog/blog-28.html' },
-    { date: '2025-12-20', title: '模型量化实战：从PyTorch到ONNX再到边缘部署', tags: ['ONNX', '量化', '边缘部署'], url: '/blog/blog-13.html' },
-    { date: '2025-12-12', title: 'Git工作流实战：从clone到rebase', tags: ['Git', '版本控制', '工作流'], url: '/blog/blog-29.html' },
-    { date: '2025-12-05', title: 'Python asyncio 深入：协程调度与事件循环', tags: ['Python', 'asyncio', '并发'], url: '/blog/blog-14.html' },
-    { date: '2025-11-28', title: '第一次读论文：如何高效啃AI学术文献', tags: ['论文', '阅读方法', 'AI'], url: '/blog/blog-30.html' },
-    { date: '2025-11-18', title: 'PyTorch 2.0 torch.compile：一行代码加速30%', tags: ['PyTorch', 'JIT', '性能'], url: '/blog/blog-15.html' },
-    { date: '2025-11-01', title: 'GitHub Actions CI/CD 实战：自动测试与部署流水线', tags: ['DevOps', 'CI-CD', 'GitHub'], url: '/blog/blog-16.html' },
-    { date: '2025-10-15', title: 'PostgreSQL JSON 索引与全文搜索优化', tags: ['PostgreSQL', 'JSON', '索引'], url: '/blog/blog-17.html' },
-    { date: '2025-09-28', title: 'Rust 从 Python 开发者视角入门', tags: ['Rust', 'Python', '系统编程'], url: '/blog/blog-18.html' },
-    { date: '2025-08-25', title: '断线重连策略：从 3 秒轮询到指数退避', tags: ['WebSocket', '前端', '网络'], url: '/blog/blog-31.html' },
-    { date: '2025-08-10', title: 'ONNX Runtime 推理优化：从Python到C++', tags: ['ONNX', '推理', 'C++'], url: '/blog/blog-19.html' },
-    { date: '2025-07-25', title: 'LangChain + RAG 实践：构建知识库问答系统', tags: ['LangChain', 'RAG', 'LLM'], url: '/blog/blog-20.html' },
-    { date: '2025-07-08', title: 'ComfyUI 本地部署：国内网络下的镜像源与模型复用', tags: ['ComfyUI', 'AI', '工具'], url: '/blog/blog-32.html' },
-    { date: '2025-06-20', title: 'Linux 性能调优笔记：perf、eBPF 与火焰图', tags: ['Linux', '性能', 'DevOps'], url: '/blog/blog-21.html' },
-    { date: '2025-06-05', title: 'TypeScript 类型体操：从入门到放弃再到真香', tags: ['TypeScript', '前端', '类型系统'], url: '/blog/blog-22.html' },
-    { date: '2025-05-25', title: 'FastAPI 依赖注入原理：从源码理解 Depends()', tags: ['FastAPI', 'Python', '源码'], url: '/blog/blog-23.html' },
-    { date: '2025-05-17', title: 'Whisper 语音识别本地部署与微调', tags: ['Whisper', 'ASR', '微调'], url: '/blog/blog-24.html' },
-    { date: '2025-05-10', title: '建站记：从零搭建个人网站的每个选择', tags: ['建站', 'FastAPI', 'HTML'], url: '/blog/blog-25.html' }
+    { date: '2026-07-05', title: 'FastAPI + PostgreSQL 性能调优：索引策略与连接池优化', titleEn: 'FastAPI + PostgreSQL Performance Tuning: Indexing and Connection Pooling', tags: ['FastAPI', 'PostgreSQL', '性能'], url: '/blog/blog-1.html' },
+    { date: '2026-06-23', title: '两周速成 FastAPI：4个项目的真实踩坑记录', titleEn: 'FastAPI in Two Weeks: Real Pitfalls from Four Projects', tags: ['FastAPI', 'Python', 'WebSocket'], url: '/blog/blog-2.html' },
+    { date: '2026-06-10', title: 'FastAPI + WebSocket 实时仪表盘：从零到部署', titleEn: 'FastAPI + WebSocket Real-Time Dashboard: Zero to Deployed', tags: ['FastAPI', 'WebSocket', '全栈'], url: '/blog/blog-3.html' },
+    { date: '2026-05-27', title: 'Python 生产级 Docker 镜像：从 1.2GB 到 120MB', titleEn: 'Production-Grade Python Docker Images: 1.2GB to 120MB', tags: ['Docker', 'Python', 'DevOps'], url: '/blog/blog-4.html' },
+    { date: '2026-05-12', title: 'LLM 幻觉检测：零额外 token 开销的新思路', titleEn: 'LLM Hallucination Detection: A Zero-Extra-Token Approach', tags: ['LLM', 'AI', 'Python'], url: '/blog/blog-5.html' },
+    { date: '2026-04-28', title: '三应用合一：用 Docker Compose 把 AWS 账单从 $45 砍到 $8', titleEn: 'Three Apps into One: Cutting an AWS Bill from $45 to $8', tags: ['Docker', 'DevOps', 'AWS'], url: '/blog/blog-6.html' },
+    { date: '2026-04-15', title: '向量数据库在免费容器上挂了——基础设施复盘', titleEn: 'When the Vector DB Died on a Free Container: A Postmortem', tags: ['RAG', 'VectorDB', 'Python'], url: '/blog/blog-7.html' },
+    { date: '2026-04-08', title: '个人站上 Cloudflare Pages：网络路径与 SPA 回退配置', titleEn: 'Personal Site on Cloudflare Pages: Network Path and SPA Fallback', tags: ['DevOps', '建站', '网络'], url: '/blog/blog-33.html' },
+    { date: '2026-04-01', title: 'React 组件样式管理：借鉴 React Native 的 StyleSheet 思维', titleEn: 'Managing React Component Styles: Borrowing StyleSheet Thinking', tags: ['React', 'TypeScript', 'CSS'], url: '/blog/blog-8.html' },
+    { date: '2026-03-19', title: '宠物面部识别边缘部署：RK3588 实测 48fps', titleEn: 'Edge Deployment of Pet Face Recognition: 48fps on RK3588', tags: ['CV', 'MobileNet', '边缘部署'], url: '/blog/blog-9.html' },
+    { date: '2026-03-10', title: '从零学PyTorch：第一周的五个坑', titleEn: 'Learning PyTorch from Zero: Five Pitfalls in Week One', tags: ['PyTorch', 'Python', '入门'], url: '/blog/blog-26.html' },
+    { date: '2026-02-28', title: '跨领域迁移学习：从CSOD到USOD的梯度解耦实践', titleEn: 'Cross-Domain Transfer Learning: Gradient Decoupling, CSOD to USOD', tags: ['CV', 'PyTorch', '迁移学习'], url: '/blog/blog-10.html' },
+    { date: '2026-02-20', title: '理解Transformer：手推一遍Self-Attention', titleEn: 'Understanding Transformers: Deriving Self-Attention by Hand', tags: ['Transformer', 'NLP', '深度学习'], url: '/blog/blog-27.html' },
+    { date: '2026-02-14', title: '轻量化水下检测网络：SG-JEDNet-Tiny 的设计与训练', titleEn: 'A Lightweight Underwater Detection Network: SG-JEDNet-Tiny', tags: ['CV', 'PyTorch', '轻量化'], url: '/blog/blog-11.html' },
+    { date: '2026-01-27', title: '多光谱RGBT数据融合：水下场景的另一种解法', titleEn: 'Multispectral RGBT Fusion: Another Angle on Underwater Scenes', tags: ['CV', 'RGBT', '多模态'], url: '/blog/blog-12.html' },
+    { date: '2026-01-25', title: 'Linux生存指南：一个Windows用户的30天', titleEn: 'Linux Survival Guide: 30 Days as a Windows User', tags: ['Linux', '命令行', '工具'], url: '/blog/blog-28.html' },
+    { date: '2025-12-20', title: '模型量化实战：从PyTorch到ONNX再到边缘部署', titleEn: 'Model Quantization: PyTorch to ONNX to Edge Deployment', tags: ['ONNX', '量化', '边缘部署'], url: '/blog/blog-13.html' },
+    { date: '2025-12-12', title: 'Git工作流实战：从clone到rebase', titleEn: 'Git Workflow in Practice: From clone to rebase', tags: ['Git', '版本控制', '工作流'], url: '/blog/blog-29.html' },
+    { date: '2025-12-05', title: 'Python asyncio 深入：协程调度与事件循环', titleEn: 'Python asyncio Deep Dive: Coroutines and the Event Loop', tags: ['Python', 'asyncio', '并发'], url: '/blog/blog-14.html' },
+    { date: '2025-11-28', title: '第一次读论文：如何高效啃AI学术文献', titleEn: 'Reading My First Paper: Getting Through AI Literature', tags: ['论文', '阅读方法', 'AI'], url: '/blog/blog-30.html' },
+    { date: '2025-11-18', title: 'PyTorch 2.0 torch.compile：一行代码加速30%', titleEn: 'PyTorch 2.0 torch.compile: 30% Faster with One Line', tags: ['PyTorch', 'JIT', '性能'], url: '/blog/blog-15.html' },
+    { date: '2025-11-01', title: 'GitHub Actions CI/CD 实战：自动测试与部署流水线', titleEn: 'GitHub Actions CI/CD: Automated Testing and Deploy Pipelines', tags: ['DevOps', 'CI-CD', 'GitHub'], url: '/blog/blog-16.html' },
+    { date: '2025-10-15', title: 'PostgreSQL JSON 索引与全文搜索优化', titleEn: 'PostgreSQL JSON Indexing and Full-Text Search', tags: ['PostgreSQL', 'JSON', '索引'], url: '/blog/blog-17.html' },
+    { date: '2025-09-28', title: 'Rust 从 Python 开发者视角入门', titleEn: 'Rust from a Python Developer's Perspective', tags: ['Rust', 'Python', '系统编程'], url: '/blog/blog-18.html' },
+    { date: '2025-08-25', title: '断线重连策略：从 3 秒轮询到指数退避', titleEn: 'Reconnection Strategy: 3-Second Polling to Exponential Backoff', tags: ['WebSocket', '前端', '网络'], url: '/blog/blog-31.html' },
+    { date: '2025-08-10', title: 'ONNX Runtime 推理优化：从Python到C++', titleEn: 'ONNX Runtime Inference Optimization: Python to C++', tags: ['ONNX', '推理', 'C++'], url: '/blog/blog-19.html' },
+    { date: '2025-07-25', title: 'LangChain + RAG 实践：构建知识库问答系统', titleEn: 'LangChain + RAG: Building a Knowledge-Base Q&A System', tags: ['LangChain', 'RAG', 'LLM'], url: '/blog/blog-20.html' },
+    { date: '2025-07-08', title: 'ComfyUI 本地部署：国内网络下的镜像源与模型复用', titleEn: 'Local ComfyUI Deployment: Mirrors and Model Reuse', tags: ['ComfyUI', 'AI', '工具'], url: '/blog/blog-32.html' },
+    { date: '2025-06-20', title: 'Linux 性能调优笔记：perf、eBPF 与火焰图', titleEn: 'Linux Performance Tuning: perf, eBPF and Flame Graphs', tags: ['Linux', '性能', 'DevOps'], url: '/blog/blog-21.html' },
+    { date: '2025-06-05', title: 'TypeScript 类型体操：从入门到放弃再到真香', titleEn: 'TypeScript Type Gymnastics: Started, Gave Up, Loved It', tags: ['TypeScript', '前端', '类型系统'], url: '/blog/blog-22.html' },
+    { date: '2025-05-25', title: 'FastAPI 依赖注入原理：从源码理解 Depends()', titleEn: 'How FastAPI Dependency Injection Works: Depends() from Source', tags: ['FastAPI', 'Python', '源码'], url: '/blog/blog-23.html' },
+    { date: '2025-05-17', title: 'Whisper 语音识别本地部署与微调', titleEn: 'Local Whisper Deployment and Fine-Tuning', tags: ['Whisper', 'ASR', '微调'], url: '/blog/blog-24.html' },
+    { date: '2025-05-10', title: '建站记：从零搭建个人网站的每个选择', titleEn: 'Building This Site: Every Choice Behind a Personal Website', tags: ['建站', 'FastAPI', 'HTML'], url: '/blog/blog-25.html' }
   ];
 
   // ===== DOM =====
@@ -303,7 +312,7 @@
         '<div class="blog-item">' +
           '<span class="blog-date">' + a.date + '</span>' +
           '<div class="blog-info">' +
-            '<a href="' + a.url + '" class="blog-title">' + a.title + '</a>' +
+            '<a href="' + a.url + '" class="blog-title">' + ((document.documentElement.lang === 'en' && a.titleEn) ? a.titleEn : a.title) + '</a>' +
             '<div class="blog-tags">' + tagHtml + '</div>' +
           '</div>' +
         '</div>';
@@ -329,10 +338,42 @@
     });
   }
 
+  window.reRenderBlog = function() { render(activeTag); };
+
   // ===== Initial Render =====
   render('全部');
 })();
 </script>
+
+
+/* ===== 语言切换（本页独立实现）===== */
+(function () {
+  var btn = document.getElementById('langSwitch');
+  if (!btn) return;
+  function toEn() { return document.documentElement.lang !== 'en'; }
+  function applyEn(on) {
+    document.documentElement.lang = on ? 'en' : 'zh';
+    btn.classList.toggle('en', on);
+    var opts = btn.querySelectorAll('.lang-option');
+    opts[0].classList.toggle('active', !on);
+    opts[1].classList.toggle('active', on);
+    var nodes = document.querySelectorAll('[data-en]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      if (!el.hasAttribute('data-zh')) el.setAttribute('data-zh', el.textContent);
+      el.textContent = on ? el.getAttribute('data-en') : el.getAttribute('data-zh');
+    }
+    if (typeof window.reRenderBlog === 'function') window.reRenderBlog();
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('site_lang'); } catch (e) {}
+  if (saved === 'en') applyEn(true);
+  btn.addEventListener('click', function () {
+    var on = toEn();
+    applyEn(on);
+    try { localStorage.setItem('site_lang', on ? 'en' : 'zh'); } catch (e) {}
+  });
+})();
 
 </body>
 </html>

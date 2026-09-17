@@ -4,14 +4,14 @@
    ============================================================ */
 
 :root {
-  --bg: #2a1e18;
-  --bg-elevated: #362921;
-  --bg-card: #3f3128;
-  --border: rgba(214, 176, 110, 0.16);
-  --border-hover: rgba(212, 168, 96, 0.42);
-  --text: #f6ecda;
-  --text-secondary: #c9b193;
-  --text-tertiary: #a8906f;
+  --bg: #1a1210;
+  --bg-elevated: #241c16;
+  --bg-card: #2a1f18;
+  --border: rgba(196, 156, 88, 0.10);
+  --border-hover: rgba(212, 168, 96, 0.30);
+  --text: #efe4cf;
+  --text-secondary: #b8a080;
+  --text-tertiary: #9c8465;
   --blue: #d4a040;
   --blue-hover: #e8c060;
   --blue-bg: rgba(212, 160, 64, 0.10);
@@ -61,7 +61,7 @@ body::before {
 body::after {
   content: '';
   position: fixed; inset: 0; z-index: 9998; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 45%, transparent 58%, rgba(12,8,4,0.34) 100%);
+  background: radial-gradient(ellipse at 50% 40%, transparent 50%, rgba(12,8,4,0.60) 100%);
 }
 
 /* Custom scrollbar */
@@ -70,7 +70,7 @@ body::after {
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-::selection { background: rgba(212,160,64,0.32); color: #2a1e18; }
+::selection { background: rgba(212,160,64,0.35); color: #1a1210; }
 
 /* ===== CONTAINER ===== */
 .container {
@@ -1321,6 +1321,16 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
   }
   .rotate-stage .panel::after { display: none; }
   .rotate-progress { display: none; }
+}
+
+/* ===== 语言开关（移到 header 右侧后）===== */
+.header-social .header-lang { margin: 0 2px 0 0; }
+.header-lang .lang-switch { padding: 2px; }
+.header-lang .lang-option { padding: 3px 11px; font-size: 12px; }
+.header-lang .lang-slider { top: 2px; left: 2px; height: calc(100% - 4px); }
+@media (max-width: 768px) {
+  .header-lang .lang-option { padding: 3px 9px; font-size: 11.5px; }
+  .header-social .header-lang { margin-right: 0; }
 }
 
 /* ===== 浅色主题覆盖（body.is-light）===== */

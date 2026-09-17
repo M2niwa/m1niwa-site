@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<a class="skip-link" href="#main">跳到主要内容</a>
+<a class="skip-link" href="#main" data-en="Skip to content">跳到主要内容</a>
 
 <canvas id="bgCanvas" aria-hidden="true"></canvas>
 
@@ -40,6 +40,13 @@
       <a href="/#contact" data-en="Contact">联系</a>
     </nav>
     <div class="header-social">
+      <div class="lang-switch-wrap header-lang">
+        <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
+          <span class="lang-option active" data-lang="zh">中</span>
+          <span class="lang-option" data-lang="en">EN</span>
+          <span class="lang-slider"></span>
+        </button>
+      </div>
       <a href="https://github.com/m2niwa" target="_blank" rel="noopener" title="GitHub">🐙</a>
       <button class="menu-toggle" id="menuToggle" aria-label="菜单" aria-expanded="false">☰</button>
     </div>
@@ -59,7 +66,7 @@
           <span class="lang-slider"></span>
         </button>
       </div>
-      <a class="page-back" href="/">← 回到首页</a>
+      <a class="page-back" href="/" data-en="← Back home">← 回到首页</a>
     </div>
   </section>
 

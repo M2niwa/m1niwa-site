@@ -32,7 +32,7 @@
 </head>
 <body class="rotate-body">
 
-<a class="skip-link" href="#navhub">跳到主要内容</a>
+<a class="skip-link" href="#skills" data-en="Skip to content">跳到主要内容</a>
 
 <!-- Ambient particle canvas -->
 <canvas id="bgCanvas" aria-hidden="true"></canvas>
@@ -69,7 +69,14 @@
       <a href="#contact" data-en="Contact">联系</a>
     </nav>
     <div class="header-social">
-      <a href="https://github.com/m2niwa" target="_blank" rel="noopener" title="GitHub">🐙</a>
+            <div class="lang-switch-wrap header-lang">
+        <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
+          <span class="lang-option active" data-lang="zh">中</span>
+          <span class="lang-option" data-lang="en">EN</span>
+          <span class="lang-slider"></span>
+        </button>
+      </div>
+<a href="https://github.com/m2niwa" target="_blank" rel="noopener" title="GitHub">🐙</a>
       <button class="menu-toggle" id="menuToggle" aria-label="菜单" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -87,13 +94,6 @@
     <div class="hero-merged">
       <div class="hero-side">
         <div class="hero-avatar">M</div>
-        <div class="lang-switch-wrap">
-          <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
-            <span class="lang-option active" data-lang="zh">中</span>
-            <span class="lang-option" data-lang="en">EN</span>
-            <span class="lang-slider"></span>
-          </button>
-        </div>
         <h1 class="hero-name" data-en="M1NIWA">M1NIWA</h1>
         <p class="hero-bio">
           <span data-en="AI Dev &amp; Game Designer">AI 开发 &amp; 游戏策划</span><br>
@@ -106,7 +106,7 @@
           <span class="tag">Workflow</span>
           <span class="tag">PyTorch</span>
           <span class="tag">CV</span>
-          <span class="tag">电子竞技</span>
+          <span class="tag" data-en="Esports">电子竞技</span>
           <span class="tag" data-en="Docker">Docker</span>
           <span class="tag">n8n / Coze</span>
         </div>
@@ -250,8 +250,8 @@
         <h3 data-en="📁 Portfolio">📁 作品集</h3>
         <p data-en="Game design docs, system design drafts, creative writing — a curated collection of work across disciplines.">游戏策划案、系统设计稿、创意写作——跨领域的作品归档。</p>
         <div class="project-tags">
-          <span class="tag">设计文档</span>
-          <span class="tag">策划案</span>
+          <span class="tag" data-en="Design Docs">设计文档</span>
+          <span class="tag" data-en="Design Drafts">策划案</span>
         </div>
         <a class="project-link" href="/portfolio.pdf" target="_blank" data-en="View →">查看 →</a>
         <a class="project-link" href="/portfolio.pdf" download style="margin-left:16px" data-en="Download ↓">下载 ↓</a>
@@ -270,7 +270,7 @@
         <h3 data-en="🎮 Fashion Crush">🎮 Fashion Crush</h3>
         <p data-en="Dress-up + interactive story game for Western women aged 20-65. Cocos engine + JSON config, 5 iterations shipped.">海外发行换装+互动故事游戏，面向 20-65 岁欧美女性。Cocos + JSON 关卡配置，已迭代 5 个版本。</p>
         <div class="project-tags">
-          <span class="tag">AI辅助美术</span>
+          <span class="tag" data-en="AI-assisted Art">AI辅助美术</span>
           <span class="tag">Cocos</span>
           <span class="tag">JSON</span>
         </div>
@@ -297,7 +297,7 @@
         <p data-en="Automated grade processing agent. Prompt engineering + toolchain. One-click analysis.">自动化综测成绩处理 Agent，Prompt 工程 + 工具链，一键汇总分析。</p>
         <div class="project-tags">
           <span class="tag">Agent</span>
-          <span class="tag">Prompt工程</span>
+          <span class="tag" data-en="Prompt Engineering">Prompt工程</span>
         </div>
       </div>
       <div class="project-card">
@@ -326,23 +326,23 @@
     </div>
     <div class="projects-grid">
       <div class="project-card">
-        <h3>🌌 引力回响 · GRAVITY ECHO</h3>
-        <p>粒子避障射击游戏。用引力场收集能量，躲避敌舰，连击得分——Canvas 渲染，纯前端运行。</p>
+        <h3 data-en="🌌 Gravity Echo">🌌 引力回响 · GRAVITY ECHO</h3>
+        <p data-en="A particle-dodging shooter. Collect energy with a gravity field, evade enemy ships, chain combos.">粒子避障射击游戏。用引力场收集能量，躲避敌舰，连击得分——Canvas 渲染，纯前端运行。</p>
         <div class="project-tags">
           <span class="tag">Canvas</span>
           <span class="tag">Game</span>
         </div>
-        <a class="project-link" href="/game.html" target="_blank">开始游戏 →</a>
+        <a class="project-link" href="/game.html" target="_blank" data-en="Play →">开始游戏 →</a>
       </div>
       <div class="project-card">
-        <h3>⚓ 沧澜废舰 · 背包乱斗</h3>
-        <p>海洋废土 Roguelike 远征：限容船舱捡垃圾、9 类事件与商人、散热/热容海战引擎、深海鱼雷拦截——纯原生 Canvas，打开即玩。</p>
+        <h3 data-en="⚓ Sea Bazaar">⚓ 沧澜废舰 · 背包乱斗</h3>
+        <p data-en="An ocean-wasteland roguelike expedition: scavenge a capacity-limited hold, nine event types and traders, a heat-management naval combat engine, deep-sea torpedo interception.">海洋废土 Roguelike 远征：限容船舱捡垃圾、9 类事件与商人、散热/热容海战引擎、深海鱼雷拦截——纯原生 Canvas，打开即玩。</p>
         <div class="project-tags">
           <span class="tag">Roguelike</span>
           <span class="tag">Canvas</span>
-          <span class="tag">原创</span>
+          <span class="tag" data-en="Original">原创</span>
         </div>
-        <a class="project-link" href="/sea-bazaar/" target="_blank">起航 →</a>
+        <a class="project-link" href="/sea-bazaar/" target="_blank" data-en="Set sail →">起航 →</a>
       </div>
     </div>
   </div>
@@ -1143,7 +1143,9 @@ document.head.appendChild(style);
 
   var saved = null;
   try { saved = localStorage.getItem('accent'); } catch (e) {}
-  var found = THEMES.filter(function (t) { return t.id === saved; })[0];
+  /* 默认用浅色（奶油底）；用户点过其它主题则沿用他的选择 */
+  var found = THEMES.filter(function (t) { return t.id === saved; })[0]
+           || THEMES.filter(function (t) { return t.id === 'light'; })[0];
   if (found) apply(found);
 })();
 

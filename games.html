@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<a class="skip-link" href="#main">跳到主要内容</a>
+<a class="skip-link" href="#main" data-en="Skip to content">跳到主要内容</a>
 
 <canvas id="bgCanvas" aria-hidden="true"></canvas>
 
@@ -40,6 +40,13 @@
       <a href="/#contact" data-en="Contact">联系</a>
     </nav>
     <div class="header-social">
+      <div class="lang-switch-wrap header-lang">
+        <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
+          <span class="lang-option active" data-lang="zh">中</span>
+          <span class="lang-option" data-lang="en">EN</span>
+          <span class="lang-slider"></span>
+        </button>
+      </div>
       <a href="https://github.com/m2niwa" target="_blank" rel="noopener" title="GitHub">🐙</a>
       <button class="menu-toggle" id="menuToggle" aria-label="菜单" aria-expanded="false">☰</button>
     </div>
@@ -59,7 +66,7 @@
           <span class="lang-slider"></span>
         </button>
       </div>
-      <a class="page-back" href="/">← 回到首页</a>
+      <a class="page-back" href="/" data-en="← Back home">← 回到首页</a>
     </div>
   </section>
 
@@ -72,23 +79,23 @@
     </div>
     <div class="projects-grid">
       <div class="project-card">
-        <h3>🌌 引力回响 · GRAVITY ECHO</h3>
-        <p>粒子避障射击游戏。用引力场收集能量，躲避敌舰，连击得分——Canvas 渲染，纯前端运行。</p>
+        <h3 data-en="🌌 Gravity Echo">🌌 引力回响 · GRAVITY ECHO</h3>
+        <p data-en="A particle-dodging shooter. Collect energy with a gravity field, evade enemy ships, chain combos.">粒子避障射击游戏。用引力场收集能量，躲避敌舰，连击得分——Canvas 渲染，纯前端运行。</p>
         <div class="project-tags">
           <span class="tag">Canvas</span>
           <span class="tag">Game</span>
         </div>
-        <a class="project-link" href="/game.html" target="_blank">开始游戏 →</a>
+        <a class="project-link" href="/game.html" target="_blank" data-en="Play →">开始游戏 →</a>
       </div>
       <div class="project-card">
-        <h3>⚓ 沧澜废舰 · 背包乱斗</h3>
-        <p>海洋废土 Roguelike 远征：限容船舱捡垃圾、9 类事件与商人、散热/热容海战引擎、深海鱼雷拦截——纯原生 Canvas，打开即玩。</p>
+        <h3 data-en="⚓ Sea Bazaar">⚓ 沧澜废舰 · 背包乱斗</h3>
+        <p data-en="An ocean-wasteland roguelike expedition: scavenge a capacity-limited hold, nine event types and traders, a heat-management naval combat engine, deep-sea torpedo interception.">海洋废土 Roguelike 远征：限容船舱捡垃圾、9 类事件与商人、散热/热容海战引擎、深海鱼雷拦截——纯原生 Canvas，打开即玩。</p>
         <div class="project-tags">
           <span class="tag">Roguelike</span>
           <span class="tag">Canvas</span>
-          <span class="tag">原创</span>
+          <span class="tag" data-en="Original">原创</span>
         </div>
-        <a class="project-link" href="/sea-bazaar/" target="_blank">起航 →</a>
+        <a class="project-link" href="/sea-bazaar/" target="_blank" data-en="Set sail →">起航 →</a>
       </div>
     </div>
   </div>

@@ -3,478 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M1NIWA — AI 开发 / 游戏策划</title>
-<meta name="description" content="M1NIWA 的个人网站：AI 开发、游戏策划、嵌入式 DIY，含 30 篇技术博客与精选作品集。">
+<title>首页重构预览 — M1NIWA</title>
+<meta name="description" content="M1NIWA 个人网站首页重构的三种方案预览。">
+<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1a1210">
-<link rel="canonical" href="https://m1niwa.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a1210'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='700' text-anchor='middle' fill='%23d4a040' font-family='system-ui,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="M1NIWA">
-<meta property="og:title" content="M1NIWA — M1NIWA · AI 开发 & 游戏策划">
-<meta property="og:description" content="AI 开发、游戏策划、嵌入式 DIY 个人站，30 篇技术博客与精选作品集。">
-<meta property="og:url" content="https://m1niwa.com/">
-<meta name="twitter:card" content="summary">
 <link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
-<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
-<noscript><style>body{cursor:auto}#bgCanvas{display:none}.slash-overlay{display:none}</style></noscript>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "M1NIWA",
-  "url": "https://m1niwa.com/",
-  "email": "mailto:miniwakazeha@outlook.com",
-  "jobTitle": "AI Developer / Game Designer",
-  "sameAs": ["https://github.com/M2niwa"]
-}
-</script>
 <link rel="stylesheet" href="/assets/site.css">
 </head>
-<body class="rotate-body">
+<body>
+<a class="skip-link" href="#main" data-en="Skip to content">跳到主要内容</a>
 
-<a class="skip-link" href="#navhub">跳到主要内容</a>
-
-<!-- Ambient particle canvas -->
 <canvas id="bgCanvas" aria-hidden="true"></canvas>
 
-<!-- ===== SLASH LOADING INTRO ===== -->
-<div class="slash-overlay" id="slashOverlay" aria-hidden="true">
-  <div class="slash-bg"></div>
-  <svg class="slash-katana" id="slashKatana" viewBox="0 0 68.49 760">
-    <path d="M26.03,760H0C20.47,552.92,26.96,357.12,21.24,185.46h0C19.06,119.86,15.09,57.81,9.44,0c7.79,6.36,14.78,13.62,20.84,21.6,4.54,43.21,8.12,88.85,10.69,136.61h0c9.52,176.77,5.29,382.63-14.94,601.79Z"/>
-    <path d="M68.49,384.66c0,117.73-5.36,244.02-16.6,375.34H26.03c20.23-219.16,24.46-425.02,14.94-601.78h0c-2.57-47.77-6.15-93.41-10.69-136.62,13.66,18.01,22.54,39.66,25.05,62.92.08.75.16,1.5.22,2.26,8.49,90.41,12.94,190.6,12.94,297.88Z"/>
-  </svg>
-  <div class="slash-mask slash-mask-up" id="slashMaskUp"></div>
-  <div class="slash-mask slash-mask-down" id="slashMaskDown"></div>
-</div>
-
-<!-- Magnetic cursor -->
 <div class="mag-cross" id="magCross" aria-hidden="true"></div>
 <div class="mag-pointer" id="magPointer" aria-hidden="true">
   <span></span><span></span><span></span><span></span>
 </div>
 
-<!-- ===== HEADER ===== -->
 <header class="header" id="header">
   <div class="header-inner">
-    <a href="#hero" class="header-logo">M<span>1</span>NIWA</a>
+    <a href="/" class="header-logo">M<span>1</span>NIWA</a>
     <nav class="header-nav" id="headerNav">
-      <a href="#hero" class="active" data-en="About">关于</a>
-      <a href="/skills.html" data-en="Skills">技能</a>
-      <a href="#technotes" data-en="Blog">博客</a>
-      <a href="#projects" data-en="Projects">项目</a>
-      <a href="/games.html" data-en="Games">游戏</a>
-      <a href="#lifestyle" data-en="Lifestyle">兴趣</a>
-      <a href="/diy.html" data-en="DIY">DIY</a>
-      <a href="#contact" data-en="Contact">联系</a>
+      <a href="#main" class="active">版本</a>
+      <a href="/skills.html">技能</a>
+      <a href="/blog/">博客</a>
+      <a href="/games.html">游戏</a>
+      <a href="/diy.html">DIY</a>
     </nav>
     <div class="header-social">
+      <div class="lang-switch-wrap header-lang">
+        <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
+          <span class="lang-option active" data-lang="zh">中</span>
+          <span class="lang-option" data-lang="en">EN</span>
+          <span class="lang-slider"></span>
+        </button>
+      </div>
       <a href="https://github.com/m2niwa" target="_blank" rel="noopener" title="GitHub">🐙</a>
       <button class="menu-toggle" id="menuToggle" aria-label="菜单" aria-expanded="false">☰</button>
     </div>
   </div>
 </header>
 
-<!-- ===== HERO ===== -->
-<div class="rotate-progress" id="hProgress" aria-hidden="true"></div>
-
-<div class="accent-picker" id="accentPicker" role="group" aria-label="配色切换"></div>
-
-<main class="rotate-stage" id="hscroll">
-
-<section class="panel" id="hero" data-idx="01 / START">
-  <div class="container">
-    <div class="hero-merged">
-      <div class="hero-side">
-        <div class="hero-avatar">M</div>
-        <div class="lang-switch-wrap">
-          <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
-            <span class="lang-option active" data-lang="zh">中</span>
-            <span class="lang-option" data-lang="en">EN</span>
-            <span class="lang-slider"></span>
-          </button>
-        </div>
-        <h1 class="hero-name" data-en="M1NIWA">M1NIWA</h1>
-        <p class="hero-bio">
-          <span data-en="AI Dev &amp; Game Designer">AI 开发 &amp; 游戏策划</span><br>
-          <span data-en="DIY Enthusiast · Olfactory Explorer">DIY 爱好者 · 嗅觉探索者</span>
-        </p>
-        <div class="hero-tags">
-          <span class="tag">Agent</span>
-          <span class="tag">LLM &amp; LoRA</span>
-          <span class="tag">FastAPI</span>
-          <span class="tag">Workflow</span>
-          <span class="tag">PyTorch</span>
-          <span class="tag">CV</span>
-          <span class="tag">电子竞技</span>
-          <span class="tag" data-en="Docker">Docker</span>
-          <span class="tag">n8n / Coze</span>
-        </div>
-      </div>
-
-      <nav class="hero-nav" aria-label="站点导航">
-      <a class="hnav-card" href="#skills">
-        <span class="hnav-icon" aria-hidden="true">🛠</span>
-        <span class="hnav-text">
-          <span class="hnav-title" data-en="Skills">技能与能力</span>
-          <span class="hnav-desc" data-en="Skills — CV · Agent · Python · FastAPI · 测试">CV · Agent · Python · FastAPI · 测试</span>
-        </span>
-        <span class="hnav-meta">8 shown</span>
-        <span class="hnav-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="hnav-card" href="#technotes">
-        <span class="hnav-icon" aria-hidden="true">✍</span>
-        <span class="hnav-text">
-          <span class="hnav-title" data-en="Blog">技术博客</span>
-          <span class="hnav-desc" data-en="Blog — 踩过的坑与实现笔记">踩过的坑与实现笔记</span>
-        </span>
-        <span class="hnav-meta">30 posts</span>
-        <span class="hnav-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="hnav-card" href="#projects">
-        <span class="hnav-icon" aria-hidden="true">📁</span>
-        <span class="hnav-text">
-          <span class="hnav-title" data-en="Projects">精选项目</span>
-          <span class="hnav-desc" data-en="Projects — CV 模型 · 边缘推理 · Agent 工具链">CV 模型 · 边缘推理 · Agent 工具链</span>
-        </span>
-        <span class="hnav-meta">6 projects</span>
-        <span class="hnav-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="hnav-card" href="#games">
-        <span class="hnav-icon" aria-hidden="true">🎮</span>
-        <span class="hnav-text">
-          <span class="hnav-title" data-en="Games">小游戏</span>
-          <span class="hnav-desc" data-en="Games — Canvas 手写，打开即玩">Canvas 手写，打开即玩</span>
-        </span>
-        <span class="hnav-meta">2 games</span>
-        <span class="hnav-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="hnav-card hnav-split" href="#lifestyle">
-        <span class="hnav-diag" aria-hidden="true"></span>
-        <span class="hnav-corner hnav-corner-tl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-.8 8.5a3.2 3.2 0 0 1-6.4 0L8 2z"/><path d="M12 14v6"/><path d="M9 20h6"/><path d="M8.4 7h7.2"/></svg></span>
-        <span class="hnav-corner hnav-corner-br" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10a5 5 0 0 1 4.6 6.9l-.9 2.4a3 3 0 0 1-5 1L14.5 16h-5l-1.2 1.3a3 3 0 0 1-5-1l-.9-2.4A5 5 0 0 1 7 7z"/><path d="M8 10.5v3M6.5 12h3"/><circle cx="15.5" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>
-        <span class="hnav-split-text">
-          <span class="hnav-title" data-en="Esports &amp; Beyond Work">电子竞技 / 工作之外</span>
-          <span class="hnav-desc" data-en="Esports · Whisky · Craft Beer">电竞 · 威士忌 · 精酿</span>
-        </span>
-        <span class="hnav-meta">6 titles</span>
-      </a>
-      <a class="hnav-card" href="#diy">
-        <span class="hnav-icon" aria-hidden="true">🔧</span>
-        <span class="hnav-text">
-          <span class="hnav-title" data-en="DIY Log">DIY 日志</span>
-          <span class="hnav-desc" data-en="DIY Log — 硬件、固件与折腾记录">硬件、固件与折腾记录</span>
-        </span>
-        <span class="hnav-meta">terminal</span>
-        <span class="hnav-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="hnav-card" href="#contact">
-        <span class="hnav-icon" aria-hidden="true">✉</span>
-        <span class="hnav-text">
-          <span class="hnav-title" data-en="Contact">联系我</span>
-          <span class="hnav-desc" data-en="Contact — 邮件 · GitHub · 微信">邮件 · GitHub · 微信</span>
-        </span>
-        <span class="hnav-meta">3 ways</span>
-        <span class="hnav-arrow" aria-hidden="true">→</span>
-      </a>
-      </nav>
-    </div>
-  </div>
-</section>
-
-<!-- ===== ABOUT / SKILLS ===== -->
-
-<!-- ===== TECH BLOG ===== -->
-<section class="panel" id="skills" data-idx="02 / SKILLS">
-    <div class="panel-fx" aria-hidden="true"><span class="fx-bar"></span><span class="fx-bar"></span><span class="fx-bar"></span><span class="fx-bar"></span><span class="fx-bar"></span></div>
-
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Skills</div>
-      <h2 class="section-title" data-en="Tech Stack">技术栈与能力</h2>
-      <p class="section-desc" data-en="The eight that matter most day to day. Full list on the dedicated page.">日常真正用到的那八项。完整技能表在独立页。</p>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-group-title" data-en="AI &amp; Deep Learning">AI &amp; 深度学习</div>
-        <div class="skill-item"><span class="skill-name" data-en="CV / CV Models">CV / CV 模型</span><div class="skill-track"><div class="skill-fill" style="width:47%"></div></div></div>
-        <div class="skill-item"><span class="skill-name" data-en="Agent Development">Agent 构建</span><div class="skill-track"><div class="skill-fill" style="width:30%"></div></div></div>
-        <div class="skill-item"><span class="skill-name" data-en="n8n / Coze / ComfyUI">n8n / Coze / ComfyUI</span><div class="skill-track"><div class="skill-fill" style="width:30%"></div></div></div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title" data-en="Dev &amp; Tools">开发 &amp; 工具</div>
-        <div class="skill-item"><span class="skill-name" data-en="Python">Python</span><div class="skill-track"><div class="skill-fill" style="width:55%"></div></div></div>
-        <div class="skill-item"><span class="skill-name" data-en="React">React</span><div class="skill-track"><div class="skill-fill" style="width:30%"></div></div></div>
-        <div class="skill-item"><span class="skill-name" data-en="Flask / FastAPI">Flask / FastAPI</span><div class="skill-track"><div class="skill-fill" style="width:38%"></div></div></div>
-        <div class="skill-item"><span class="skill-name" data-en="Docker">Docker</span><div class="skill-track"><div class="skill-fill" style="width:38%"></div></div></div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title" data-en="Testing &amp; QA">测试与质量</div>
-        <div class="skill-item"><span class="skill-name" data-en="pytest / unittest">pytest / unittest</span><div class="skill-track"><div class="skill-fill" style="width:42%"></div></div></div>
-      </div>
-    </div>
-    <a class="panel-more" href="/skills.html"><span data-en="Full skills breakdown">看完整技能表</span> <span aria-hidden="true">→</span></a>
-  </div>
-</section>
-
-<section class="panel" id="technotes" data-idx="03 / BLOG">
-    <div class="panel-fx fx-chars" aria-hidden="true"></div>
-
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Writing</div>
-      <h2 class="section-title" data-en="Tech Blog">技术博客</h2>
-      <p class="section-desc" data-en="Bugs survived, problems untangled">踩过的坑，想过的问题</p>
-    </div>
-    <div class="blog-featured" id="blogFeatured">
-      <!-- JS renders 4 featured posts -->
-    </div>
-    <div class="blog-more-wrap">
-      <a href="/blog/index.html" class="blog-more-btn" data-en="View all 33 posts →">查看全部 33 篇文章 →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== PROJECTS ===== -->
-<section class="panel" id="projects" data-idx="04 / PROJECTS">
-    <div class="panel-fx" aria-hidden="true"><span class="fx-current"></span><span class="fx-current d2"></span></div>
-
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Projects</div>
-      <h2 class="section-title" data-en="Featured Projects">精选项目</h2>
-      <p class="section-desc" data-en="AI · Gaming · Embedded · Tooling">AI · 游戏 · 嵌入式 · 工具开发</p>
-    </div>
-    <div class="projects-grid">
-      <div class="project-card">
-        <h3 data-en="📁 Portfolio">📁 作品集</h3>
-        <p data-en="Game design docs, system design drafts, creative writing — a curated collection of work across disciplines.">游戏策划案、系统设计稿、创意写作——跨领域的作品归档。</p>
-        <div class="project-tags">
-          <span class="tag">设计文档</span>
-          <span class="tag">策划案</span>
-        </div>
-        <a class="project-link" href="/portfolio.pdf" target="_blank" data-en="View →">查看 →</a>
-        <a class="project-link" href="/portfolio.pdf" download style="margin-left:16px" data-en="Download ↓">下载 ↓</a>
-      </div>
-      <div class="project-card">
-        <h3 data-en="🐱 Pet Face Recognition System">🐱 宠物面部识别系统</h3>
-        <p data-en="Lightweight pet recognition with MobileNet-V3. F1 96%, accuracy 82%, 20+ fps on edge devices. Awarded Excellent Thesis.">基于 MobileNet-V3 的轻量化宠物个体特征识别。F1 96%、识别率 82%，边缘设备 20+ fps。获评优秀毕设。</p>
-        <div class="project-tags">
-          <span class="tag">PyTorch</span>
-          <span class="tag">MobileNet</span>
-          <span class="tag">CV</span>
-        </div>
-        <a class="project-link" href="https://github.com/M2niwa/petface-recognition-with-mobilenet" target="_blank" rel="noopener">GitHub →</a>
-      </div>
-      <div class="project-card">
-        <h3 data-en="🎮 Fashion Crush">🎮 Fashion Crush</h3>
-        <p data-en="Dress-up + interactive story game for Western women aged 20-65. Cocos engine + JSON config, 5 iterations shipped.">海外发行换装+互动故事游戏，面向 20-65 岁欧美女性。Cocos + JSON 关卡配置，已迭代 5 个版本。</p>
-        <div class="project-tags">
-          <span class="tag">AI辅助美术</span>
-          <span class="tag">Cocos</span>
-          <span class="tag">JSON</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <h3 data-en="📱 HarmonyOS Health Assistant">📱 鸿蒙健康助手</h3>
-        <p data-en="ArkTS-based smart wearable frontend. Bauhaus industrial design, 7 main + 23 sub pages. Approved for store.">基于 ArkTS 的智能穿戴前端应用。包豪斯工业风，7类主页面+23子页面，已过审。</p>
-        <div class="project-tags">
-          <span class="tag">ArkTS</span>
-          <span class="tag">HarmonyOS</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <h3 data-en="🌱 STM32 Smart Hydroponics">🌱 STM32 智能水培槽</h3>
-        <p data-en="Aluminum frame + STM32 automated hydroponics. PID closed-loop water/light/nutrients. iCAN National Second Prize.">铝型材 + STM32 自动化水培系统，PID 闭环水位/光照/营养。iCAN 国家级二等奖。</p>
-        <div class="project-tags">
-          <span class="tag">STM32</span>
-          <span class="tag">PID</span>
-          <span class="tag">CAD</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <h3 data-en="📝 Grade Evaluation Agent">📝 综测成绩 Agent</h3>
-        <p data-en="Automated grade processing agent. Prompt engineering + toolchain. One-click analysis.">自动化综测成绩处理 Agent，Prompt 工程 + 工具链，一键汇总分析。</p>
-        <div class="project-tags">
-          <span class="tag">Agent</span>
-          <span class="tag">Prompt工程</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <h3 data-en="🌐 Script Translator">🌐 Script Translator</h3>
-        <p data-en="AI multi-language script translation table generator with automated workflow.">AI 多语言剧本翻译表格生成器，自动化翻译工作流处理。</p>
-        <div class="project-tags">
-          <span class="tag">LLM</span>
-          <span class="tag">Python</span>
-          <span class="tag">Workflow</span>
-        </div>
-        <a class="project-link" href="https://github.com/M2niwa/script-translator" target="_blank" rel="noopener">GitHub →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== MINI GAMES ===== -->
-
-<!-- ===== LIFESTYLE (Wine + Esports merged) ===== -->
-<section class="panel" id="games" data-idx="05 / GAMES">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Play</div>
-      <h2 class="section-title" data-en="Mini Games">小游戏</h2>
-      <p class="section-desc" data-en="Browser games built for fun">纯前端小游戏，打开即玩</p>
-    </div>
-    <div class="projects-grid">
-      <div class="project-card">
-        <h3>🌌 引力回响 · GRAVITY ECHO</h3>
-        <p>粒子避障射击游戏。用引力场收集能量，躲避敌舰，连击得分——Canvas 渲染，纯前端运行。</p>
-        <div class="project-tags">
-          <span class="tag">Canvas</span>
-          <span class="tag">Game</span>
-        </div>
-        <a class="project-link" href="/game.html" target="_blank">开始游戏 →</a>
-      </div>
-      <div class="project-card">
-        <h3>⚓ 沧澜废舰 · 背包乱斗</h3>
-        <p>海洋废土 Roguelike 远征：限容船舱捡垃圾、9 类事件与商人、散热/热容海战引擎、深海鱼雷拦截——纯原生 Canvas，打开即玩。</p>
-        <div class="project-tags">
-          <span class="tag">Roguelike</span>
-          <span class="tag">Canvas</span>
-          <span class="tag">原创</span>
-        </div>
-        <a class="project-link" href="/sea-bazaar/" target="_blank">起航 →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="panel" id="lifestyle" data-idx="06 / BEYOND WORK">
-    <div class="panel-fx" aria-hidden="true"><span class="fx-svg fx-bottle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4v3.2l2 3.3V21a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V8.5l2-3.3V2z"/><path d="M8 13h8"/><path d="M10 2h4"/></svg></span><span class="fx-svg fx-glass"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 5h13l-2.2 8.5a2 2 0 0 1-1.9 1.5h-4.8a2 2 0 0 1-1.9-1.5L5.5 5z"/><path d="M12 15v5"/><path d="M8.5 20h7"/><path d="M7 9h10"/></svg></span><span class="fx-svg fx-mouse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="5"/><path d="M12 7v4"/></svg></span><span class="fx-svg fx-kbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6.5" width="20" height="11" rx="2.2"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M7 14h10"/></svg></span><span class="fx-svg fx-pad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10a5 5 0 0 1 4.6 6.9l-.9 2.4a3 3 0 0 1-5 1L14.5 16h-5l-1.2 1.3a3 3 0 0 1-5-1l-.9-2.4A5 5 0 0 1 7 7z"/><path d="M8 10.5v3M6.5 12h3"/><circle cx="15.5" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span></div>
-
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Lifestyle</div>
-      <h2 class="section-title" data-en="Beyond Work">工作之外</h2>
-      <p class="section-desc" data-en="Whisky tasting · Craft beer · Strategy gamer">威士忌品鉴 · 精酿收藏 · 深度策略玩家</p>
-    </div>
-    <div class="lifestyle-grid">
-      <div class="lifestyle-col">
-        <h3 class="lifestyle-subtitle" data-en="🥃 Wine Picks">🥃 酒柜精选</h3>
-        <div class="wine-compact" id="wineCompact">
-          <!-- JS renders 4 items -->
-        </div>
-        <button class="wine-shuffle-btn" id="wineShuffle" title="换一批">
-          <span class="shuffle-icon">🎲</span> <span data-en="Shuffle">换一批</span>
+<main id="main">
+  <section class="page-head">
+    <div class="container">
+      <p class="page-kicker">M1NIWA / redesign preview</p>
+      <h1 class="page-title">首页重构 · 五个版本</h1>
+      <p class="gallery-lead">同一套内容和配色，五种首页组织方式。前三个都是纵向页面，把「导航中枢」提到首屏之后、把简历挪到页面最末，区别在导航中枢的形态与信息密度；<strong>版本 D 换掉了滚动方向本身</strong> —— 滚轮往下滚，整页向右走。点进去逐个看，然后告诉我留哪个，我会把它提升为正式首页再推到 m1niwa.com。</p>
+      <div class="lang-switch-wrap">
+        <button class="lang-switch" id="langSwitch" aria-label="中英文切换">
+          <span class="lang-option active" data-lang="zh">中</span>
+          <span class="lang-option" data-lang="en">EN</span>
+          <span class="lang-slider"></span>
         </button>
       </div>
-      <div class="lifestyle-col">
-        <h3 class="lifestyle-subtitle" data-en="🎮 Gaming & Esports">🎮 游戏与竞技</h3>
-        <p class="lifestyle-text" data-en="Six years in game design, 1000+ hours in strategy games. OW amateur competition experience, team coach. Skilled in number crunching and competitive analysis.">六年游戏策划视角，超千小时策略游戏积累。守望先锋业余赛事经历，兼任校队教练。擅长数值框架拆解、竞品分析。</p>
-        <p class="lifestyle-text" data-en="Deep into casual games too — pursuing aesthetic harmony and satisfying gameplay loops." style="margin-top:-8px;">休闲游戏亦有深度浸淫，同时追求审美对应与体验循环。</p>
-        <div class="chips-grid">
-          <div class="game-chip" data-en="Overwatch">守望先锋</div><div class="game-chip" data-en="DOTA2">DOTA2</div>
-          <div class="game-chip" data-en="CS">CS</div><div class="game-chip" data-en="APEX">APEX</div>
-          <div class="game-chip" data-en="StarCraft II">星际争霸2</div><div class="game-chip" data-en="Civilization">文明</div>
-          <div class="game-chip" data-en="Stellaris">群星</div><div class="game-chip" data-en="Escape from Tarkov">逃离塔科夫</div>
-          <div class="game-chip" data-en="Starsector">远行星号</div>
-        </div>
-        <div class="chips-grid" style="margin-top:10px;">
-          <div class="game-chip casual" data-en="Stardew Valley">星露谷物语</div><div class="game-chip casual" data-en="Timberborn">海狸浮生记</div>
-          <div class="game-chip casual" data-en="BattleBlock Theater">战斗方块剧场</div><div class="game-chip casual" data-en="Starbound">星界边境</div>
-          <div class="game-chip casual" data-en="NIKKI UP TO U">暖暖</div><div class="game-chip casual" data-en="Onmyoji">阴阳师</div>
-          <div class="game-chip casual" data-en="Factorio">异星工场</div><div class="game-chip casual" data-en="Surviving Mars">火星求生</div>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
-
-<!-- ===== DIY ===== -->
-
-<!-- ===== CONTACT ===== -->
-<section class="panel" id="diy" data-idx="07 / DIY">
-    <div class="panel-fx" aria-hidden="true"><span class="fx-spark"></span><span class="fx-spark"></span><span class="fx-spark"></span></div>
-
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Workshop</div>
-      <h2 class="section-title" data-en="DIY Project Log">DIY 项目日志</h2>
-      <p class="section-desc" data-en="Hardware · Embedded · DIY">硬件 · 嵌入式 · 自造</p>
-    </div>
-    <div class="terminal">
-      <div class="line"><span class="prompt">root@workshop:~$</span> <span class="cmd"data-en="cat projects.log">cat projects.log</span></div>
-      <div class="line"><span class="out"data-en="[2017] STM32 Smart Hydroponics v1.0 — Aluminum frame + PID control">[2017] STM32 智能水培槽 v1.0 — 铝型材框架 + PID 环控</span></div>
-      <div class="line"><span class="out"data-en="[2018] iCAN Innovation Contest — National Second Prize">[2018] iCAN 创新创业赛 — 国家级二等奖</span></div>
-      <div class="line"><span class="out"data-en="[2018] College Innovation Project — Provincial Third Prize">[2018] 大创项目 — 省级三等奖</span></div>
-      <div class="line"><span class="out"data-en="[2019] Hydroponics v2.0 — Added aeroponics & remote monitoring">[2019] 水培槽 v2.0 — 加入气培模块 & 远程监控</span></div>
-      <div class="line"><span class="out"data-en="[2024] Expo DIY — Salvaged 7 working PCs from 11 broken ones">[2024] 展会物料 DIY — 11台不可用电脑重组为7台可用</span></div>
-      <div class="line" style="margin-top:12px"><span class="prompt">root@workshop:~$</span> <span class="cmd"data-en="cat /etc/skills.conf">cat /etc/skills.conf</span></div>
-      <div class="line"><span class="out"data-en="PLC Programming (Siemens TIA) · SolidWorks 2016 · CAD">PLC 编程 (西门子博途) · SolidWorks 2016 · CAD</span></div>
-      <div class="line"><span class="out"data-en="Circuit Design Basics (Analog Electronics) · Aluminum Frame Construction">电路设计基础 (模拟电子技术) · 铝型材结构搭建</span></div>
-      <div class="line" style="margin-top:12px"><span class="prompt">root@workshop:~$</span> <span class="cmd" data-en="cat boards.log">cat boards.log</span></div>
-      <div class="line"><span class="out" data-en="[2025] RK3588 — 8-core edge board, ran pet-face recognition at 48fps (INT8 quantized)">[2025] RK3588 — 八核边缘板，量化后跑宠物面部识别 48fps</span></div>
-      <div class="line"><span class="out" data-en="[2026] RK3566 — lower-tier board, probing NPU limits for lightweight CV">[2026] RK3566 — 低型号板子，在摸它的 NPU 上限能扛多轻量的 CV</span></div>
-      <div class="line"><span class="out" data-en="[2026] ESP32 / 蓝牙 &amp; ZigBee — sensor nodes, still half-explored">[2026] ESP32 / 蓝牙与 ZigBee — 传感器节点，还没玩透</span></div>
-      <div class="line" style="margin-top:12px"><span class="prompt">root@workshop:~$</span> <span class="cmd">_</span><span class="cursor">█</span></div>
-    </div>
-  </div>
-    <a class="panel-more" href="/diy.html"><span data-en="Full DIY log">看完整 DIY 日志</span> <span aria-hidden="true">→</span></a>
   </section>
 
-<section class="panel" id="contact" data-idx="08 / CONTACT">
-  <div class="panel-fx fx-coffee" aria-hidden="true" data-fx="coffee"></div>
-
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Connect</div>
-      <h2 class="section-title" data-en="Contact Me">联系我</h2>
-      <p class="section-desc" data-en="Open to tech talks, collaboration, or grabbing a drink">欢迎技术交流、项目合作、或一起喝一杯</p>
+  <section class="section" id="variants">
+    <div class="container">
+      <div class="gallery-grid">
+  <a class="gallery-card" href="v1-editorial.html">
+    <div class="gallery-thumb">目录编号 01→08</div>
+    <div>
+      <div class="gallery-name">版本 A · 编辑式目录</div>
+      <div class="gallery-desc">把全站做成一份目录：编号 + 标题 + 一句话说明，横向条目排列。信息密度低、节奏平缓，滚动时像翻阅刊物目录。</div>
+      <div class="gallery-tags"><span class="tag">目录式布局</span><span class="tag">低密度</span><span class="tag">文字优先</span></div>
     </div>
-    <div class="contact-grid">
-      <a class="contact-card" href="https://github.com/m2niwa" target="_blank" rel="noopener">
-        <div class="contact-icon">🐙</div>
-        <div class="contact-label" data-en="GitHub">GitHub</div>
-        <div class="contact-value">m2niwa</div>
-      </a>
-      <div class="contact-card">
-        <div class="contact-icon">📧</div>
-        <div class="contact-label" data-en="Email">Email</div>
-        <div class="contact-value">miniwakazeha@outlook.com</div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+  <a class="gallery-card" href="v2-console.html">
+    <div class="gallery-thumb">sp6 / sp3 / sp4 混排</div>
+    <div>
+      <div class="gallery-name">版本 B · 控制台磁贴</div>
+      <div class="gallery-desc">入口是尺寸错落的 bento 磁贴，每块带序号、统计和一个悬停辉光。技术感最强，跟站内已有的终端日志区气质一致。</div>
+      <div class="gallery-tags"><span class="tag">Bento 网格</span><span class="tag">错落尺寸</span><span class="tag">技术感</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+  <a class="gallery-card" href="v3-magazine.html">
+    <div class="gallery-thumb">2 列 + 通栏</div>
+    <div>
+      <div class="gallery-name">版本 C · 杂志大卡</div>
+      <div class="gallery-desc">每块内容一张大卡，两列封面式排布，首尾两行通栏。视觉分量最重，适合当作品集首页。</div>
+      <div class="gallery-tags"><span class="tag">封面大卡</span><span class="tag">两列</span><span class="tag">视觉优先</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+  <a class="gallery-card" href="v5-rotate.html">
+    <div class="gallery-thumb">8 屏 = 一圈 360°</div>
+    <div>
+      <div class="gallery-name">版本 E · 旋转转盘 ★★</div>
+      <div class="gallery-desc">整页做成一张光盘：滚动时以左上角为轴顺时针旋转 45° 切换下一屏（8 屏正好一圈）。每张面板在盘面上预旋转，转到正位时刚好回正，所以文字不会歪。Q 弹由旋转的过冲缓动实现。</div>
+      <div class="gallery-tags"><span class="tag">旋转切换</span><span class="tag">左上角为轴</span><span class="tag">转盘布局</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
+  <a class="gallery-card" href="v4-horizontal.html">
+    <div class="gallery-thumb">100vw × 100vh 面板</div>
+    <div>
+      <div class="gallery-name">版本 D · 横向卷轴</div>
+      <div class="gallery-desc">滚轮往下滚，整页向右走 —— 所有板块排成一条横向长卷，每个板块一屏宽。带滚动视差、键盘 ←/→ 切换、顶部横向进度条；手机端自动回退成纵向。</div>
+      <div class="gallery-tags"><span class="tag">横向滚动</span><span class="tag">滚轮驱动</span><span class="tag">滚动视差</span></div>
+    </div>
+    <span class="gallery-go">进入 →</span>
+  </a>
       </div>
-      <div class="contact-card">
-        <div class="contact-icon">🌍</div>
-        <div class="contact-label" data-en="Location">所在地</div>
-        <div class="contact-value" data-en="Shenzhen / Wuhan, China">中国 · 深圳 / 武汉</div>
-      </div>
-      <div class="contact-card">
-        <div class="contact-icon">💼</div>
-        <div class="contact-label" data-en="Role">职位方向</div>
-        <div class="contact-value" data-en="AI Dev / Game Design">AI 开发 / 游戏策划</div>
+      <div class="gallery-note">
+        <strong>关于这次重构：</strong>原来 8 个板块在同一页里纵向堆叠，其中 5 个是「标题 + 描述 + 网格」的同一套骨架，所以读起来像瀑布。现在把「技能全表 / 小游戏 / DIY 日志」三块拆成了独立页面（<a href="/skills.html">/skills.html</a>、<a href="/games.html">/games.html</a>、<a href="/diy.html">/diy.html</a> 三个版本的入口都能到），首页只保留导航中枢 + 精选内容，简历独立成区并放到联系方式之前。<br><br>
+        另外修掉了一个一直存在的 bug：页面里的字体 <code>&lt;link&gt;</code> 标签嵌套了另一个 link，导致 JetBrains Mono 的 @font-face 实际从未生效，现在已经修正并用上了真正的等宽字体。
       </div>
     </div>
-  </div>
-
-</section>
+  </section>
+</main>
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
   <div class="container">
     <p>© 2026 M1NIWA</p>
     <div class="powered">
-      <span class="tag">FastAPI</span>
-      <span class="tag">Canvas</span>
-      <span class="tag">WebSocket</span>
-      <span class="tag">Uvicorn</span>
+      <span class="tag">preview</span>
+      <span class="tag">not deployed yet</span>
     </div>
   </div>
 </footer>
 
-</main>
-
-<div id="fx-coffee-src" hidden aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h12v5.5A5.5 5.5 0 0 1 10.5 20h-1A5.5 5.5 0 0 1 4 14.5V9z"/><path d="M16 10.5h1.8a2.8 2.8 0 0 1 0 5.6H16"/><path d="M7.5 3.5c-.8 1 .8 1.6 0 2.6M11.5 3.5c-.8 1 .8 1.6 0 2.6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 8h11l-1.2 12.2a1 1 0 0 1-1 .8H8.7a1 1 0 0 1-1-.8L6.5 8z"/><path d="M5 5.2h14L18 8H6L5 5.2z"/><path d="M10 12.5h4"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8h15l-1.4 12.2a1 1 0 0 1-1 .8H6.9a1 1 0 0 1-1-.8L4.5 8z"/><path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2"/></svg></div>
-
 <!-- Scroll to top -->
-<button class="scroll-top" id="scrollTop" title="回到开头">←</button>
+<button class="scroll-top" id="scrollTop" title="回到顶部">↑</button>
 
 <script>
 /* ===== SCROLL TO TOP ===== */
@@ -499,7 +155,6 @@ function updateActiveNav() {
 }
 window.addEventListener('scroll', updateActiveNav);
 updateActiveNav();
-
 /* ===== MOBILE MENU ===== */
 const menuToggle = document.getElementById('menuToggle');
 const headerNav = document.getElementById('headerNav');
@@ -516,132 +171,6 @@ document.addEventListener('keydown', (e) => {
 headerNav.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => headerNav.classList.remove('open'));
 });
-/* ===== WINE DATA ===== */
-const wines = [
-  { name:'Kavalan 经典雪莉桶', emoji:'🥃', notes:'台湾噶玛兰酒厂代表作。Oloroso雪莉桶熟成，深琥珀色泽，黑巧克力、熟莓果、淡淡肉桂辛香，尾韵悠长甜美。' },
-  { name:'泰斯卡十年', emoji:'🥃', notes:'苏格兰斯凯岛单一麦芽。标志性海盐烟熏，黑胡椒辛香与蜂蜜甜感交织，海浪拍岸般的粗犷与温暖平衡。' },
-  { name:'Botanist 金酒', emoji:'🍸', notes:'苏格兰艾雷岛手工金酒。萃取22种岛上植物，花香轻盈、薄荷清凉、柑橘明亮，如漫步于赫布里底群岛的植物园。' },
-  { name:'明石蓝标', emoji:'🥃', notes:'日本兵库县白橡木蒸馏所调和威士忌。轻井泽风格的低调优雅，蜂蜜、谷物甜香，柔顺易饮的日常之选。' },
-  { name:'梦乃寒梅 古酒', emoji:'🍶', notes:'日本新潟县梦之酒造出品，长期熟成清酒。多年陈酿呈琥珀色，雪利酒般的坚果、焦糖与干果气息，醇厚圆润，余韵深邃。' },
-  { name:'小猫三只 IPA', emoji:'🍺', notes:'伊势角屋的三倍干投浑浊IPA。Mosaic与CATS酒花叠加出葡萄柚、热带水果的奢华香气，稠滑酒体、泡沫持久——"超越小猫两只"的狂野版。(10% ABV，酒花儿评分 76)' },
-  { name:'海河 Gose', emoji:'🍺', notes:'楚门津酿以天津母亲河命名的德式古斯：极简麦芽配比，乳酸微酸恰到好处，芫荽与海盐勾勒出海河般的清爽——酒花儿标签：乳酸、清爽、海水。(4.7% ABV)' },
-  { name:'深喉 IPA', emoji:'🍺', notes:'楚门的双倍IPA。巨大酒花投放带来强而有力的松脂与柑橘香，焦糖麦芽压住苦度，琥珀色酒体结实直击喉咙。(8.4% ABV · IBU 90)' },
-  { name:'西楚霸王 IPA', emoji:'🍺', notes:'楚门津酿拳头产品——单一西楚(Citra)酒花、高发酵度艾尔酵母的帝国IPA。酒花清新醇厚、口感柔顺，14.2%酒精度被平衡得几乎感受不到。"帝王千百位，霸王只一人"。' },
-  { name:'跳东湖 IPA', emoji:'🍺', notes:'武汉十八号酒馆为2011年"跳东湖"活动而生的一款美式IPA。金色清澈酒体，柑橘与热带果香打头，苦度干净利落、收口干爽。(6.2% ABV · IBU 60)' },
-  { name:'百花深处 IPA', emoji:'🍺', notes:'北平机器的中秋限定西海岸IPA。大量新西兰酒花带来猛烈饱满的热带果香，琥珀色酒体、干爽悠长——名字取自北京"百花深处"胡同。(6.1% ABV · IBU 65)' },
-  { name:'猴拳 IPA', emoji:'🍺', notes:'悠航(Slow Boat)的招牌IPA：干净爽口，酒花香浓郁带芒果气息，柑橘与松脂收尾，泡沫丰富、适合入门。(6.2% ABV · IBU 50)' },
-  { name:'格兰利威12年', emoji:'🥃', notes:'苏格兰斯佩塞单一麦芽威士忌。菠萝、梨子、香草荚的清新花果香，柔顺丝滑，是全球销量最高的单一麦芽之一。' },
-  { name:'百年孤独 本格烧酒', emoji:'🍶', notes:'日本宫崎县黑木本店麦烧酎，酒名致敬马尔克斯。大麦蒸馏后橡木桶熟成，烤麦、香草与木质香交织，温润深邃。' },
-  { name:'尊尼获加 黑标', emoji:'🥃', notes:'苏格兰经典调和威士忌12年。四十余种基酒调和，烟熏、太妃糖、香草与辛香料交织，威士忌爱好者的日常口粮。' },
-  { name:'Jameson', emoji:'🥃', notes:'爱尔兰三次蒸馏调和威士忌。如丝绸般顺滑，蜂蜜、烤木、淡淡花香，不泥煤的温和风格，入门与老手皆宜。' },
-  { name:'六代目百合', emoji:'🍶', notes:'鹿儿岛芋烧酎。甘薯蒸馏，酒体醇厚浓烈，入口有炙烤红薯的焦香与泥土感，尾韵温暖有力。六代传承的匠心之作。' },
-  { name:'秩父百花 蜂蜜酒', emoji:'🍯', notes:'日本埼玉秩父蒸馏所限定款。以当地百花蜂蜜发酵酿制，甜而不腻，花香馥郁，似液体的春日花园，小批次珍品。' },
-  { name:'小江户 COEDO 琉璃', emoji:'🍺', notes:'小江户酒造(COEDO)的皮尔森。日本文化里"琉璃"是晴空般的湛蓝——酒体通透清澈、雪白头冠，微苦而平衡，极佳适饮性几乎能搭配任何菜品。(5.0% ABV，酒花儿标签：浅黄/清澈/微苦)' },
-  { name:'酿酒狗 Punk IPA', emoji:'🍺', notes:'酿酒狗的朋克宣言：以 Punk IPA 配方为底，Citra 等新世界酒花注入活力，松脂与热带果香直白叛逆，酒花罐里的"反叛者"。(6.5% ABV)' },
-];
-
-const winesEn = [
-  { name:'Kavalan Classic Sherry Oak', emoji:'🥃', notes:'Taiwan\'s Kavalan Distillery. Oloroso sherry cask matured, deep amber, dark chocolate, dried berries, cinnamon spice, long sweet finish.' },
-  { name:'Talisker 10 Year', emoji:'🥃', notes:'Isle of Skye single malt. Signature sea-salt smoke, black pepper spice meets honey sweetness — rugged yet balanced, like waves crashing on shore.' },
-  { name:'Botanist Gin', emoji:'🍸', notes:'Islay handcrafted gin. 22 local botanicals, delicate floral notes, cool mint, bright citrus — a walk through Hebridean gardens in a glass.' },
-  { name:'Akashi Blue Label', emoji:'🥃', notes:'Hyogo Prefecture blended whisky. Karuizawa-esque understated elegance, honey, grain sweetness, smooth daily sipper from Japan.' },
-  { name:'Yumeno Kankobai Koshu', emoji:'🍶', notes:'Niigata aged sake. Amber hue from years of aging, sherry-like nuts, caramel and dried fruit. Rich, round, profound finish.' },
-  { name:'Three Kittens IPA', emoji:'🍺', notes:'Ise Kadoya (Japan) American IPA. Bursting citrus and tropical fruit, moderate bitterness, crisp and clean. Cute kittens, serious brew.' },
-  { name:'Haihe Gose', emoji:'🍺', notes:'Tianjin Truman Brewing Gose. Lactic acidity meets coriander and sea salt — bright, slightly savory, the ultimate summer thirst-quencher.' },
-  { name:'Deep Throat IPA', emoji:'🍺', notes:'Heavyweight Chinese IPA. Massive hop load — pine needles, grapefruit, resin. Bitter punch straight to the throat. For hop veterans only.' },
-  { name:'Citra Overlord IPA', emoji:'🍺', notes:'Single-hop Citra showcase. Lychee, mango, passionfruit explosion. Clean bitter finish. Bold name, bold brew.' },
-  { name:'Tiaodonghu IPA', emoji:'🍺', notes:'NE-style hazy IPA, orange-juice body. Tropical fruit bomb — pineapple and mango. Low bitterness, silky mouthfeel. Wuhan craft icon.' },
-  { name:'Baihua Shendu IPA', emoji:'🍺', notes:'Beijing Jing-A classic. Named after a hutong alley. Passionfruit, lychee, citrus — bright bitterness, pine and herbal layers. China craft benchmark.' },
-  { name:'Monkey Fist IPA', emoji:'🍺', notes:'Classic American IPA gateway. Caramel malt base with Cascade hops — citrus and pine. Balanced bitterness. Straightforward like a monkey\'s punch.' },
-  { name:'Glenlivet 12 Year', emoji:'🥃', notes:'Speyside single malt. Pineapple, pear, vanilla pod — fresh fruit and floral elegance. Smooth and silky. The world\'s best-selling single malt.' },
-  { name:'100 Years of Solitude Shochu', emoji:'🍶', notes:'Miyazaki Kuroki Honten barley shochu. Named after Marquez. Oak-aged with roasted barley, vanilla, and wood. Warm and profound.' },
-  { name:'Johnnie Walker Black Label', emoji:'🥃', notes:'Classic 12-year blended Scotch. 40+ whiskies — smoke, toffee, vanilla, spice layered together. The daily dram of whisky lovers worldwide.' },
-  { name:'Jameson', emoji:'🥃', notes:'Triple-distilled Irish blend whiskey. Silk-smooth, honey, toasted wood, subtle florals. No peat, all warmth. Perfect for beginners and veterans alike.' },
-  { name:'Rokudaime Yuri', emoji:'🍶', notes:'Kagoshima sweet potato shochu. Bold and intense, roasted sweet potato char, earthy depth. Warm powerful finish. Six generations of mastery.' },
-  { name:'Chichibu Hyakka Mead', emoji:'🍯', notes:'Saitama Chichibu Distillery limited release. Local wildflower honey fermented — sweet but not cloying, floral bouquet. Liquid spring garden in a bottle.' },
-  { name:'COEDO Ruri Pilsner', emoji:'🍺', notes:'Ruri means sky-blue in Japanese — a crystal-clear pilsner with a snowy head, subtle balanced bitterness and great drinkability. Pairs with almost any dish. (5.0% ABV)' },
-  { name:'BrewDog Punk IPA', emoji:'🍺', notes:'BrewDog\'s punk manifesto: a Punk IPA base charged with Citra and other new-world hops — direct, rebellious pine and tropical fruit. (6.5% ABV)' },
-];
-
-let shuffledWines = [];
-
-function shuffleWines() {
-  const arr = [...getWines()];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr.slice(0, 4);
-}
-
-function getWines() { return document.documentElement.lang === 'en' ? winesEn : wines; }
-
-const TYPE_BY_EMOJI = { '🥃': 'whisky', '🍺': 'beer', '🍶': 'sake', '🍸': 'gin', '🍯': 'mead' };
-
-/* Wine card photos: real bottle/glass shots from Wikimedia Commons (free licenses,
-   attribution in assets/wines/CREDITS.md). Falls back to a type image by emoji. */
-const WINE_IMG = ['kavalan','talisker10','botanist','akashi','yumeno-kankobai','ise-kadoya-ipa','haihe-gose','','','tiaodonghu-ipa','','monkey-fist-ipa','glenlivet12','','jw-black','jameson','rokudaime-yuri','chichibu-hyakka','coedo-ruri','punk-ipa'];
-wines.forEach((w, i) => { w.img = WINE_IMG[i] || ''; });
-winesEn.forEach((w, i) => { w.img = WINE_IMG[i] || ''; });
-
-function renderWines(items) {
-  const container = document.getElementById('wineCompact');
-  if (!container) return;
-  const show = items || (shuffledWines.length ? shuffledWines : (shuffledWines = shuffleWines()));
-  container.innerHTML = show.map(w => `
-    <div class="wine-mini">
-      <span class="wm-type">${w.emoji}</span>
-      ${w.img ? `<div class="wm-art"><img src="/assets/wines/${w.img}.jpg" alt="" loading="lazy" decoding="async"></div>` : ''}
-      <div class="wm-name">${w.name}</div>
-      <div class="wm-notes">${w.notes}</div>
-    </div>
-  `).join('');
-}
-
-function doShuffle() {
-  const btn = document.getElementById('wineShuffle');
-  btn.classList.add('shuffling');
-  shuffledWines = shuffleWines();
-  renderWines(shuffledWines);
-  setTimeout(() => btn.classList.remove('shuffling'), 500);
-}
-
-document.getElementById('wineShuffle').addEventListener('click', doShuffle);
-renderWines();
-
-/* ===== TECH NOTES ===== */
-const techNotes = [
-  { title:'FastAPI + PostgreSQL 性能调优：索引策略与连接池优化', summary:'从索引设计、查询优化和连接池配置三个维度，拆解 FastAPI 项目中 PostgreSQL 性能调优的实战经验。', url:'/blog/blog-1.html', date:'2026-07-05', tags:['FastAPI','PostgreSQL','性能'] },
-  { title:'个人站上 Cloudflare Pages：网络路径与 SPA 回退配置', summary:'从 GitHub Pages 迁到 Cloudflare Pages 的网络观察——Anycast 边缘节点、大陆可达性，以及 _redirects/_headers 里值得抄的两条静态站配置。', url:'/blog/blog-33.html', date:'2026-04-08', tags:['DevOps','建站','网络'] },
-  { title:'断线重连策略：从 3 秒轮询到指数退避', summary:'固定间隔重连为何伤害服务器；带抖动的指数退避公式、应用层心跳和 visibilitychange 处理——来自实时仪表盘的踩坑实录。', url:'/blog/blog-31.html', date:'2025-08-25', tags:['WebSocket','前端','网络'] },
-  { title:'ComfyUI 本地部署：国内网络下的镜像源与模型复用', summary:'多 Python 与 CUDA torch 对齐、torchaudio DLL 兼容、Gitee 镜像与清华源，以及模型下载的格式陷阱与秋叶包复用。', url:'/blog/blog-32.html', date:'2025-07-08', tags:['ComfyUI','AI','工具'] },
-];
-
-const techNotesEn = [
-  { title:'FastAPI + PostgreSQL Performance: Indexing & Connection Pooling', summary:'Deep dive into PostgreSQL performance tuning for FastAPI — index design, query optimization, and connection pool configuration from real project experience.', url:'/blog/blog-1.html', date:'2026-07-05', tags:['FastAPI','PostgreSQL','Perf'] },
-  { title:'Moving to Cloudflare Pages: Network Path & SPA Fallback', summary:'From GitHub Pages to Cloudflare Pages — Anycast edges, mainland reachability, and two static-site configs worth stealing from _redirects/_headers.', url:'/blog/blog-33.html', date:'2026-04-08', tags:['DevOps','Hosting','Network'] },
-  { title:'Reconnect Strategy: From 3s Polling to Exponential Backoff', summary:'Why fixed-interval reconnects hurt your server; a jittered exponential backoff, app-level heartbeat, and visibilitychange handling from a live dashboard.', url:'/blog/blog-31.html', date:'2025-08-25', tags:['WebSocket','Frontend','Network'] },
-  { title:'ComfyUI on a Budget GPU: Mirrors & Model Reuse in China', summary:'Aligning multiple Pythons with CUDA torch, torchaudio DLL fixes, Gitee/tuna mirrors, and the model-format traps behind hf-mirror and ModelScope.', url:'/blog/blog-32.html', date:'2025-07-08', tags:['ComfyUI','AI','Tools'] },
-];
-
-function renderTechNotes() {
-  const container = document.getElementById('blogFeatured');
-  if (!container) return;
-  const notes = document.documentElement.lang === 'en' ? techNotesEn : techNotes;
-  container.innerHTML = notes.map((n, i) => `
-    <a class="technote-item" href="${n.url}" style="animation: fadeUp 0.4s ease ${i*0.08}s both;">
-      <div class="technote-title">${n.title}</div>
-      <div class="technote-summary">${n.summary}</div>
-      <div class="technote-meta">
-        <span class="technote-date">${n.date}</span>
-        ${n.tags.map(t => `<span class="tag" style="font-size:10px;padding:3px 9px">${t}</span>`).join(' ')}
-        <span class="technote-arrow">→</span>
-      </div>
-    </a>
-  `).join('');
-}
-renderTechNotes();
-
 /* ===== FADE UP ANIMATION ===== */
 const style = document.createElement('style');
 style.textContent = '@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }';
@@ -896,243 +425,7 @@ document.head.appendChild(style);
     }
   });
 })();
-
-/* ===== 旋转转盘引擎（v5）=====
-   整块页面绕左上角旋转切换；Q 弹由 CSS transition 的过冲缓动实现。 */
-(function () {
-  var stage = document.getElementById('hscroll');
-  if (!stage) return;
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-
-  var bar = document.getElementById('hProgress');
-  var panels = Array.prototype.slice.call(stage.querySelectorAll('.panel'));
-  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.header-nav a'));
-  if (!panels.length) return;
-
-  var isMobile = function () { return window.innerWidth <= 768; };
-  var N = panels.length;
-  var STEP_DEG = 90;                            // 每次转 90°（用户指定，不再按面板数平分）
-  var STEP_RAD = STEP_DEG * Math.PI / 180;
-  var turn = 0;                                 // 累计步数，不设上下限 -> 可无限循环
-  var acc = 0, lastWheelTs = 0, animating = false;
-  var lockTimer = null;
-  var WHEEL_THRESHOLD = 22, WHEEL_GAP_MS = 200, LOCK_MS = 700;
-
-  function mod(n, m) { return ((n % m) + m) % m; }
-  function curIndex() { return mod(turn, N); }
-
-  // 把每张面板摆到圆弧上并预旋转，使盘面转到正位时它刚好水平
-  function layout() {
-    var W = window.innerWidth, H = window.innerHeight;
-    var R = Math.hypot(W * 0.5, H * 0.5);        // 面板中心到左上角的距离
-    var PHI0 = Math.atan2(H * 0.5, W * 0.5);     // 第 0 张的基准角
-    panels.forEach(function (p, i) {
-      var ang = PHI0 - i * STEP_RAD;
-      p.style.left = (R * Math.cos(ang) - W * 0.5).toFixed(1) + 'px';
-      p.style.top  = (R * Math.sin(ang) - H * 0.5).toFixed(1) + 'px';
-      p.style.setProperty('--prot', (-i * STEP_DEG).toFixed(2) + 'deg');
-    });
-  }
-
-  function markActive() {
-    var ci = curIndex();
-    panels.forEach(function (p, i) { p.classList.toggle('is-active', i === ci); });
-    navLinks.forEach(function (a) {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + panels[ci].id);
-    });
-    if (bar) bar.style.width = (N > 1 ? (ci / (N - 1) * 100) : 0).toFixed(2) + '%';
-  }
-
-  function applyTurn(instant) {
-    if (instant) {
-      stage.classList.add('no-anim');
-      stage.style.transform = 'rotate(' + (turn * STEP_DEG).toFixed(2) + 'deg)';
-      void stage.offsetWidth;
-      stage.classList.remove('no-anim');
-    } else {
-      stage.style.transform = 'rotate(' + (turn * STEP_DEG).toFixed(2) + 'deg)';
-    }
-    markActive();
-    animating = true;
-    clearTimeout(lockTimer);
-    lockTimer = setTimeout(function () { animating = false; }, instant ? 60 : LOCK_MS);
-  }
-
-  // 顺序翻一屏（滚轮 / 方向键）：步数累加，转满一圈自然回到开头
-  function stepBy(delta, instant) {
-    turn += delta;
-    applyTurn(instant);
-  }
-
-  // 跳到指定面板：走最短路径（可能是倒着转）
-  function goToIndex(target, instant) {
-    target = mod(target, N);
-    var diff = target - curIndex();
-    if (diff > N / 2) diff -= N;
-    if (diff < -N / 2) diff += N;
-    if (diff === 0 && !instant) return;
-    turn += diff;
-    applyTurn(instant);
-  }
-
-  stage.addEventListener('wheel', function (e) {
-    if (isMobile() || e.ctrlKey) return;
-    var d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-    if (!d) return;
-    e.preventDefault();
-    if (animating) { acc = 0; return; }
-    var now = Date.now();
-    if (now - lastWheelTs > WHEEL_GAP_MS) acc = 0;
-    lastWheelTs = now; acc += d;
-    if (Math.abs(acc) < WHEEL_THRESHOLD) return;
-    var dir = acc > 0 ? 1 : -1; acc = 0;
-    stepBy(dir);
-  }, { passive: false });
-
-  window.addEventListener('keydown', function (e) {
-    if (isMobile()) return;
-    var k = e.key;
-    if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || k === ' ') { e.preventDefault(); stepBy(1); }
-    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); stepBy(-1); }
-    else if (k === 'Home') { e.preventDefault(); goToIndex(0); }
-    else if (k === 'End') { e.preventDefault(); goToIndex(N - 1); }
-  });
-
-  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-    a.addEventListener('click', function (ev) {
-      if (isMobile()) return;
-      var id = a.getAttribute('href');
-      if (!id || id === '#') return;
-      var el = document.querySelector(id);
-      var panel = el && el.closest ? el.closest('.panel') : null;
-      if (!panel) return;
-      ev.preventDefault();
-      goToIndex(panels.indexOf(panel));
-      history.replaceState(null, '', id);
-    });
-  });
-
-  window.addEventListener('resize', function () { layout(); applyTurn(true); });
-
-  var initIdx = 0;
-  if (location.hash) {
-    var hEl = document.querySelector(location.hash);
-    var hPanel = hEl && hEl.closest ? hEl.closest('.panel') : null;
-    if (hPanel) initIdx = panels.indexOf(hPanel);
-  }
-
-  window.__hs = {
-    get turn() { return turn; }, get current() { return curIndex(); },
-    get animating() { return animating; }, get step() { return STEP_DEG; },
-    stepBy: stepBy, go: goToIndex, applyTurn: applyTurn,
-    panels: panels, stage: stage, layout: layout
-  };
-
-  layout();
-  goToIndex(initIdx, true);
-  window.addEventListener('load', function () { layout(); goToIndex(initIdx, true); });
-})();
-
-/* -------- 以下动效 / 配色与 v4 完全一致（直接从 v4 引擎里截取复用）-------- */
-/* ===== 博客面板：掉落字符 ===== */
-(function () {
-  var host = document.querySelector('.fx-chars');
-  if (!host) return;
-  var glyphs = '01{}/<>*#_$=+;:[]()'.split('');
-  for (var i = 0; i < 26; i++) {
-    var s = document.createElement('span');
-    s.textContent = glyphs[(Math.random() * glyphs.length) | 0];
-    s.style.left = (Math.random() * 100).toFixed(1) + '%';
-    s.style.animationDuration = (5.5 + Math.random() * 5).toFixed(1) + 's';
-    s.style.animationDelay = (-Math.random() * 9).toFixed(1) + 's';
-    s.style.fontSize = (10 + Math.random() * 6).toFixed(0) + 'px';
-    host.appendChild(s);
-  }
-})();
-
-/* ===== 联系面板：咖啡杯 / 外带杯 / 外卖袋掉落（尺寸偏大）===== */
-(function () {
-  var host = document.querySelector('.fx-coffee');
-  if (!host) return;
-  var svgs = document.querySelectorAll('#fx-coffee-src svg');
-  if (!svgs.length) return;
-  var LABELS = ['生椰拿铁', '玛奇朵', '冷萃', '澳白', '美式'];
-  for (var i = 0; i < 14; i++) {
-    var wrapEl = document.createElement('span');
-    wrapEl.className = 'fx-drop';
-    var tint = ['o1', 'o2', 'o3'][i % 3];
-    wrapEl.classList.add(tint);
-    var size = 46 + Math.round(Math.random() * 46);      // 46 - 92px，明显大于字符动效
-    wrapEl.style.width = size + 'px';
-    wrapEl.style.height = size + 'px';
-    wrapEl.style.left = (Math.random() * 96).toFixed(1) + '%';
-    wrapEl.style.animationDuration = (9 + Math.random() * 8).toFixed(1) + 's';
-    wrapEl.style.animationDelay = (-Math.random() * 14).toFixed(1) + 's';
-    wrapEl.appendChild(svgs[i % svgs.length].cloneNode(true));
-    if (i % 4 === 0) {
-      var lb = document.createElement('em');
-      lb.className = 'fx-drop-label';
-      lb.textContent = LABELS[(Math.random() * LABELS.length) | 0];
-      wrapEl.appendChild(lb);
-    }
-    host.appendChild(wrapEl);
-  }
-})();
-
-/* ===== 配色切换：强调色 + 背景色一起换 ===== */
-(function () {
-  var host = document.getElementById('accentPicker');
-  if (!host) return;
-  var THEMES = [
-    { id: 'amber',  name: '琥珀金', main: '#d4a040', hover: '#e8c060', rgb: '212,160,64',
-      bg: '#1a1210', elev: '#241c16', card: '#2a1f18', border: '196,156,88' },
-    { id: 'copper', name: '铜色',   main: '#c07a45', hover: '#d89158', rgb: '192,122,69',
-      bg: '#171310', elev: '#221c17', card: '#29211a', border: '186,132,86' },
-    { id: 'terra',  name: '赤陶红', main: '#c2603f', hover: '#d97a56', rgb: '194,96,63',
-      bg: '#1a1211', elev: '#251a18', card: '#2c201c', border: '188,108,80' },
-    { id: 'wine',   name: '酒红',   main: '#b05563', hover: '#c76e7a', rgb: '176,85,99',
-      bg: '#181114', elev: '#231a1e', card: '#2a2024', border: '180,100,112' },
-    { id: 'teal',   name: '青绿',   main: '#4f9d8c', hover: '#66b8a6', rgb: '79,157,140',
-      bg: '#0f1614', elev: '#16211e', card: '#1c2724', border: '96,158,144' }
-  ];
-  var root = document.documentElement;
-
-  function apply(t) {
-    root.style.setProperty('--blue', t.main);
-    root.style.setProperty('--blue-hover', t.hover);
-    root.style.setProperty('--blue-bg', 'rgba(' + t.rgb + ',0.10)');
-    root.style.setProperty('--amber', t.hover);
-    root.style.setProperty('--amber-bg', 'rgba(' + t.rgb + ',0.08)');
-    root.style.setProperty('--accent-glow', 'rgba(' + t.rgb + ',0.35)');
-    /* 背景与卡片一起换色，整站色调才真的跟着变 */
-    root.style.setProperty('--bg', t.bg);
-    root.style.setProperty('--bg-elevated', t.elev);
-    root.style.setProperty('--bg-card', t.card);
-    root.style.setProperty('--border', 'rgba(' + t.border + ',0.14)');
-    root.style.setProperty('--border-hover', 'rgba(' + t.rgb + ',0.34)');
-    root.setAttribute('data-accent', t.id);
-    try { localStorage.setItem('accent', t.id); } catch (e) {}
-    Array.prototype.forEach.call(host.children, function (b) {
-      b.classList.toggle('on', b.getAttribute('data-id') === t.id);
-    });
-  }
-
-  THEMES.forEach(function (t) {
-    var b = document.createElement('button');
-    b.className = 'accent-dot';
-    b.setAttribute('data-id', t.id);
-    b.title = t.name;
-    b.style.background = t.main;
-    b.addEventListener('click', function () { apply(t); });
-    host.appendChild(b);
-  });
-
-  var saved = null;
-  try { saved = localStorage.getItem('accent'); } catch (e) {}
-  var found = THEMES.filter(function (t) { return t.id === saved; })[0];
-  if (found) apply(found);
-})();
-
 </script>
+
 </body>
 </html>
