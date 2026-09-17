@@ -83,6 +83,36 @@
 </header>
 
 <!-- ===== HERO ===== -->
+<!-- 左侧随动齿轮（随转盘转动） -->
+<div class="gear-wrap" id="gearWrap" aria-hidden="true">
+  <svg viewBox="0 0 120 120">
+    <g class="gear-rot" id="gearRot">
+      <g class="gear-main">
+        <rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(0 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(45 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(90 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(135 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(180 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(225 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(270 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(315 60 60)"/>
+        <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="7"/>
+        <circle cx="60" cy="60" r="14" fill="none" stroke="currentColor" stroke-width="5"/>
+      </g>
+    </g>
+    <g class="gear-rot" id="gearSub" style="transform-origin: 90px 90px">
+      <g class="gear-sub">
+        <rect x="83" y="76" width="5" height="9" rx="1.5" fill="currentColor" transform="rotate(0 90 90)"/><rect x="83" y="76" width="5" height="9" rx="1.5" fill="currentColor" transform="rotate(60 90 90)"/><rect x="83" y="76" width="5" height="9" rx="1.5" fill="currentColor" transform="rotate(120 90 90)"/><rect x="83" y="76" width="5" height="9" rx="1.5" fill="currentColor" transform="rotate(180 90 90)"/><rect x="83" y="76" width="5" height="9" rx="1.5" fill="currentColor" transform="rotate(240 90 90)"/><rect x="83" y="76" width="5" height="9" rx="1.5" fill="currentColor" transform="rotate(300 90 90)"/>
+        <circle cx="90" cy="90" r="15" fill="none" stroke="currentColor" stroke-width="4"/>
+      </g>
+    </g>
+    <circle class="gear-hub" cx="60" cy="60" r="5.5"/>
+  </svg>
+</div>
+
+<!-- 手机首屏提示：手掌 + 滑动指示 -->
+<div class="mobile-hint" id="mobileHint" aria-hidden="true">
+  <span class="hint-swipe">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path class="palm" d="M9 11V5.6a1.4 1.4 0 0 1 2.8 0V10m0-.4V4.6a1.4 1.4 0 0 1 2.8 0V10m0-.6V5.6a1.4 1.4 0 0 1 2.8 0v6.9c0 3.5-2.3 6.5-5.6 6.5S7.4 16.1 7.4 13v-2.4a1.4 1.4 0 0 1 2.8 0"/>
+    </svg>
+  </span>
+  <span class="hint-text" data-en="Swipe to turn the dial">滑动转动转盘</span>
+</div>
+
 <div class="hscroll-progress" id="hProgress" aria-hidden="true"></div>
 
 <div class="accent-picker" id="accentPicker" role="group" aria-label="配色切换"></div>
@@ -318,6 +348,8 @@
 
 <!-- ===== LIFESTYLE (Wine + Esports merged) ===== -->
 <section class="panel" id="games" data-idx="05 / GAMES">
+    <div class="panel-fx" aria-hidden="true"><span class="fx-star"></span><span class="fx-star"></span><span class="fx-star"></span><span class="fx-star"></span><span class="fx-star"></span><span class="fx-star"></span><span class="fx-shell"></span><span class="fx-shell"></span><span class="fx-torpedo"></span><span class="fx-torpedo"></span></div>
+
   <div class="container">
     <div class="section-header">
       <div class="section-label">Play</div>
@@ -469,12 +501,10 @@
   </div>
 </footer>
 
-</main>
-
 <div id="fx-coffee-src" hidden aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h12v5.5A5.5 5.5 0 0 1 10.5 20h-1A5.5 5.5 0 0 1 4 14.5V9z"/><path d="M16 10.5h1.8a2.8 2.8 0 0 1 0 5.6H16"/><path d="M7.5 3.5c-.8 1 .8 1.6 0 2.6M11.5 3.5c-.8 1 .8 1.6 0 2.6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 8h11l-1.2 12.2a1 1 0 0 1-1 .8H8.7a1 1 0 0 1-1-.8L6.5 8z"/><path d="M5 5.2h14L18 8H6L5 5.2z"/><path d="M10 12.5h4"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8h15l-1.4 12.2a1 1 0 0 1-1 .8H6.9a1 1 0 0 1-1-.8L4.5 8z"/><path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2"/></svg></div>
 
 <!-- Scroll to top -->
-<button class="scroll-top" id="scrollTop" title="回到开头">←</button>
+<button class="scroll-top" id="scrollTop" title="回到顶部">↑</button>
 
 <script>
 /* ===== SCROLL TO TOP ===== */
@@ -1050,14 +1080,15 @@ document.head.appendChild(style);
 (function () {
   var host = document.querySelector('.fx-chars');
   if (!host) return;
-  var glyphs = '01{}/<>*#_$=+;:[]()'.split('');
-  for (var i = 0; i < 26; i++) {
+  var glyphs = '01{}/<>*#_$=+;:[]()|\\'.split('');
+  for (var i = 0; i < 46; i++) {
     var s = document.createElement('span');
     s.textContent = glyphs[(Math.random() * glyphs.length) | 0];
     s.style.left = (Math.random() * 100).toFixed(1) + '%';
-    s.style.animationDuration = (5.5 + Math.random() * 5).toFixed(1) + 's';
-    s.style.animationDelay = (-Math.random() * 9).toFixed(1) + 's';
-    s.style.fontSize = (10 + Math.random() * 6).toFixed(0) + 'px';
+    s.style.animationDuration = (6 + Math.random() * 6).toFixed(1) + 's';
+    s.style.animationDelay = (-Math.random() * 11).toFixed(1) + 's';
+    s.style.fontSize = (7 + Math.random() * 4).toFixed(0) + 'px';   /* 比之前更小 */
+    if (i % 6 === 0) s.className = 'lead';
     host.appendChild(s);
   }
 })();
@@ -1068,7 +1099,6 @@ document.head.appendChild(style);
   if (!host) return;
   var svgs = document.querySelectorAll('#fx-coffee-src svg');
   if (!svgs.length) return;
-  var LABELS = ['生椰拿铁', '玛奇朵', '冷萃', '澳白', '美式'];
   for (var i = 0; i < 14; i++) {
     var wrapEl = document.createElement('span');
     wrapEl.className = 'fx-drop';
@@ -1081,12 +1111,6 @@ document.head.appendChild(style);
     wrapEl.style.animationDuration = (9 + Math.random() * 8).toFixed(1) + 's';
     wrapEl.style.animationDelay = (-Math.random() * 14).toFixed(1) + 's';
     wrapEl.appendChild(svgs[i % svgs.length].cloneNode(true));
-    if (i % 4 === 0) {
-      var lb = document.createElement('em');
-      lb.className = 'fx-drop-label';
-      lb.textContent = LABELS[(Math.random() * LABELS.length) | 0];
-      wrapEl.appendChild(lb);
-    }
     host.appendChild(wrapEl);
   }
 })();

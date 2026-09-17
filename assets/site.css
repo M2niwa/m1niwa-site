@@ -1101,26 +1101,31 @@ body.hscroll-body { overflow: hidden; height: 100vh; }
 .panel.is-active .panel-fx * { animation-play-state: running; }
 
 /* --- 博客：掉落字符 --- */
+/* --- 博客：黑客帝国式字符雨 --- */
 .fx-chars span {
   position: absolute; top: -30px;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  color: var(--blue); opacity: 0;
+  color: #56d364;                        /* 矩阵绿 */
+  opacity: 0;
+  text-shadow: 0 0 8px rgba(86, 211, 100, 0.55);
   animation-name: charFall; animation-timing-function: linear; animation-iteration-count: infinite;
 }
+.fx-chars span.lead { color: #b7f7bf; }  /* 每列最前那个更亮，像矩阵里的"头部" */
 @keyframes charFall {
-  0% { transform: translateY(0); opacity: 0; }
-  12% { opacity: 0.5; } 80% { opacity: 0.32; }
+  0%   { transform: translateY(-10px); opacity: 0; }
+  6%   { opacity: 0.95; }
+  75%  { opacity: 0.6; }
   100% { transform: translateY(105vh); opacity: 0; }
 }
 
 /* --- 项目：电流延展 --- */
 .fx-current {
-  position: absolute; left: -25%; top: 50%; width: 22%; height: 1.5px;
+  position: absolute; left: -25%; top: 50%; width: 22%; height: 3px;
   background: linear-gradient(90deg, transparent, var(--blue), transparent);
-  box-shadow: 0 0 14px var(--accent-glow, rgba(212,160,64,0.5));
+  box-shadow: 0 0 22px var(--accent-glow, rgba(212,160,64,0.65));
   animation: currentRun 3.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
-.fx-current.d2 { top: 62%; animation-delay: 1.7s; height: 1px; opacity: 0.7; }
+.fx-current.d2 { top: 62%; animation-delay: 1.7s; height: 2px; opacity: 0.75; }
 @keyframes currentRun {
   0% { left: -25%; width: 18%; opacity: 0; }
   12% { opacity: 1; } 70% { width: 78%; opacity: 1; }
@@ -1196,13 +1201,6 @@ body.hscroll-body { overflow: hidden; height: 100vh; }
   animation-name: coffeeFall; animation-timing-function: linear; animation-iteration-count: infinite;
 }
 .fx-drop svg { width: 100%; height: 100%; }
-.fx-drop .fx-drop-label {
-  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-  margin-top: 3px; white-space: nowrap;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10px; font-style: normal; letter-spacing: 0.06em;
-  color: var(--text-tertiary); opacity: 0.75;
-}
 .fx-drop.o1 { color: #c07a45; }
 .fx-drop.o2 { color: #a8624a; }
 .fx-drop.o3 { color: #8d7a5c; }
@@ -1320,7 +1318,11 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
     transform: none !important; padding: 84px 24px 56px;
   }
   .rotate-stage .panel::after { display: none; }
+  /* 手机上转盘退化成普通纵向滚动，所有面板都必须可见，
+     否则滚到的那一屏是 opacity:0 的空白 */
+  .rotate-stage .panel { opacity: 1 !important; pointer-events: auto !important; }
   .rotate-progress { display: none; }
+  .gear-wrap, .mobile-hint { display: none !important; }
 }
 
 /* ===== 语言开关（移到 header 右侧后）===== */
@@ -1331,6 +1333,92 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
 @media (max-width: 768px) {
   .header-lang .lang-option { padding: 3px 9px; font-size: 11.5px; }
   .header-social .header-lang { margin-right: 0; }
+}
+
+/* ===== 左侧随动齿轮 ===== */
+.gear-wrap {
+  position: fixed; left: -34px; top: 50%;
+  width: 168px; height: 168px;
+  margin-top: -84px;
+  z-index: 4; pointer-events: none;
+  opacity: 0.55;
+}
+.gear-wrap svg { width: 100%; height: 100%; display: block; }
+.gear-wrap .gear-rot { transform-origin: 50% 50%; transition: transform 0.66s cubic-bezier(0.34, 1.42, 0.44, 1); }
+.gear-wrap .gear-main { color: var(--blue); opacity: 0.26; }
+.gear-wrap .gear-sub { color: var(--text-tertiary); opacity: 0.22; }
+.gear-wrap .gear-hub { color: var(--blue); opacity: 0.34; }
+
+/* ===== 手机首屏提示（箭头 + 手掌）===== */
+.mobile-hint {
+  position: fixed; left: 50%; bottom: 15vh;
+  transform: translateX(-50%);
+  z-index: 210; pointer-events: none;
+  display: none; align-items: center; gap: 14px;
+  padding: 12px 18px;
+  background: color-mix(in srgb, var(--bg-card) 88%, transparent);
+  border: 1px solid var(--border); border-radius: 999px;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+}
+.mobile-hint.show { display: flex; animation: hintIn 0.45s var(--ease) both; }
+.mobile-hint.hide { animation: hintOut 0.5s var(--ease) both; }
+.mobile-hint .hint-swipe {
+  width: 34px; height: 34px; flex: 0 0 auto;
+  display: grid; place-items: center;
+  color: var(--blue);
+}
+.mobile-hint .hint-swipe svg { width: 100%; height: 100%; }
+.mobile-hint .hint-swipe .palm { animation: hintSwipe 1.9s ease-in-out infinite; }
+.mobile-hint .hint-text {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.03em;
+  color: var(--text-secondary); white-space: nowrap;
+}
+@keyframes hintIn  { from { opacity: 0; transform: translateX(-50%) translateY(12px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes hintOut { from { opacity: 1; } to { opacity: 0; transform: translateX(-50%) translateY(10px); } }
+@keyframes hintSwipe {
+  0%, 100% { transform: translate(-5px, 0); opacity: 0.55; }
+  50%      { transform: translate(5px, 0); opacity: 1; }
+}
+
+/* ===== 小游戏：星尘 / 炮弹 / 鱼雷 ===== */
+.fx-star {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--blue); box-shadow: 0 0 8px var(--accent-glow, rgba(212,160,64,0.6));
+  opacity: 0; animation: starTwinkle 3.2s ease-in-out infinite;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  45%      { opacity: 0.85; transform: scale(1.25); }
+}
+.fx-shell, .fx-torpedo {
+  position: absolute; height: 2px; border-radius: 2px;
+  opacity: 0; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+.fx-shell {
+  width: 74px;
+  background: linear-gradient(90deg, rgba(0,0,0,0), var(--blue));
+  box-shadow: 0 0 12px var(--accent-glow, rgba(212,160,64,0.7));
+  animation-name: shellFly;
+}
+.fx-torpedo {
+  width: 54px; height: 3px;
+  background: linear-gradient(270deg, rgba(0,0,0,0), #56a9d3);
+  box-shadow: 0 0 12px rgba(86, 169, 211, 0.6);
+  animation-name: torpedoFly;
+}
+@keyframes shellFly {
+  0%   { transform: translateX(-10vw) translateY(0); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateX(110vw) translateY(-3vh); opacity: 0; }
+}
+@keyframes torpedoFly {
+  0%   { transform: translateX(110vw) translateY(0); opacity: 0; }
+  8%   { opacity: 0.9; }
+  92%  { opacity: 0.9; }
+  100% { transform: translateX(-10vw) translateY(2vh); opacity: 0; }
 }
 
 /* ===== 浅色主题覆盖（body.is-light）===== */
