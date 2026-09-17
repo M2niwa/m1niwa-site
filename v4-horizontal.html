@@ -30,7 +30,7 @@
 </script>
 <link rel="stylesheet" href="/assets/site.css">
 </head>
-<body class="hscroll-body">
+<body class="hscroll-body is-light">
 
 <a class="skip-link" href="#skills" data-en="Skip to content">跳到主要内容</a>
 
@@ -65,7 +65,7 @@
       <a href="#projects" data-en="Projects">项目</a>
       <a href="/games.html" data-en="Games">游戏</a>
       <a href="#lifestyle" data-en="Lifestyle">兴趣</a>
-      <a href="/diy.html" data-en="DIY">DIY</a>
+      <a href="#diy" data-en="DIY">DIY</a>
       <a href="#contact" data-en="Contact">联系</a>
     </nav>
     <div class="header-social">
@@ -114,8 +114,6 @@
 </div>
 
 <div class="hscroll-progress" id="hProgress" aria-hidden="true"></div>
-
-<div class="accent-picker" id="accentPicker" role="group" aria-label="配色切换"></div>
 
 <main class="hscroll" id="hscroll">
 
@@ -450,7 +448,7 @@
       <div class="line" style="margin-top:12px"><span class="prompt">root@workshop:~$</span> <span class="cmd">_</span><span class="cursor">█</span></div>
     </div>
   </div>
-    <a class="panel-more" href="/diy.html"><span data-en="Full DIY log">看完整 DIY 日志</span> <span aria-hidden="true">→</span></a>
+    <a class="panel-more" href="#diy"><span data-en="Full DIY log">看完整 DIY 日志</span> <span aria-hidden="true">→</span></a>
   </section>
 
 <section class="panel" id="contact" data-idx="08 / CONTACT">
@@ -926,6 +924,8 @@ document.head.appendChild(style);
       pointer.style.setProperty('--w', '');
       pointer.style.setProperty('--h', '');
     }
+  });
+})();
 
 /* ===== HORIZONTAL SCROLL ENGINE — 一次滚轮 = 翻一屏 =====
    动画走浏览器原生 smooth scroll；不用 rAF（标签页不可见时 rAF 会被暂停，
@@ -1115,75 +1115,7 @@ document.head.appendChild(style);
   }
 })();
 
-/* ===== 配色切换：强调色 + 背景色一起换 ===== */
-(function () {
-  var host = document.getElementById('accentPicker');
-  if (!host) return;
-  var THEMES = [
-    /* 背景整体提亮一档（原先偏黑，观感发闷）；每个主题仍保持各自的色调倾向 */
-    { id: 'amber',  name: '琥珀金', main: '#d4a040', hover: '#e8c060', rgb: '212,160,64',
-      bg: '#2a1e18', elev: '#362921', card: '#3f3128', border: '214,176,110', text: '#f6ecda',
-      tw: '#c9b193', tg: '#a8906f' },
-    { id: 'copper', name: '铜色',   main: '#c07a45', hover: '#d89158', rgb: '192,122,69',
-      bg: '#262019', elev: '#332b23', card: '#3c332a', border: '206,162,116', text: '#f5ecdf',
-      tw: '#c6b096', tg: '#a38d72' },
-    { id: 'terra',  name: '赤陶红', main: '#c2603f', hover: '#d97a56', rgb: '194,96,63',
-      bg: '#2a1e1c', elev: '#372926', card: '#402f2b', border: '212,150,122', text: '#f7ebe5',
-      tw: '#cbada2', tg: '#a88b7e' },
-    { id: 'wine',   name: '酒红',   main: '#b05563', hover: '#c76e7a', rgb: '176,85,99',
-      bg: '#282024', elev: '#352a2f', card: '#3d3036', border: '206,152,162', text: '#f6e9ec',
-      tw: '#c8adb4', tg: '#a48b92' },
-    { id: 'teal',   name: '青绿',   main: '#4f9d8c', hover: '#66b8a6', rgb: '79,157,140',
-      bg: '#1e2b28', elev: '#263633', card: '#2e403c', border: '138,196,182', text: '#e9f4f1',
-      tw: '#a9c8c1', tg: '#89a8a1' },
-    /* 浅色主题：奶油底 + 深棕字，属于"明亮"那一档 */
-    { id: 'light',  name: '明亮（浅色）', main: '#a8761f', hover: '#8d6116', rgb: '168,118,31',
-      bg: '#f7f1e7', elev: '#fffbf4', card: '#ffffff', border: '150,118,72', text: '#2c2118',
-      tw: '#6d5c4a', tg: '#9b8a76', light: true }
-  ];
-  var root = document.documentElement;
-
-  function apply(t) {
-    root.style.setProperty('--blue', t.main);
-    root.style.setProperty('--blue-hover', t.hover);
-    root.style.setProperty('--blue-bg', 'rgba(' + t.rgb + ',0.10)');
-    root.style.setProperty('--amber', t.hover);
-    root.style.setProperty('--amber-bg', 'rgba(' + t.rgb + ',0.08)');
-    root.style.setProperty('--accent-glow', 'rgba(' + t.rgb + ',0.35)');
-    /* 背景与卡片一起换色，整站色调才真的跟着变 */
-    root.style.setProperty('--bg', t.bg);
-    root.style.setProperty('--bg-elevated', t.elev);
-    root.style.setProperty('--bg-card', t.card);
-    root.style.setProperty('--border', 'rgba(' + t.border + ',0.16)');
-    root.style.setProperty('--border-hover', 'rgba(' + t.rgb + ',0.42)');
-    if (t.text) root.style.setProperty('--text', t.text);
-    if (t.tw) root.style.setProperty('--text-secondary', t.tw);
-    if (t.tg) root.style.setProperty('--text-tertiary', t.tg);
-    root.setAttribute('data-accent', t.id);
-    document.body.classList.toggle('is-light', !!t.light);
-    try { localStorage.setItem('accent', t.id); } catch (e) {}
-    Array.prototype.forEach.call(host.children, function (b) {
-      b.classList.toggle('on', b.getAttribute('data-id') === t.id);
-    });
-  }
-
-  THEMES.forEach(function (t) {
-    var b = document.createElement('button');
-    b.className = 'accent-dot';
-    b.setAttribute('data-id', t.id);
-    b.title = t.name;
-    b.style.background = t.main;
-    b.addEventListener('click', function () { apply(t); });
-    host.appendChild(b);
-  });
-
-  var saved = null;
-  try { saved = localStorage.getItem('accent'); } catch (e) {}
-  /* 默认用浅色（奶油底）；用户点过其它主题则沿用他的选择 */
-  var found = THEMES.filter(function (t) { return t.id === saved; })[0]
-           || THEMES.filter(function (t) { return t.id === 'light'; })[0];
-  if (found) apply(found);
-})();
+/* 配色切换器已移除：主题固定为浅色（奶油底），变量写在 CSS 的 :root 里 */
 </script>
 </body>
 </html>

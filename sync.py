@@ -32,7 +32,6 @@ PAGES = [
     "versions.html",
     "skills.html",
     "games.html",
-    "diy.html",
     "game.html",
 ]
 

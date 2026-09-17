@@ -29,7 +29,7 @@
       <a href="/skills.html">技能</a>
       <a href="/blog/">博客</a>
       <a href="/games.html">游戏</a>
-      <a href="/diy.html">DIY</a>
+      <a href="#diy">DIY</a>
     </nav>
     <div class="header-social">
       <div class="lang-switch-wrap header-lang">
@@ -111,7 +111,7 @@
   </a>
       </div>
       <div class="gallery-note">
-        <strong>关于这次重构：</strong>原来 8 个板块在同一页里纵向堆叠，其中 5 个是「标题 + 描述 + 网格」的同一套骨架，所以读起来像瀑布。现在把「技能全表 / 小游戏 / DIY 日志」三块拆成了独立页面（<a href="/skills.html">/skills.html</a>、<a href="/games.html">/games.html</a>、<a href="/diy.html">/diy.html</a> 三个版本的入口都能到），首页只保留导航中枢 + 精选内容，简历独立成区并放到联系方式之前。<br><br>
+        <strong>关于这次重构：</strong>原来 8 个板块在同一页里纵向堆叠，其中 5 个是「标题 + 描述 + 网格」的同一套骨架，所以读起来像瀑布。现在把「技能全表 / 小游戏 / DIY 日志」三块拆成了独立页面（<a href="/skills.html">/skills.html</a>、<a href="/games.html">/games.html</a>、<a href="#diy">/diy.html</a> 三个版本的入口都能到），首页只保留导航中枢 + 精选内容，简历独立成区并放到联系方式之前。<br><br>
         另外修掉了一个一直存在的 bug：页面里的字体 <code>&lt;link&gt;</code> 标签嵌套了另一个 link，导致 JetBrains Mono 的 @font-face 实际从未生效，现在已经修正并用上了真正的等宽字体。
       </div>
     </div>
@@ -425,6 +425,8 @@ document.head.appendChild(style);
       pointer.style.setProperty('--w', '');
       pointer.style.setProperty('--h', '');
     }
+  });
+})();
 </script>
 
 </body>
