@@ -39,7 +39,7 @@ PAGES = [
 COPY_DIRS = ["assets", "sea-bazaar", "blog"]
 
 # 单文件同步
-COPY_FILES = ["robots.txt", "sitemap.xml", "resume.pdf", "portfolio.pdf"]
+COPY_FILES = ["robots.txt", "sitemap.xml", "portfolio.pdf"]
 
 
 def strip_dynamic(html: str) -> str:
