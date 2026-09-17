@@ -1273,3 +1273,53 @@ body.hscroll-body { overflow: hidden; height: 100vh; }
   .panel.settling-next .container, .panel.settling-prev .container { animation: none; }
   .panel-fx { display: none; }
 }
+
+/* ============================================================
+   2026-09 旋转转盘版（v5-rotate）
+   整页绕左上角旋转切换；Q 弹由 transition 过冲缓动实现
+   ============================================================ */
+
+body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
+
+.rotate-stage {
+  position: fixed; inset: 0; width: 100vw; height: 100vh;
+  transform-origin: 0 0;                       /* 左上角为旋转轴 */
+  transform: rotate(0deg);
+  transition: transform 0.66s cubic-bezier(0.34, 1.42, 0.44, 1);   /* 过冲 = Q 弹 */
+  will-change: transform;
+}
+.rotate-stage.no-anim { transition: none; }
+
+.rotate-stage .panel {
+  position: absolute;
+  width: 100vw; min-width: 0; height: 100vh;
+  left: 0; top: 0;
+  transform-origin: center center;
+  transform: rotate(var(--prot, 0deg));
+  animation: none;
+  opacity: 1;
+  z-index: 1;
+}
+.rotate-stage .panel.is-active { z-index: 3; }
+.rotate-stage .panel .container { transform: none; }
+
+.rotate-progress {
+  position: fixed; top: 64px; left: 0; height: 1.5px; width: 0;
+  background: linear-gradient(90deg, var(--blue), var(--amber));
+  z-index: 99; pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  body.rotate-body { overflow: auto; height: auto; }
+  .rotate-stage { position: static; inset: auto; transform: none !important; transition: none; height: auto; }
+  .rotate-stage .panel {
+    position: static; width: 100%; height: auto; min-height: 0;
+    transform: none !important; padding: 84px 24px 56px;
+  }
+  .rotate-stage .panel::after { display: none; }
+  .rotate-progress { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotate-stage { transition: none; }
+}
