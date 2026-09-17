@@ -78,6 +78,8 @@
 <!-- ===== HERO ===== -->
 <div class="hscroll-progress" id="hProgress" aria-hidden="true"></div>
 
+<div class="accent-picker" id="accentPicker" role="group" aria-label="配色切换"></div>
+
 <main class="hscroll" id="hscroll">
 
 <section class="panel" id="hero" data-idx="01 / START">
@@ -108,17 +110,25 @@
           <span class="tag" data-en="Docker">Docker</span>
           <span class="tag">n8n / Coze</span>
         </div>
-        <p class="hero-hint" data-en="Scroll down or press → to move right">滚轮往下滚，页面往右走 →</p>
       </div>
 
       <nav class="hero-nav" aria-label="站点导航">
-      <a class="hnav-card" href="/skills.html">
+      <a class="hnav-card" href="#skills">
         <span class="hnav-icon" aria-hidden="true">🛠</span>
         <span class="hnav-text">
           <span class="hnav-title" data-en="Skills">技能与能力</span>
           <span class="hnav-desc" data-en="Skills — AI 与深度学习 · 开发与工具 · 测试与质量">AI 与深度学习 · 开发与工具 · 测试与质量</span>
         </span>
         <span class="hnav-meta">4 groups</span>
+        <span class="hnav-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="hnav-card" href="#technotes">
+        <span class="hnav-icon" aria-hidden="true">✍</span>
+        <span class="hnav-text">
+          <span class="hnav-title" data-en="Blog">技术博客</span>
+          <span class="hnav-desc" data-en="Blog — 踩过的坑与实现笔记">踩过的坑与实现笔记</span>
+        </span>
+        <span class="hnav-meta">30 posts</span>
         <span class="hnav-arrow" aria-hidden="true">→</span>
       </a>
       <a class="hnav-card" href="#projects">
@@ -130,16 +140,7 @@
         <span class="hnav-meta">6 projects</span>
         <span class="hnav-arrow" aria-hidden="true">→</span>
       </a>
-      <a class="hnav-card" href="/blog/">
-        <span class="hnav-icon" aria-hidden="true">✍</span>
-        <span class="hnav-text">
-          <span class="hnav-title" data-en="Blog">技术博客</span>
-          <span class="hnav-desc" data-en="Blog — 踩过的坑与实现笔记">踩过的坑与实现笔记</span>
-        </span>
-        <span class="hnav-meta">30 posts</span>
-        <span class="hnav-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="hnav-card" href="/games.html">
+      <a class="hnav-card" href="#games">
         <span class="hnav-icon" aria-hidden="true">🎮</span>
         <span class="hnav-text">
           <span class="hnav-title" data-en="Games">小游戏</span>
@@ -157,7 +158,7 @@
         <span class="hnav-meta">18 bottles</span>
         <span class="hnav-arrow" aria-hidden="true">→</span>
       </a>
-      <a class="hnav-card" href="/diy.html">
+      <a class="hnav-card" href="#diy">
         <span class="hnav-icon" aria-hidden="true">🔧</span>
         <span class="hnav-text">
           <span class="hnav-title" data-en="DIY Log">DIY 日志</span>
@@ -192,7 +193,55 @@
 <!-- ===== ABOUT / SKILLS ===== -->
 
 <!-- ===== TECH BLOG ===== -->
-<section class="panel" id="technotes" data-idx="02 / BLOG">
+<section class="panel" id="skills" data-idx="02 / SKILLS">
+    <div class="panel-fx" aria-hidden="true" data-fx="bars"><span></span><span></span><span></span><span></span><span></span></div>
+
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Skills</div>
+      <h2 class="section-title" data-en="Tech Stack">技术栈与能力</h2>
+      <p class="section-desc" data-en="From deep learning to backend, from agents to hardware DIY">从深度学习到后端开发，从 Agent 构建到硬件 DIY</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title" data-en="AI & Deep Learning">AI & 深度学习</div>
+        <div class="skill-item"><span class="skill-name"data-en="CV / CV Models">CV / CV 模型</span><div class="skill-track"><div class="skill-fill" style="width:55%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Agent Development">Agent 构建</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Hermes / Agent Orchestration">Hermes / Agent 编排</span><div class="skill-track"><div class="skill-fill" style="width:40%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="LLM & LoRA">LLM / LoRA</span><div class="skill-track"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="AI Tool Integration">AI 调用工具固化</span><div class="skill-track"><div class="skill-fill" style="width:55%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="n8n / Coze / ComfyUI">n8n / Coze / ComfyUI</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="LangChain / Neo4j">LangChain / Neo4j</span><div class="skill-track"><div class="skill-fill" style="width:25%"></div></div></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title" data-en="Dev & Tools">开发 & 工具</div>
+        <div class="skill-item"><span class="skill-name"data-en="Python">Python</span><div class="skill-track"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="React">React</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Flask / FastAPI">Flask / FastAPI</span><div class="skill-track"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Docker</span><div class="skill-track"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Harness / CI-CD">Harness / CI-CD</span><div class="skill-track"><div class="skill-fill" style="width:40%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="C / C++ / Java">C / C++ / Java</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="ArkTS">ArkTS</span><div class="skill-track"><div class="skill-fill" style="width:25%"></div></div></div>
+        <div class="skill-group-title" style="margin-top:28px" data-en="Tools & Collab">工具 & 协作</div>
+        <div class="skill-item"><span class="skill-name"data-en="SVN">SVN</span><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Git / GitHub">Git / GitHub</span><div class="skill-track"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="Excel / Pivot Tables">Excel / 数据透视</span><div class="skill-track"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><span class="skill-name"data-en="SolidWorks / CAD">SolidWorks / CAD</span><div class="skill-track"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-group-title" style="margin-top:28px" data-en="Testing & QA">测试与质量</div>
+        <div class="skill-item"><span class="skill-name" data-en="pytest / unittest">pytest / unittest</span><div class="skill-track"><div class="skill-fill" style="width:50%"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-en="Postman / API Testing">Postman / API测试</span><div class="skill-track"><div class="skill-fill" style="width:55%"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-en="Selenium / Auto">Selenium / 自动化</span><div class="skill-track"><div class="skill-fill" style="width:35%"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-en="Perf Benchmarking">性能基准测试</span><div class="skill-track"><div class="skill-fill" style="width:40%"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+    <a class="panel-more" href="/skills.html"><span data-en="Full skills breakdown">看完整技能表</span> <span aria-hidden="true">→</span></a>
+  </section>
+
+<section class="panel" id="technotes" data-idx="03 / BLOG">
+    <div class="panel-fx fx-chars" aria-hidden="true" data-fx="chars"></div>
+
   <div class="container">
     <div class="section-header">
       <div class="section-label">Writing</div>
@@ -206,10 +255,14 @@
       <a href="/blog/index.html" class="blog-more-btn" data-en="View all 33 posts →">查看全部 33 篇文章 →</a>
     </div>
   </div>
-</section>
+
+    <a class="panel-more" href="/blog/"><span data-en="All 30 posts">看全部 30 篇</span> <span aria-hidden="true">→</span></a>
+  </section>
 
 <!-- ===== PROJECTS ===== -->
-<section class="panel" id="projects" data-idx="03 / PROJECTS">
+<section class="panel" id="projects" data-idx="04 / PROJECTS">
+    <div class="panel-fx" aria-hidden="true" data-fx="current"><span class="fx-current"></span><span class="fx-current d2"></span></div>
+
   <div class="container">
     <div class="section-header">
       <div class="section-label">Projects</div>
@@ -283,12 +336,49 @@
       </div>
     </div>
   </div>
-</section>
+
+    <a class="panel-more" href="/portfolio.pdf" target="_blank" rel="noopener"><span data-en="Portfolio PDF">看作品集 PDF</span> <span aria-hidden="true">→</span></a>
+  </section>
 
 <!-- ===== MINI GAMES ===== -->
 
 <!-- ===== LIFESTYLE (Wine + Esports merged) ===== -->
-<section class="panel" id="lifestyle" data-idx="04 / BEYOND WORK">
+<section class="panel" id="games" data-idx="05 / GAMES">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Play</div>
+      <h2 class="section-title" data-en="Mini Games">小游戏</h2>
+      <p class="section-desc" data-en="Browser games built for fun">纯前端小游戏，打开即玩</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>🌌 引力回响 · GRAVITY ECHO</h3>
+        <p>粒子避障射击游戏。用引力场收集能量，躲避敌舰，连击得分——Canvas 渲染，纯前端运行。</p>
+        <div class="project-tags">
+          <span class="tag">Canvas</span>
+          <span class="tag">Game</span>
+        </div>
+        <a class="project-link" href="/game.html" target="_blank">开始游戏 →</a>
+      </div>
+      <div class="project-card">
+        <h3>⚓ 沧澜废舰 · 背包乱斗</h3>
+        <p>海洋废土 Roguelike 远征：限容船舱捡垃圾、9 类事件与商人、散热/热容海战引擎、深海鱼雷拦截——纯原生 Canvas，打开即玩。</p>
+        <div class="project-tags">
+          <span class="tag">Roguelike</span>
+          <span class="tag">Canvas</span>
+          <span class="tag">原创</span>
+        </div>
+        <a class="project-link" href="/sea-bazaar/" target="_blank">起航 →</a>
+      </div>
+    </div>
+  </div>
+
+    <a class="panel-more" href="/games.html"><span data-en="All games">看全部小游戏</span> <span aria-hidden="true">→</span></a>
+  </section>
+
+<section class="panel" id="lifestyle" data-idx="06 / BEYOND WORK">
+    <div class="panel-fx" aria-hidden="true" data-fx="life"><span class="fx-bottle">🍾</span><span class="fx-glass">🥃</span><span class="fx-mouse">🖱</span><span class="fx-kbd">⌨</span><span class="fx-pad">🎮</span></div>
+
   <div class="container">
     <div class="section-header">
       <div class="section-label">Lifestyle</div>
@@ -330,7 +420,33 @@
 <!-- ===== DIY ===== -->
 
 <!-- ===== CONTACT ===== -->
-<section class="panel" id="resume" data-idx="05 / RÉSUMÉ">
+<section class="panel" id="diy" data-idx="07 / DIY">
+    <div class="panel-fx" aria-hidden="true" data-fx="sparks"><span></span><span></span><span></span></div>
+
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Workshop</div>
+      <h2 class="section-title" data-en="DIY Project Log">DIY 项目日志</h2>
+      <p class="section-desc" data-en="Hardware · Embedded · DIY">硬件 · 嵌入式 · 自造</p>
+    </div>
+    <div class="terminal">
+      <div class="line"><span class="prompt">root@workshop:~$</span> <span class="cmd"data-en="cat projects.log">cat projects.log</span></div>
+      <div class="line"><span class="out"data-en="[2017] STM32 Smart Hydroponics v1.0 — Aluminum frame + PID control">[2017] STM32 智能水培槽 v1.0 — 铝型材框架 + PID 环控</span></div>
+      <div class="line"><span class="out"data-en="[2018] iCAN Innovation Contest — National Second Prize">[2018] iCAN 创新创业赛 — 国家级二等奖</span></div>
+      <div class="line"><span class="out"data-en="[2018] College Innovation Project — Provincial Third Prize">[2018] 大创项目 — 省级三等奖</span></div>
+      <div class="line"><span class="out"data-en="[2019] Hydroponics v2.0 — Added aeroponics & remote monitoring">[2019] 水培槽 v2.0 — 加入气培模块 & 远程监控</span></div>
+      <div class="line"><span class="out"data-en="[2024] Expo DIY — Salvaged 7 working PCs from 11 broken ones">[2024] 展会物料 DIY — 11台不可用电脑重组为7台可用</span></div>
+      <div class="line" style="margin-top:12px"><span class="prompt">root@workshop:~$</span> <span class="cmd"data-en="cat /etc/skills.conf">cat /etc/skills.conf</span></div>
+      <div class="line"><span class="out"data-en="PLC Programming (Siemens TIA) · SolidWorks 2016 · CAD">PLC 编程 (西门子博途) · SolidWorks 2016 · CAD</span></div>
+      <div class="line"><span class="out"data-en="Circuit Design Basics (Analog Electronics) · Aluminum Frame Construction">电路设计基础 (模拟电子技术) · 铝型材结构搭建</span></div>
+      <div class="line" style="margin-top:12px"><span class="prompt">root@workshop:~$</span> <span class="cmd">_</span><span class="cursor">█</span></div>
+    </div>
+  </div>
+
+    <a class="panel-more" href="/diy.html"><span data-en="Full DIY log">看完整 DIY 日志</span> <span aria-hidden="true">→</span></a>
+  </section>
+
+<section class="panel" id="resume" data-idx="08 / RÉSUMÉ">
   <div class="container">
     <h2 class="section-title" data-en="Résumé">简历</h2>
     <p class="section-desc" data-en="One-page PDF. Built for engineering roles in AI / backend / game.">一页 PDF，面向 AI 开发 / 后端 / 游戏方向的工程岗。</p>
@@ -351,9 +467,13 @@
       </div>
     </div>
   </div>
-</section>
 
-<section class="panel" id="contact" data-idx="06 / CONTACT">
+    <a class="panel-more" href="/resume.pdf" target="_blank" rel="noopener"><span data-en="Download PDF">下载 PDF 简历</span> <span aria-hidden="true">→</span></a>
+  </section>
+
+<section class="panel" id="contact" data-idx="09 / CONTACT">
+    <div class="panel-fx" aria-hidden="true" data-fx="waves"><span></span><span></span><span></span></div>
+
   <div class="container">
     <div class="section-header">
       <div class="section-label">Connect</div>
@@ -824,18 +944,15 @@ document.head.appendChild(style);
   });
 })();
 
-/* ===== HORIZONTAL SCROLL ENGINE — 一次滚轮 = 翻一屏（带回弹）=====
+/* ===== HORIZONTAL SCROLL ENGINE — 一次滚轮 = 翻一屏（带回弹 / 主题动效）=====
    动画走浏览器原生 smooth scroll（scrollTo + behavior:'smooth'），
    刻意不用 requestAnimationFrame：rAF 在标签页不可见时会被浏览器暂停，
-   一旦暂停，"正在翻屏"的锁就永远解不开，整个引擎卡死。
-   回弹感由 CSS animation 实现（到位时给面板加 class），同样不依赖 rAF。 */
+   一旦暂停，"正在翻屏"的锁就永远解不开，整个引擎卡死。 */
 (function () {
   var wrap = document.getElementById('hscroll');
   if (!wrap) return;
 
-  // 浏览器默认会恢复上次的滚动位置，会把这条横向长卷直接丢到中间某处
-  // （表现为"打开就是空白首屏"）——关掉它，位置完全由本引擎决定
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';   // 否则打开即被丢到长卷中间
 
   var bar = document.getElementById('hProgress');
   var panels = Array.prototype.slice.call(wrap.querySelectorAll('.panel'));
@@ -843,35 +960,20 @@ document.head.appendChild(style);
   if (!panels.length) return;
 
   var isMobile = function () { return window.innerWidth <= 768; };
+  var current = 0, animating = false, acc = 0, lastWheelTs = 0;
+  var animTimer = null, snapTimer = null, syncTimer = null, settleTimer = null;
 
-  var current = 0;
-  var animating = false;
-  var acc = 0;
-  var lastWheelTs = 0;
-  var animTimer = null;
-  var snapTimer = null;
-  var syncTimer = null;
-  var settleTimer = null;
-
-  var WHEEL_THRESHOLD = 22;   // 累积到这个量翻一屏
-  var WHEEL_GAP_MS = 200;     // 两次滚轮间隔超过它 -> 视为新手势
-  var ANIM_LOCK_MS = 700;     // 翻屏锁定上限；到点还没就位就直接落位兜底
-  var SETTLE_MS = 470;        // 回弹动画时长，与 CSS 保持一致
+  var WHEEL_THRESHOLD = 22, WHEEL_GAP_MS = 200, ANIM_LOCK_MS = 700, SETTLE_MS = 470;
 
   function clampIndex(i) { return Math.max(0, Math.min(i, panels.length - 1)); }
   function panelX(i) { return panels[clampIndex(i)].offsetLeft; }
+  function unlock() { animating = false; if (animTimer) { clearTimeout(animTimer); animTimer = null; } }
 
-  function unlock() {
-    animating = false;
-    if (animTimer) { clearTimeout(animTimer); animTimer = null; }
-  }
-
-  // 到位回弹：按翻屏方向决定从哪一侧弹入
   function bounce(panel, dir) {
     var cls = dir < 0 ? 'settling-prev' : 'settling-next';
     var other = dir < 0 ? 'settling-next' : 'settling-prev';
     panel.classList.remove(cls, other);
-    void panel.offsetWidth;                 // 强制重排，让动画能重新触发
+    void panel.offsetWidth;
     panel.classList.add(cls);
     clearTimeout(settleTimer);
     settleTimer = setTimeout(function () { panel.classList.remove(cls); }, SETTLE_MS);
@@ -882,12 +984,7 @@ document.head.appendChild(style);
     var x = panelX(i);
     var dir = i > current ? 1 : (i < current ? -1 : 0);
 
-    if (instant) {
-      unlock();
-      current = i;
-      wrap.scrollLeft = x;
-      return;
-    }
+    if (instant) { unlock(); current = i; wrap.scrollLeft = x; markActive(); return; }
     if (i === current && Math.abs(wrap.scrollLeft - x) < 2) return;
 
     current = i;
@@ -898,32 +995,32 @@ document.head.appendChild(style);
     animTimer = setTimeout(function () {
       animating = false;
       animTimer = null;
-      if (Math.abs(wrap.scrollLeft - x) > 3) wrap.scrollLeft = x;   // 兜底落位
+      if (Math.abs(wrap.scrollLeft - x) > 3) wrap.scrollLeft = x;
       bounce(panels[i], dir || 1);
     }, ANIM_LOCK_MS);
   }
 
-  // 滚轮：一次手势只翻一屏
+  // 只让当前面板的主题动效跑，其余暂停（省性能）
+  function markActive() {
+    panels.forEach(function (p, i) { p.classList.toggle('is-active', i === current); });
+  }
+
   wrap.addEventListener('wheel', function (e) {
     if (isMobile() || e.ctrlKey) return;
     var d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
     if (!d) return;
     e.preventDefault();
-
     if (animating) { acc = 0; return; }
-
     var now = Date.now();
     if (now - lastWheelTs > WHEEL_GAP_MS) acc = 0;
     lastWheelTs = now;
     acc += d;
-
     if (Math.abs(acc) < WHEEL_THRESHOLD) return;
     var dir = acc > 0 ? 1 : -1;
     acc = 0;
     goToPanel(current + dir);
   }, { passive: false });
 
-  // 键盘
   window.addEventListener('keydown', function (e) {
     if (isMobile()) return;
     var k = e.key;
@@ -933,7 +1030,7 @@ document.head.appendChild(style);
     else if (k === 'End') { e.preventDefault(); goToPanel(panels.length - 1); }
   });
 
-  // 导航 / 页内锚点
+  // 所有页内锚点（含导航卡）都滚到对应面板，而不是跳转
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (ev) {
       if (isMobile()) return;
@@ -965,6 +1062,7 @@ document.head.appendChild(style);
     var idx = 0;
     panels.forEach(function (p, i) { if (p.offsetLeft <= probe) idx = i; });
     if (!animating) current = idx;
+    markActive();
     navLinks.forEach(function (a) {
       a.classList.toggle('active', a.getAttribute('href') === '#' + panels[current].id);
     });
@@ -972,11 +1070,8 @@ document.head.appendChild(style);
   }
 
   wrap.addEventListener('scroll', function () {
-    if (!syncTimer) {
-      syncTimer = setTimeout(function () { syncTimer = null; sync(); }, 16);
-    }
+    if (!syncTimer) syncTimer = setTimeout(function () { syncTimer = null; sync(); }, 16);
     if (animating && Math.abs(wrap.scrollLeft - panelX(current)) < 3) unlock();
-
     if (!animating) {
       clearTimeout(snapTimer);
       snapTimer = setTimeout(function () {
@@ -995,22 +1090,77 @@ document.head.appendChild(style);
   }
 
   window.__hs = {
-    get current() { return current; },
-    get animating() { return animating; },
-    get acc() { return acc; },
-    get scrollLeft() { return wrap.scrollLeft; },
+    get current() { return current; }, get animating() { return animating; },
+    get acc() { return acc; }, get scrollLeft() { return wrap.scrollLeft; },
     go: goToPanel, panels: panels, wrap: wrap
   };
 
   goToPanel(initIdx, true);
   sync();
-  // load 之后浏览器仍可能再调整一次滚动位置，这里再校准
   window.addEventListener('load', function () {
     var x = panelX(current);
     if (Math.abs(wrap.scrollLeft - x) > 2) wrap.scrollLeft = x;
     sync();
   });
-  panels.forEach(function (p, i) { p.style.setProperty('--pd', (i * 0.04) + 's'); });
+  panels.forEach(function (p, i) { p.style.setProperty('--pd', (i * 0.03) + 's'); });
+})();
+
+/* ===== 博客面板：掉落字符 ===== */
+(function () {
+  var host = document.querySelector('.fx-chars');
+  if (!host) return;
+  var glyphs = '01{}/<>*#_$=+;:[]()'.split('');
+  for (var i = 0; i < 26; i++) {
+    var s = document.createElement('span');
+    s.textContent = glyphs[(Math.random() * glyphs.length) | 0];
+    s.style.left = (Math.random() * 100).toFixed(1) + '%';
+    s.style.animationDuration = (5.5 + Math.random() * 5).toFixed(1) + 's';
+    s.style.animationDelay = (-Math.random() * 9).toFixed(1) + 's';
+    s.style.fontSize = (10 + Math.random() * 6).toFixed(0) + 'px';
+    host.appendChild(s);
+  }
+})();
+
+/* ===== 配色切换（避开"黄=警告"，给几个暖色替代方案实时对比）===== */
+(function () {
+  var host = document.getElementById('accentPicker');
+  if (!host) return;
+  var THEMES = [
+    { id: 'amber',  name: '琥珀金（当前）', main: '#d4a040', hover: '#e8c060', soft: 'rgba(212,160,64,',  glow: 'rgba(212,160,64,' },
+    { id: 'copper', name: '铜色',           main: '#c07a45', hover: '#d89158', soft: 'rgba(192,122,69,',  glow: 'rgba(192,122,69,' },
+    { id: 'terra',  name: '赤陶红',         main: '#c2603f', hover: '#d97a56', soft: 'rgba(194,96,63,',   glow: 'rgba(194,96,63,' },
+    { id: 'wine',   name: '酒红',           main: '#a8515c', hover: '#c26872', soft: 'rgba(168,81,92,',   glow: 'rgba(168,81,92,' },
+    { id: 'teal',   name: '青绿',           main: '#4f9d8c', hover: '#66b8a6', soft: 'rgba(79,157,140,',  glow: 'rgba(79,157,140,' }
+  ];
+  var root = document.documentElement;
+
+  function apply(t) {
+    root.style.setProperty('--blue', t.main);
+    root.style.setProperty('--blue-hover', t.hover);
+    root.style.setProperty('--blue-bg', t.soft + '0.10)');
+    root.style.setProperty('--amber', t.hover);
+    root.style.setProperty('--accent-glow', t.glow + '0.35)');
+    root.setAttribute('data-accent', t.id);
+    try { localStorage.setItem('accent', t.id); } catch (e) {}
+    Array.prototype.forEach.call(host.children, function (b) {
+      b.classList.toggle('on', b.getAttribute('data-id') === t.id);
+    });
+  }
+
+  THEMES.forEach(function (t) {
+    var b = document.createElement('button');
+    b.className = 'accent-dot';
+    b.setAttribute('data-id', t.id);
+    b.title = t.name;
+    b.style.background = t.main;
+    b.addEventListener('click', function () { apply(t); });
+    host.appendChild(b);
+  });
+
+  var saved = null;
+  try { saved = localStorage.getItem('accent'); } catch (e) {}
+  var found = THEMES.filter(function (t) { return t.id === saved; })[0];
+  if (found) apply(found);
 })();
 </script>
 </body>
