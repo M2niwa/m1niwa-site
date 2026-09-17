@@ -934,20 +934,14 @@ body { cursor: none; }
 
 /* ============================================================
    2026-09 横向卷轴版（v4-horizontal）
-   整站排成一条横向长卷：滚轮 -> 向右翻一屏
    ============================================================ */
 
 body.hscroll-body { overflow: hidden; height: 100vh; }
 
 .hscroll {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+  display: flex; height: 100vh; width: 100vw;
+  overflow-x: auto; overflow-y: hidden;
+  scroll-behavior: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin;
 }
 .hscroll::-webkit-scrollbar { height: 6px; }
 .hscroll::-webkit-scrollbar-track { background: transparent; }
@@ -956,17 +950,11 @@ body.hscroll-body { overflow: hidden; height: 100vh; }
 
 .panel {
   position: relative;
-  flex: 0 0 auto;
-  width: 100vw;
-  min-width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex: 0 0 auto; width: 100vw; min-width: 100vw; height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
   padding: 88px clamp(28px, 6vw, 96px) 60px;
-  /* 内容默认必须可见。入场动画只做"轻微淡入 + 位移"，且起始 opacity 不低于
-     0.35 —— 这样即使 CSS 动画被浏览器暂停（后台标签 / 无头渲染 / 动画被禁用），
-     面板内容依然看得见，不会出现整屏空白。 */
+  /* 内容默认必须可见：入场动画起始 opacity 不低于 0.35，
+     这样即使 CSS 动画被浏览器暂停（后台标签 / 无头渲染），也不会出现整屏空白。 */
   animation: panelIn 0.52s var(--ease) both;
   animation-delay: var(--pd, 0s);
 }
@@ -976,94 +964,67 @@ body.hscroll-body { overflow: hidden; height: 100vh; }
 }
 
 .panel .container {
+  position: relative; z-index: 2;
   width: 100%; max-width: 1240px;
   transform: translate3d(var(--px, 0), 0, 0);
 }
 
-/* 左下角面板编号 */
 .panel::after {
   content: attr(data-idx);
-  position: absolute;
-  left: clamp(28px, 6vw, 96px);
-  bottom: 24px;
+  position: absolute; left: clamp(28px, 6vw, 96px); bottom: 24px;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
-  color: var(--text-tertiary);
-  opacity: 0.55;
+  font-size: 10.5px; letter-spacing: 0.18em;
+  color: var(--text-tertiary); opacity: 0.55;
 }
 
-/* 横向进度条 */
 .hscroll-progress {
   position: fixed; top: 64px; left: 0; height: 1.5px; width: 0;
   background: linear-gradient(90deg, var(--blue), var(--amber));
   z-index: 99; pointer-events: none;
 }
 
-/* ===== 到位回弹（轻微过冲）===== */
+/* ===== 到位回弹 ===== */
 @keyframes settleFromRight {
-  0%   { transform: translate3d(30px, 0, 0); }
-  52%  { transform: translate3d(-7px, 0, 0); }
-  78%  { transform: translate3d(3px, 0, 0); }
-  100% { transform: translate3d(0, 0, 0); }
+  0% { transform: translate3d(30px,0,0); } 52% { transform: translate3d(-7px,0,0); }
+  78% { transform: translate3d(3px,0,0); } 100% { transform: translate3d(0,0,0); }
 }
 @keyframes settleFromLeft {
-  0%   { transform: translate3d(-30px, 0, 0); }
-  52%  { transform: translate3d(7px, 0, 0); }
-  78%  { transform: translate3d(-3px, 0, 0); }
-  100% { transform: translate3d(0, 0, 0); }
+  0% { transform: translate3d(-30px,0,0); } 52% { transform: translate3d(7px,0,0); }
+  78% { transform: translate3d(-3px,0,0); } 100% { transform: translate3d(0,0,0); }
 }
 .panel.settling-next .container { animation: settleFromRight 0.47s cubic-bezier(0.22, 1, 0.36, 1); }
 .panel.settling-prev .container { animation: settleFromLeft 0.47s cubic-bezier(0.22, 1, 0.36, 1); }
 
-/* ===== hero + 导航 合并面板 ===== */
+/* ===== hero + 导航 ===== */
 .hero-merged {
-  display: grid;
-  grid-template-columns: minmax(300px, 0.8fr) 1.2fr;
-  gap: clamp(28px, 4vw, 60px);
-  align-items: center;
+  display: grid; grid-template-columns: minmax(300px, 0.78fr) 1.22fr;
+  gap: clamp(28px, 4vw, 58px); align-items: center;
 }
-
 .hero-side { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
 .hero-side .hero-avatar {
-  width: 68px; height: 68px; border-radius: 50%;
-  display: grid; place-items: center;
-  font-size: 30px; font-weight: 700;
+  width: 66px; height: 66px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 29px; font-weight: 700;
   background: linear-gradient(140deg, var(--blue), var(--amber));
   color: #1a1210;
-  box-shadow: 0 0 32px rgba(212, 160, 64, 0.32);
+  box-shadow: 0 0 32px var(--accent-glow, rgba(212,160,64,0.32));
 }
 .hero-side .lang-switch-wrap { margin: 0; }
 .hero-side .hero-name {
-  font-size: clamp(34px, 4.4vw, 52px);
-  font-weight: 700; letter-spacing: -0.025em; line-height: 1.05;
-  text-shadow: 0 0 30px rgba(212, 160, 64, 0.35);
+  font-size: clamp(34px, 4.2vw, 50px); font-weight: 700;
+  letter-spacing: -0.025em; line-height: 1.05;
+  text-shadow: 0 0 30px var(--accent-glow, rgba(212,160,64,0.35));
 }
 .hero-side .hero-bio { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
 .hero-side .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
-.hero-hint {
-  margin-top: 6px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 11.5px; color: var(--text-tertiary);
-  letter-spacing: 0.04em;
-}
 
-.hero-nav {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 11px;
-}
+.hero-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
 .hnav-card {
-  position: relative;
-  display: grid;
+  position: relative; display: grid;
   grid-template-columns: 38px minmax(0, 1fr) auto 16px;
-  align-items: center;
-  gap: 12px;
+  align-items: center; gap: 12px;
   padding: 14px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  text-decoration: none; color: inherit;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); text-decoration: none; color: inherit;
   transition: border-color .25s var(--ease), transform .25s var(--ease), background .25s;
 }
 .hnav-card:hover { border-color: var(--border-hover); background: var(--bg-elevated); transform: translateY(-2px); }
@@ -1074,43 +1035,176 @@ body.hscroll-body { overflow: hidden; height: 100vh; }
   background: var(--blue-bg); border: 1px solid var(--border);
 }
 .hnav-text { min-width: 0; }
-.hnav-title {
-  display: block; font-size: 15px; font-weight: 650;
-  letter-spacing: -0.01em; white-space: nowrap;
-}
+.hnav-title { display: block; font-size: 15px; font-weight: 650; letter-spacing: -0.01em; white-space: nowrap; }
 .hnav-desc {
-  display: block; font-size: 11.5px; color: var(--text-secondary);
-  margin-top: 3px; line-height: 1.45;
+  display: block; font-size: 11.5px; color: var(--text-secondary); margin-top: 3px; line-height: 1.45;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .hnav-meta {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10px; color: var(--text-tertiary);
-  letter-spacing: 0.04em; white-space: nowrap;
+  font-size: 10px; color: var(--text-tertiary); letter-spacing: 0.04em; white-space: nowrap;
 }
-.hnav-arrow {
-  font-size: 14px; color: var(--amber);
-  opacity: 0; transform: translateX(-4px);
-  transition: opacity .25s var(--ease), transform .25s var(--ease);
-}
+.hnav-arrow { font-size: 14px; color: var(--amber); opacity: 0; transform: translateX(-4px); transition: opacity .25s var(--ease), transform .25s var(--ease); }
 .hnav-card:hover .hnav-arrow { opacity: 1; transform: translateX(0); }
 
-/* 项目：面板内横排 */
+/* ===== 面板底部「完整版」入口 ===== */
+.panel-more {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 20px;
+  padding: 8px 15px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.03em;
+  color: var(--text-secondary); text-decoration: none;
+  border: 1px solid var(--border); border-radius: 999px;
+  transition: color .22s var(--ease), border-color .22s var(--ease), gap .22s var(--ease);
+}
+.panel-more:hover { color: var(--blue); border-color: var(--border-hover); gap: 12px; }
+.panel-more:active { transform: scale(0.98); }
+
+/* ===== 面板主题动效层 ===== */
+.panel-fx { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+/* 只有当前面板的动效在跑，其余暂停（省性能，也避免视觉噪音） */
+.panel .panel-fx * { animation-play-state: paused; }
+.panel.is-active .panel-fx * { animation-play-state: running; }
+
+/* --- 博客：掉落字符 --- */
+.fx-chars span {
+  position: absolute; top: -30px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  color: var(--blue); opacity: 0;
+  animation-name: charFall; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+@keyframes charFall {
+  0%   { transform: translateY(0); opacity: 0; }
+  12%  { opacity: 0.55; }
+  80%  { opacity: 0.35; }
+  100% { transform: translateY(105vh); opacity: 0; }
+}
+
+/* --- 项目：电流延展 --- */
+.fx-current {
+  position: absolute; left: -25%; top: 50%; width: 22%; height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  box-shadow: 0 0 14px var(--accent-glow, rgba(212,160,64,0.5));
+  animation: currentRun 3.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.fx-current.d2 { top: 62%; animation-delay: 1.7s; height: 1px; opacity: 0.7; }
+@keyframes currentRun {
+  0%   { left: -25%; width: 18%; opacity: 0; }
+  12%  { opacity: 1; }
+  70%  { width: 78%; opacity: 1; }
+  100% { left: 105%; width: 22%; opacity: 0; }
+}
+
+/* --- 工作之外：倒酒 + 外设出现-浮动-离开 --- */
+.fx-bottle, .fx-glass, .fx-mouse, .fx-kbd, .fx-pad {
+  position: absolute; font-size: 30px; opacity: 0;
+  filter: drop-shadow(0 0 10px var(--accent-glow, rgba(212,160,64,0.35)));
+}
+.fx-bottle { left: 4%; top: 46%; animation: pourBottle 6s ease-in-out infinite; }
+.fx-glass  { left: 11%; top: 62%; font-size: 24px; animation: pourGlass 6s ease-in-out infinite; }
+.fx-mouse  { right: 15%; top: 52%; animation: deviceFloat 6s ease-in-out infinite; }
+.fx-kbd    { right: 7%;  top: 62%; font-size: 26px; animation: deviceFloat 6s ease-in-out 0.5s infinite; }
+.fx-pad    { right: 22%; top: 66%; animation: deviceFloat 6s ease-in-out 1s infinite; }
+@keyframes pourBottle {
+  0%, 12%   { transform: rotate(0) translateY(0); opacity: 0; }
+  22%       { transform: rotate(-38deg) translateY(-6px); opacity: 1; }
+  55%       { transform: rotate(-38deg) translateY(-6px); opacity: 1; }
+  68%, 100% { transform: rotate(0) translateY(0); opacity: 0; }
+}
+@keyframes pourGlass {
+  0%, 16%   { transform: translateY(0) scale(1); opacity: 0; }
+  30%       { opacity: 1; }
+  70%       { transform: translateY(0) scale(1.06); opacity: 1; }
+  88%, 100% { transform: translateY(0) scale(1); opacity: 0; }
+}
+@keyframes deviceFloat {
+  0%, 10%   { transform: translateY(14px); opacity: 0; }
+  26%       { transform: translateY(0); opacity: 1; }
+  40%, 62%  { transform: translateY(-7px); opacity: 1; }
+  78%, 100% { transform: translateY(-22px); opacity: 0; }
+}
+
+/* --- 技能：脉冲条 --- */
+.fx-bars span {
+  position: absolute; left: 50%; width: 2px; height: 78px;
+  transform: translateX(-50%); border-radius: 2px;
+  background: linear-gradient(180deg, transparent, var(--blue), transparent);
+  opacity: 0;
+  animation-name: barPulse; animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-iteration-count: infinite; animation-duration: 4.2s;
+}
+.fx-bars span:nth-child(1) { margin-left: -140px; animation-delay: 0s; }
+.fx-bars span:nth-child(2) { margin-left: -70px;  animation-delay: 0.5s; }
+.fx-bars span:nth-child(3) { margin-left: 0;      animation-delay: 1s; }
+.fx-bars span:nth-child(4) { margin-left: 70px;   animation-delay: 1.5s; }
+.fx-bars span:nth-child(5) { margin-left: 140px;  animation-delay: 2s; }
+@keyframes barPulse {
+  0%, 100% { opacity: 0; transform: translateX(-50%) scaleY(0.4); }
+  45%      { opacity: 0.75; transform: translateX(-50%) scaleY(1); }
+}
+
+/* --- DIY：火花 --- */
+.fx-sparks span {
+  position: absolute; bottom: 18%; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--blue); box-shadow: 0 0 12px var(--accent-glow, rgba(212,160,64,0.6));
+  opacity: 0;
+  animation-name: sparkRise; animation-timing-function: ease-out;
+  animation-iteration-count: infinite; animation-duration: 3.6s;
+}
+.fx-sparks span:nth-child(1) { left: 16%; animation-delay: 0s; }
+.fx-sparks span:nth-child(2) { left: 38%; animation-delay: 1.2s; }
+.fx-sparks span:nth-child(3) { left: 64%; animation-delay: 2.4s; }
+@keyframes sparkRise {
+  0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+  25%  { opacity: 0.9; }
+  100% { transform: translateY(-160px) scale(1.1); opacity: 0; }
+}
+
+/* --- 联系：扩散波 --- */
+.fx-waves span {
+  position: absolute; left: 50%; top: 50%;
+  width: 160px; height: 160px; margin: -80px 0 0 -80px;
+  border: 1px solid var(--blue); border-radius: 50%; opacity: 0;
+  animation: waveOut 4.5s ease-out infinite;
+}
+.fx-waves span:nth-child(2) { animation-delay: 1.5s; }
+.fx-waves span:nth-child(3) { animation-delay: 3s; }
+@keyframes waveOut {
+  0%   { transform: scale(0.35); opacity: 0; }
+  20%  { opacity: 0.35; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+
+/* ===== 配色切换器 ===== */
+.accent-picker {
+  position: fixed; right: 16px; bottom: 16px; z-index: 120;
+  display: flex; gap: 8px; align-items: center;
+  padding: 8px 10px;
+  background: rgba(26,18,16,0.85);
+  border: 1px solid var(--border); border-radius: 999px;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.accent-dot {
+  width: 18px; height: 18px; padding: 0;
+  border: 1px solid rgba(255,255,255,0.18); border-radius: 50%;
+  cursor: pointer; transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.accent-dot:hover { transform: scale(1.18); }
+.accent-dot.on { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px currentColor; transform: scale(1.1); }
+
+/* ===== 面板内布局微调 ===== */
 .panel .projects-grid { display: flex; gap: 16px; perspective: none; margin-top: 8px; }
-.panel .project-card { flex: 0 0 clamp(240px, 22vw, 300px); transform: none !important; }
+.panel .project-card { flex: 0 0 clamp(230px, 21vw, 290px); transform: none !important; }
 .panel .project-card:nth-child(n+5) { display: none; }
 .panel .blog-grid, .panel .technote-list { margin-top: 8px; }
 .panel#technotes .blog-card:nth-child(n+4) { display: none; }
-.panel#resume .resume-split { margin-top: 16px; }
+.panel#resume .resume-split { margin-top: 14px; }
+.panel .skills-grid { margin-top: 8px; columns: 2; column-gap: 26px; }
 
-.hscroll > .footer {
-  flex: 0 0 auto; width: 100vw; min-width: 100vw;
-  align-self: stretch; display: flex; align-items: center;
-}
-
+.hscroll > .footer { flex: 0 0 auto; width: 100vw; min-width: 100vw; align-self: stretch; display: flex; align-items: center; }
 .hscroll-body .scroll-top { border-radius: 50%; }
 
-/* 移动端回退：普通纵向滚动 */
 @media (max-width: 980px) {
   .hero-merged { grid-template-columns: 1fr; gap: 26px; align-items: start; }
   .hero-side { gap: 12px; }
@@ -1118,26 +1212,24 @@ body.hscroll-body { overflow: hidden; height: 100vh; }
 @media (max-width: 768px) {
   body.hscroll-body { overflow: auto; height: auto; }
   .hscroll { flex-direction: column; height: auto; width: auto; overflow: visible; display: block; }
-  .panel {
-    width: 100%; min-width: 0; height: auto; min-height: 0;
-    padding: 84px 24px 56px; opacity: 1; animation: none;
-  }
+  .panel { width: 100%; min-width: 0; height: auto; min-height: 0; padding: 84px 24px 56px; animation: none; }
   .panel::after { display: none; }
   .hscroll-progress { display: none; }
   .panel.settling-next .container, .panel.settling-prev .container { animation: none; }
+  .panel-fx { display: none; }
   .panel .projects-grid { display: grid; perspective: 1200px; }
   .panel .project-card { flex: initial; }
   .panel .project-card:nth-child(n+5) { display: block; }
   .panel#technotes .blog-card:nth-child(n+4) { display: block; }
+  .panel .skills-grid { columns: 1; }
   .hscroll > .footer { display: block; width: auto; }
   .hero-nav { grid-template-columns: 1fr; }
+  .accent-picker { display: none; }
 }
-@media (max-width: 560px) {
-  .hero-nav { grid-template-columns: 1fr; }
-  .hnav-desc { white-space: normal; }
-}
+@media (max-width: 560px) { .hnav-desc { white-space: normal; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .panel { opacity: 1; animation: none; }
+  .panel { animation: none; }
   .panel.settling-next .container, .panel.settling-prev .container { animation: none; }
+  .panel-fx { display: none; }
 }
