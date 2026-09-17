@@ -1297,10 +1297,13 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
   transform-origin: center center;
   transform: rotate(var(--prot, 0deg));
   animation: none;
-  opacity: 1;
+  /* 未用到的面板自动隐藏：只留当前那张，避免盘面边缘出现倒置的其它页 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.44s ease;
   z-index: 1;
 }
-.rotate-stage .panel.is-active { z-index: 3; }
+.rotate-stage .panel.is-active { opacity: 1; pointer-events: auto; z-index: 3; }
 .rotate-stage .panel .container { transform: none; }
 
 .rotate-progress {
