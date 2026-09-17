@@ -818,7 +818,9 @@ document.head.appendChild(style);
 
   // Elements that attract the cursor
   var magnetic = '.header-nav a, .header-social a, .technote-item, .project-card, ' +
-    '.blog-more-btn, .lang-switch, .wine-shuffle-btn, .scroll-top, .contact-card, .hero-btn, .skill-group';
+    '.blog-more-btn, .lang-switch, .wine-shuffle-btn, .scroll-top, .contact-card, .hero-btn, .skill-group, ' +
+    /* 首页横向/转盘版新增的交互元素：导航卡、「工作之外」芯片、面板底部入口 */
+    '.hnav-card, .game-chip, .panel-more, .accent-dot, .chips-grid .game-chip';
 
   // Cross always follows exact mouse position
   window.addEventListener('mousemove', function(e) {
@@ -857,8 +859,6 @@ document.head.appendChild(style);
       pointer.style.setProperty('--w', '');
       pointer.style.setProperty('--h', '');
     }
-  });
-})();
 </script>
 
 </body>
