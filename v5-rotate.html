@@ -936,13 +936,15 @@ document.head.appendChild(style);
 
   var isMobile = function () { return window.innerWidth <= 768; };
   var N = panels.length;
-  var STEP_DEG = 360 / N;                       // 一圈平分；8 张 = 45°
+  var STEP_DEG = 90;                            // 每次转 90°（用户指定，不再按面板数平分）
   var STEP_RAD = STEP_DEG * Math.PI / 180;
-  var current = 0, acc = 0, lastWheelTs = 0, animating = false;
+  var turn = 0;                                 // 累计步数，不设上下限 -> 可无限循环
+  var acc = 0, lastWheelTs = 0, animating = false;
   var lockTimer = null;
   var WHEEL_THRESHOLD = 22, WHEEL_GAP_MS = 200, LOCK_MS = 700;
 
-  function clampIndex(i) { return Math.max(0, Math.min(i, N - 1)); }
+  function mod(n, m) { return ((n % m) + m) % m; }
+  function curIndex() { return mod(turn, N); }
 
   // 把每张面板摆到圆弧上并预旋转，使盘面转到正位时它刚好水平
   function layout() {
@@ -958,29 +960,44 @@ document.head.appendChild(style);
   }
 
   function markActive() {
-    panels.forEach(function (p, i) { p.classList.toggle('is-active', i === current); });
+    var ci = curIndex();
+    panels.forEach(function (p, i) { p.classList.toggle('is-active', i === ci); });
     navLinks.forEach(function (a) {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + panels[current].id);
+      a.classList.toggle('active', a.getAttribute('href') === '#' + panels[ci].id);
     });
-    if (bar) bar.style.width = (N > 1 ? (current / (N - 1) * 100) : 0).toFixed(2) + '%';
+    if (bar) bar.style.width = (N > 1 ? (ci / (N - 1) * 100) : 0).toFixed(2) + '%';
   }
 
-  function goToPanel(i, instant) {
-    i = clampIndex(i);
-    if (i === current && !instant) return;
-    current = i;
+  function applyTurn(instant) {
     if (instant) {
       stage.classList.add('no-anim');
-      stage.style.transform = 'rotate(' + (current * STEP_DEG).toFixed(2) + 'deg)';
+      stage.style.transform = 'rotate(' + (turn * STEP_DEG).toFixed(2) + 'deg)';
       void stage.offsetWidth;
       stage.classList.remove('no-anim');
     } else {
-      stage.style.transform = 'rotate(' + (current * STEP_DEG).toFixed(2) + 'deg)';
+      stage.style.transform = 'rotate(' + (turn * STEP_DEG).toFixed(2) + 'deg)';
     }
     markActive();
     animating = true;
     clearTimeout(lockTimer);
     lockTimer = setTimeout(function () { animating = false; }, instant ? 60 : LOCK_MS);
+  }
+
+  // 顺序翻一屏（滚轮 / 方向键）：步数累加，转满一圈自然回到开头
+  function stepBy(delta, instant) {
+    turn += delta;
+    applyTurn(instant);
+  }
+
+  // 跳到指定面板：走最短路径（可能是倒着转）
+  function goToIndex(target, instant) {
+    target = mod(target, N);
+    var diff = target - curIndex();
+    if (diff > N / 2) diff -= N;
+    if (diff < -N / 2) diff += N;
+    if (diff === 0 && !instant) return;
+    turn += diff;
+    applyTurn(instant);
   }
 
   stage.addEventListener('wheel', function (e) {
@@ -994,16 +1011,16 @@ document.head.appendChild(style);
     lastWheelTs = now; acc += d;
     if (Math.abs(acc) < WHEEL_THRESHOLD) return;
     var dir = acc > 0 ? 1 : -1; acc = 0;
-    goToPanel(current + dir);
+    stepBy(dir);
   }, { passive: false });
 
   window.addEventListener('keydown', function (e) {
     if (isMobile()) return;
     var k = e.key;
-    if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || k === ' ') { e.preventDefault(); goToPanel(current + 1); }
-    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); goToPanel(current - 1); }
-    else if (k === 'Home') { e.preventDefault(); goToPanel(0); }
-    else if (k === 'End') { e.preventDefault(); goToPanel(N - 1); }
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || k === ' ') { e.preventDefault(); stepBy(1); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); stepBy(-1); }
+    else if (k === 'Home') { e.preventDefault(); goToIndex(0); }
+    else if (k === 'End') { e.preventDefault(); goToIndex(N - 1); }
   });
 
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
@@ -1015,12 +1032,12 @@ document.head.appendChild(style);
       var panel = el && el.closest ? el.closest('.panel') : null;
       if (!panel) return;
       ev.preventDefault();
-      goToPanel(panels.indexOf(panel));
+      goToIndex(panels.indexOf(panel));
       history.replaceState(null, '', id);
     });
   });
 
-  window.addEventListener('resize', function () { layout(); goToPanel(current, true); });
+  window.addEventListener('resize', function () { layout(); applyTurn(true); });
 
   var initIdx = 0;
   if (location.hash) {
@@ -1030,14 +1047,15 @@ document.head.appendChild(style);
   }
 
   window.__hs = {
-    get current() { return current; }, get animating() { return animating; },
-    get step() { return STEP_DEG; }, go: goToPanel, panels: panels, stage: stage,
-    layout: layout
+    get turn() { return turn; }, get current() { return curIndex(); },
+    get animating() { return animating; }, get step() { return STEP_DEG; },
+    stepBy: stepBy, go: goToIndex, applyTurn: applyTurn,
+    panels: panels, stage: stage, layout: layout
   };
 
   layout();
-  goToPanel(initIdx, true);
-  window.addEventListener('load', function () { layout(); goToPanel(initIdx, true); });
+  goToIndex(initIdx, true);
+  window.addEventListener('load', function () { layout(); goToIndex(initIdx, true); });
 })();
 
 /* -------- 以下动效 / 配色与 v4 完全一致（直接从 v4 引擎里截取复用）-------- */
