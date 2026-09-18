@@ -1343,8 +1343,8 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
   z-index: 4; pointer-events: none;
   opacity: 0.62;
 }
-.gear-wrap.gear-left  { left: -34px; }
-.gear-wrap.gear-right { right: -34px; }
+.gear-wrap.gear-left  { left: -84px; }   /* 168px 的一半，埋进边缘 */
+.gear-wrap.gear-right { right: -84px; }
 .gear-wrap svg { width: 100%; height: 100%; display: block; }
 .gear-wrap .gear-rot { transform-origin: 50% 50%; transition: transform 0.66s cubic-bezier(0.34, 1.42, 0.44, 1); }
 .gear-wrap .gear-main { color: var(--blue); opacity: 0.34; }
@@ -1449,8 +1449,8 @@ body.is-light ::selection { background: rgba(168, 118, 31, 0.24); color: #2c2118
     width: 104px; height: 104px; margin-top: -52px;
     opacity: 0.62;
   }
-  .gear-wrap.gear-left  { left: -18px; }
-  .gear-wrap.gear-right { right: -18px; }
+  .gear-wrap.gear-left  { left: -52px; }   /* 104px 的一半 */
+  .gear-wrap.gear-right { right: -52px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

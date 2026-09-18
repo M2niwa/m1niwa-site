@@ -1048,13 +1048,16 @@ document.head.appendChild(style);
     if (bar) bar.style.width = (N > 1 ? (ci / (N - 1) * 100) : 0).toFixed(2) + '%';
   }
 
-  function spinGear() {
-    var deg = (turn * STEP_DEG).toFixed(2);
+  function spinGear(degOverride) {
+    var deg = (degOverride !== undefined ? degOverride : turn * STEP_DEG).toFixed(2);
     var l = document.getElementById('gearRot');
     var r = document.getElementById('gearRotR');
     if (l) l.style.transform = 'rotate(' + deg + 'deg)';
     if (r) r.style.transform = 'rotate(-' + deg + 'deg)';   /* 右侧反向，左右呼应 */
   }
+
+  /* 暴露给 IIFE 外部（手机端滚动驱动用） */
+  window.__spinGear = spinGear;
 
   function applyTurn(instant) {
     spinGear();
@@ -1165,6 +1168,16 @@ document.head.appendChild(style);
     shots[j].style.animationDuration = (2.6 + Math.random() * 2.6).toFixed(1) + 's';
   }
 })();
+
+/* ===== 手机端：齿轮随页面滚动旋转 =====
+   手机上转盘退化成纵向滚动，turn 不再变化，所以齿轮要用滚动量驱动，
+   否观感上齿轮就是死的。 */
+window.addEventListener('scroll', function () {
+  if (window.innerWidth > 768) return;          /* 桌面由 turn 驱动 */
+  if (typeof window.__spinGear !== 'function') return;
+  var y = window.scrollY || window.pageYOffset || 0;
+  window.__spinGear(y * 0.45);
+}, { passive: true });
 
 /* ===== 手机首屏提示：手掌 + 箭头（只在手机、且只显示一次）===== */
 (function () {
