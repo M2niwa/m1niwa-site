@@ -84,9 +84,23 @@
 
 <!-- ===== HERO ===== -->
 <!-- 左侧随动齿轮（随转盘转动） -->
-<div class="gear-wrap" id="gearWrap" aria-hidden="true">
+<div class="gear-wrap gear-left" id="gearWrap" aria-hidden="true">
   <svg viewBox="0 0 120 120">
     <g class="gear-rot" id="gearRot">
+      <g class="gear-main">
+        <rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(0 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(45 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(90 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(135 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(180 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(225 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(270 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(315 60 60)"/>
+        <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="7"/>
+        <circle cx="60" cy="60" r="14" fill="none" stroke="currentColor" stroke-width="5"/>
+      </g>
+    </g>
+    </g>
+    <circle class="gear-hub" cx="60" cy="60" r="5.5"/>
+  </svg>
+</div>
+
+<div class="gear-wrap gear-right" id="gearWrapR" aria-hidden="true">
+  <svg viewBox="0 0 120 120">
+    <g class="gear-rot" id="gearRotR">
       <g class="gear-main">
         <rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(0 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(45 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(90 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(135 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(180 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(225 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(270 60 60)"/><rect x="56" y="11" width="8" height="15" rx="2" fill="currentColor" transform="rotate(315 60 60)"/>
         <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="7"/>
@@ -669,6 +683,73 @@ const style = document.createElement('style');
 style.textContent = '@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }';
 document.head.appendChild(style);
 
+/* ===== SLASH LOADING INTRO — original timeline, reproduced without GSAP ===== */
+(function() {
+  const overlay = document.getElementById('slashOverlay');
+  const katana = document.getElementById('slashKatana');
+  const maskUp = document.getElementById('slashMaskUp');
+  const maskDown = document.getElementById('slashMaskDown');
+  if (!overlay || !katana || !maskUp || !maskDown) return;
+
+  let done = false;
+  function hide() {
+    if (done) return;
+    done = true;
+    overlay.style.display = 'none';
+  }
+  // Safety nets: unsupported / reduced motion → skip instantly; watchdog → never trap the page.
+  if (!('requestAnimationFrame' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    hide();
+    return;
+  }
+  setTimeout(hide, 4200);
+
+  // Original GSAP timeline, reproduced 1:1 (no GSAP dependency):
+  //   rise:  y → -h/2, 0.7s, power3.out
+  //   slash: starts at 0.2s, y → -h/2 - innerHeight, x → innerWidth, 0.6s, power3.in
+  //   fade:  overlay opacity → 0, 0.3s  (total ≈ 1.1s)
+  const T_RISE = 700, T_SLASH_START = 200, T_SLASH = 600, T_TOTAL = 1100;
+  const power3Out = t => 1 - Math.pow(1 - t, 3);
+  const power3In = t => t * t * t;
+  const t0 = performance.now();
+
+  function frame(now) {
+    if (done) return;
+    const el = now - t0;
+    const vw = innerWidth, vh = innerHeight;
+    const w = 0.30 * Math.min(vw, vh);
+    const h = w * (760 / 68.49);
+
+    if (el < T_SLASH_START) {
+      const y = -h / 2 * power3Out(Math.min(el / T_RISE, 1));
+      katana.style.transform = 'translate3d(0px,' + y + 'px,0)';
+    } else if (el < T_SLASH_START + T_SLASH) {
+      // Blade position where the slash tween takes over (exact value at 200ms — no jump)
+      const ySlashStart = -h / 2 * power3Out(T_SLASH_START / T_RISE);
+      const p = power3In((el - T_SLASH_START) / T_SLASH);
+      const y = ySlashStart + ((-h / 2 - vh) - ySlashStart) * p;
+      const x = p * vw;
+      katana.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+      // clip-path polygons track the blade rect (original logic)
+      const r = katana.getBoundingClientRect();
+      const cx = (r.left + r.width / 2) / vw * 100;
+      const cy = (r.top + r.height / 2) / vh * 100;
+      const my = cy * 1.2;
+      const dx = r.left / vw * 100;
+      maskUp.style.clipPath = 'polygon(0% 0%, 100% 0%, ' + cx + '% ' + cy + '%, 0% ' + my + '%)';
+      maskDown.style.clipPath = 'polygon(100% 100%, 100% 0%, ' + cx + '% ' + cy + '%, ' + dx + '% 100%)';
+    } else if (el < T_TOTAL) {
+      const k = (el - T_SLASH_START - T_SLASH) / 300;
+      overlay.style.opacity = String(1 - k);
+    } else {
+      hide();
+      return;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 /* ===== LANGUAGE SWITCH ===== */
 (function() {
   const root = document.getElementById('rootHtml');
@@ -968,8 +1049,11 @@ document.head.appendChild(style);
   }
 
   function spinGear() {
-    var main = document.getElementById('gearRot');
-    if (main) main.style.transform = 'rotate(' + (turn * STEP_DEG).toFixed(2) + 'deg)';
+    var deg = (turn * STEP_DEG).toFixed(2);
+    var l = document.getElementById('gearRot');
+    var r = document.getElementById('gearRotR');
+    if (l) l.style.transform = 'rotate(' + deg + 'deg)';
+    if (r) r.style.transform = 'rotate(-' + deg + 'deg)';   /* 右侧反向，左右呼应 */
   }
 
   function applyTurn(instant) {

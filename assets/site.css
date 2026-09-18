@@ -1337,17 +1337,19 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
 
 /* ===== 左侧随动齿轮 ===== */
 .gear-wrap {
-  position: fixed; left: -34px; top: 50%;
+  position: fixed; top: 50%;                 /* 垂直居中 */
   width: 168px; height: 168px;
   margin-top: -84px;
   z-index: 4; pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.62;
 }
+.gear-wrap.gear-left  { left: -34px; }
+.gear-wrap.gear-right { right: -34px; }
 .gear-wrap svg { width: 100%; height: 100%; display: block; }
 .gear-wrap .gear-rot { transform-origin: 50% 50%; transition: transform 0.66s cubic-bezier(0.34, 1.42, 0.44, 1); }
-.gear-wrap .gear-main { color: var(--blue); opacity: 0.26; }
+.gear-wrap .gear-main { color: var(--blue); opacity: 0.34; }
 .gear-wrap .gear-sub { color: var(--text-tertiary); opacity: 0.22; }
-.gear-wrap .gear-hub { color: var(--blue); opacity: 0.34; }
+.gear-wrap .gear-hub { color: var(--blue); opacity: 0.45; }
 
 /* ===== 手机首屏提示（箭头 + 手掌）===== */
 .mobile-hint {
@@ -1444,10 +1446,11 @@ body.is-light ::selection { background: rgba(168, 118, 31, 0.24); color: #2c2118
 /* ===== 手机端齿轮（放在最后，避免被基础样式覆盖）===== */
 @media (max-width: 768px) {
   .gear-wrap {
-    left: -22px; top: 50%;
-    width: 112px; height: 112px; margin-top: -56px;
-    opacity: 0.45;
+    width: 104px; height: 104px; margin-top: -52px;
+    opacity: 0.62;
   }
+  .gear-wrap.gear-left  { left: -18px; }
+  .gear-wrap.gear-right { right: -18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
