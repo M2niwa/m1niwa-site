@@ -1323,8 +1323,6 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
      否则滚到的那一屏是 opacity:0 的空白 */
   .rotate-stage .panel { opacity: 1 !important; pointer-events: auto !important; }
   .rotate-progress { display: none; }
-  /* 手机上齿轮同样显示，只是缩小并更贴边 */
-  .gear-wrap { left: -22px; width: 112px; height: 112px; margin-top: -56px; opacity: 0.45; }
 }
 
 /* ===== 语言开关（移到 header 右侧后）===== */
@@ -1442,6 +1440,15 @@ body.is-light .hnav-card { box-shadow: 0 1px 3px rgba(120, 90, 50, 0.07); }
 body.is-light .hero-side .hero-avatar { color: #fff8ec; }
 body.is-light .rotate-stage .panel::after { color: #9b8a76; }
 body.is-light ::selection { background: rgba(168, 118, 31, 0.24); color: #2c2118; }
+
+/* ===== 手机端齿轮（放在最后，避免被基础样式覆盖）===== */
+@media (max-width: 768px) {
+  .gear-wrap {
+    left: -22px; top: 50%;
+    width: 112px; height: 112px; margin-top: -56px;
+    opacity: 0.45;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .rotate-stage { transition: none; }
