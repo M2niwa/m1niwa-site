@@ -1336,20 +1336,24 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
 }
 
 /* ===== 左侧随动齿轮 ===== */
+/* 尺寸随视口自适应（clamp 下限 92px / 上限 168px），
+   定位用尺寸的一半 —— 这样任何机型上都恰好埋进边缘一半 */
 .gear-wrap {
-  position: fixed; top: 50%;                 /* 垂直居中 */
-  width: 168px; height: 168px;
-  margin-top: -84px;
+  --gear-size: clamp(92px, 21vmin, 168px);
+  position: fixed; top: 50%;
+  width: var(--gear-size);
+  height: var(--gear-size);
+  margin-top: calc(var(--gear-size) / -2);
   z-index: 4; pointer-events: none;
-  opacity: 0.62;
+  opacity: 0.95;
 }
-.gear-wrap.gear-left  { left: -84px; }   /* 168px 的一半，埋进边缘 */
-.gear-wrap.gear-right { right: -84px; }
+.gear-wrap.gear-left  { left: calc(var(--gear-size) / -2); }
+.gear-wrap.gear-right { right: calc(var(--gear-size) / -2); }
 .gear-wrap svg { width: 100%; height: 100%; display: block; }
 .gear-wrap .gear-rot { transform-origin: 50% 50%; transition: transform 0.66s cubic-bezier(0.34, 1.42, 0.44, 1); }
-.gear-wrap .gear-main { color: var(--blue); opacity: 0.34; }
+.gear-wrap .gear-main { color: var(--blue); opacity: 0.5; }
 .gear-wrap .gear-sub { color: var(--text-tertiary); opacity: 0.22; }
-.gear-wrap .gear-hub { color: var(--blue); opacity: 0.45; }
+.gear-wrap .gear-hub { color: var(--blue); opacity: 0.62; }
 
 /* ===== 手机首屏提示（箭头 + 手掌）===== */
 .mobile-hint {
@@ -1444,14 +1448,7 @@ body.is-light .rotate-stage .panel::after { color: #9b8a76; }
 body.is-light ::selection { background: rgba(168, 118, 31, 0.24); color: #2c2118; }
 
 /* ===== 手机端齿轮（放在最后，避免被基础样式覆盖）===== */
-@media (max-width: 768px) {
-  .gear-wrap {
-    width: 104px; height: 104px; margin-top: -52px;
-    opacity: 0.62;
-  }
-  .gear-wrap.gear-left  { left: -52px; }   /* 104px 的一半 */
-  .gear-wrap.gear-right { right: -52px; }
-}
+/* 齿轮已用 clamp 自适应，无需按断点覆盖尺寸 */
 
 @media (prefers-reduced-motion: reduce) {
   .rotate-stage { transition: none; }
