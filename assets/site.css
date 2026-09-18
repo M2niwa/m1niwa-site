@@ -1323,7 +1323,8 @@ body.rotate-body { overflow: hidden; height: 100vh; background: var(--bg); }
      否则滚到的那一屏是 opacity:0 的空白 */
   .rotate-stage .panel { opacity: 1 !important; pointer-events: auto !important; }
   .rotate-progress { display: none; }
-  .gear-wrap { display: none !important; }   /* 齿轮在手机上隐藏；mobile-hint 需保留（手机才显示） */
+  /* 手机上齿轮同样显示，只是缩小并更贴边 */
+  .gear-wrap { left: -22px; width: 112px; height: 112px; margin-top: -56px; opacity: 0.45; }
 }
 
 /* ===== 语言开关（移到 header 右侧后）===== */

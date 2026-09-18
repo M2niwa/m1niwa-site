@@ -1,19 +1,12 @@
-可读性全量修复：三个颜色变量对比度不达标
+齿轮调整 + 去掉技术栈说明
 
-用 WCAG 对比度标准扫了全站可见文字（排除装饰性元素），
-共 92 处不达标，集中在几个复用的颜色变量上：
+1. 手机端也显示齿轮
+   之前 @media(max-width:768px) 里把 .gear-wrap 直接隐藏了，现在改为缩小显示：
+   112px（桌面 168px）、更贴边（left -22px）、透明度降到 0.45，避免在小屏上抢内容。
 
-  --text-tertiary  #9b8a76   奶底仅 2.97:1   （.tag 48 处、.hnav-meta 7 处、
-                                              .section-label、.technote-date、
-                                              .contact-value、页脚等）
-  --blue           #a8761f   奶底仅 3.54:1   （强调色做文字时也不达标）
-  --text-secondary #6d5c4a   奶底 5.70:1     （勉强达标但层次不够）
+2. 双端去掉副齿轮
+   移除 #gearSub 的 SVG 段，spinGear() 里也不再驱动它 —— 只留主齿轮随转盘旋转。
 
-修复后（奶底 / 白卡）:
-  --text            #2c2118   13.97 / 15.70
-  --text-secondary  #5c4d3d    7.23 /  8.13
-  --text-tertiary   #6f6250    5.28 /  5.93
-  --blue            #8d6116    4.85 /  5.45   （白字置于其上 5.45）
-  --blue-hover      #74500f
-
-全部 ≥4.5:1（AA 正文标准），同时保留了三个层级的明暗梯度。
+3. 去掉技术栈面板的说明文字
+   删掉 <p class="section-desc">「从深度学习到后端开发，从 Agent 构建到硬件 DIY」，
+   首页 skills 面板与 /skills 独立页同步生效（共用 frag-skills 片段）。
