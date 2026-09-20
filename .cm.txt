@@ -1,22 +1,40 @@
-齿轮机型适配 + 可见度修复
+SEO 优化：补全 canonical / Open Graph / Twitter Card / 结构化数据
 
-问题: 手机上"看不到齿轮" —— 截图确认齿轮其实一直在渲染, 只是淡到看不见。
-根因是透明度两层相乘:
-    .gear-wrap  opacity 0.62
-  x .gear-main  opacity 0.34
-  = 实际可见度 0.21
-电脑上勉强能看出轮廓, 手机小屏 + 亮度不高就彻底糊没了。
+审计发现的问题与修复:
 
-修复:
-1. 去掉双层衰减, 合并为一层
-   .gear-wrap  0.62 -> 0.95
-   .gear-main  0.34 -> 0.50
-   实测有效可见度 0.21 -> 0.47
+1. 博客文章 33 篇（最严重）
+   - 0 篇有 rel=canonical —— 缺 canonical 容易被判重复内容
+   - 全部缺 og / twitter 标签，分享到社交平台没标题没图
+   - 全部缺 BlogPosting 结构化数据（搜索引擎拿不到作者/日期）
+   - head 里还带着「字体 <link> 嵌套」的老 bug：整个 <link>+<style>
+     被塞进了另一个 <link> 的 href 属性里，导致 JetBrains Mono 一直加载失败
 
-2. 尺寸真正做机型自适应 (原来只有 768px 一个断点, 且尺寸写死)
-   改用 clamp(92px, 21vmin, 168px):
-     390px 宽手机   21vmin = 82px  -> 取下限 92px
-     桌面 1600px    21vmin = 336px -> 取上限 168px
-     平板等中间尺寸 自动插值
-   定位用 calc(var(--gear-size) / -2) —— 任何尺寸下都恰好埋进边缘一半。
-   同时删掉原来 768px 断点里那套写死的尺寸覆盖。
+2. 博客列表页
+   - 缺 description、canonical、og、结构化数据
+   - 补 CollectionPage + description
+
+3. 首页
+   - 原有 Person 结构化数据，补 WebSite 节点（含作者、语言）
+   - 补 twitter:image
+
+4. skills / games 子页
+   - 补 twitter card + WebPage 结构化数据
+
+5. 社交分享图
+   - 新增 /assets/og-cover.png（1200x630，奶油底 + 齿轮装饰，
+     与站点视觉一致），全站 og:image / twitter:image 指向它
+
+6. sitemap
+   - 原来只收录 30 篇博客，实际有 33 篇 —— 补上缺失的 3 条，现 40 条
+   - 确认变体页（v1-v5 / versions）未被收录
+
+7. noindex 回归修复
+   - v1-v5 与 versions.html 的 noindex 之前丢失了，这些是首页备选方案
+     与画廊，内容高度重复，必须挡在索引外，已补回（noindex, follow）
+
+8. 工程改动
+   - 新增 .rebuild/seo_blog_posts.py（博客文章批量注入）
+   - 新增 .rebuild/seo_site.py（列表页/首页/子页/noindex）
+   - 把 SEO 步骤接到 build_horizontal.py 末尾 —— 因为 build_base 与
+     build_variants 都会重写 HTML，SEO 注入必须发生在它们之后，
+     否则会被覆盖（实测确认过这个覆盖行为）

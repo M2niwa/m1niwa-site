@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Linux 性能调优笔记：perf、eBPF 与火焰图 — M1NIWA</title>
 <meta name="description" content="服务器性能排查实战：perf 采样、eBPF 动态追踪与火焰图可视化——面对 CPU 飙高与延迟上升时的一套系统化诊断工具链。">
-<link href="<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
-<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
 <style>
 :root{--bg:#1a1210;--bg-elevated:#241c16;--border:rgba(196,156,88,0.10);--text:#efe4cf;--text-secondary:#b8a080;--text-tertiary:#9c8465;--blue:#d4a040;--blue-hover:#e8c060;--radius:10px;--radius-sm:6px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -36,6 +36,19 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 .blog-footer a{color:var(--text-secondary);text-decoration:none}
 .blog-footer a:hover{color:var(--blue)}
 </style>
+<link rel="canonical" href="https://m1niwa.com/blog/blog-21.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="Linux 性能调优笔记：perf、eBPF 与火焰图">
+<meta property="og:description" content="服务器性能排查实战：perf 采样、eBPF 动态追踪与火焰图可视化——面对 CPU 飙高与延迟上升时的一套系统化诊断工具链。">
+<meta property="og:url" content="https://m1niwa.com/blog/blog-21.html">
+<meta property="og:image" content="https://m1niwa.com/assets/og-cover.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Linux 性能调优笔记：perf、eBPF 与火焰图">
+<meta name="twitter:description" content="服务器性能排查实战：perf 采样、eBPF 动态追踪与火焰图可视化——面对 CPU 飙高与延迟上升时的一套系统化诊断工具链。">
+<meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Linux 性能调优笔记：perf、eBPF 与火焰图", "description": "服务器性能排查实战：perf 采样、eBPF 动态追踪与火焰图可视化——面对 CPU 飙高与延迟上升时的一套系统化诊断工具链。", "url": "https://m1niwa.com/blog/blog-21.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-21.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-06-20", "dateModified": "2025-06-20"}</script>
 </head>
 <body>
 <nav class="blog-nav"><div class="blog-nav-inner"><a href="/index.html" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">Linux 性能调优</span></div></nav>

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rust 从 Python 开发者视角入门 — M1NIWA</title>
 <meta name="description" content="以 Python 开发者的视角理解 Rust：所有权 vs 引用计数、Cargo vs pip、Result vs Exception、闭包对比，以及为什么 Rust 是写 Python 扩展的最佳语言。">
-<link href="<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
-<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -165,6 +165,19 @@ body {
 }
 .blog-footer a:hover { color: #d4a040; }
 </style>
+<link rel="canonical" href="https://m1niwa.com/blog/blog-18.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="Rust 从 Python 开发者视角入门">
+<meta property="og:description" content="以 Python 开发者的视角理解 Rust：所有权 vs 引用计数、Cargo vs pip、Result vs Exception、闭包对比，以及为什么 Rust 是写 Python 扩展的最佳语言。">
+<meta property="og:url" content="https://m1niwa.com/blog/blog-18.html">
+<meta property="og:image" content="https://m1niwa.com/assets/og-cover.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rust 从 Python 开发者视角入门">
+<meta name="twitter:description" content="以 Python 开发者的视角理解 Rust：所有权 vs 引用计数、Cargo vs pip、Result vs Exception、闭包对比，以及为什么 Rust 是写 Python 扩展的最佳语言。">
+<meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Rust 从 Python 开发者视角入门", "description": "以 Python 开发者的视角理解 Rust：所有权 vs 引用计数、Cargo vs pip、Result vs Exception、闭包对比，以及为什么 Rust 是写 Python 扩展的最佳语言。", "url": "https://m1niwa.com/blog/blog-18.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-18.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-09-28", "dateModified": "2025-09-28"}</script>
 </head>
 <body>
 <div class="container">

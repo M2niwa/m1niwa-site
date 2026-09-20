@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ONNX Runtime 推理优化：从Python到C++ — M1NIWA</title>
 <meta name="description" content="ONNX 模型导出常见坑（dynamic axes、opset版本）、ORT Session 配置、IOBinding 零拷贝、Python vs C++ 推理延迟对比，以及量化模型在 ONNX 中的部署实践。">
-<link href="<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
-<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -165,6 +165,19 @@ body {
 }
 .blog-footer a:hover { color: #d4a040; }
 </style>
+<link rel="canonical" href="https://m1niwa.com/blog/blog-19.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="ONNX Runtime 推理优化：从Python到C++">
+<meta property="og:description" content="ONNX 模型导出常见坑（dynamic axes、opset版本）、ORT Session 配置、IOBinding 零拷贝、Python vs C++ 推理延迟对比，以及量化模型在 ONNX 中的部署实践。">
+<meta property="og:url" content="https://m1niwa.com/blog/blog-19.html">
+<meta property="og:image" content="https://m1niwa.com/assets/og-cover.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ONNX Runtime 推理优化：从Python到C++">
+<meta name="twitter:description" content="ONNX 模型导出常见坑（dynamic axes、opset版本）、ORT Session 配置、IOBinding 零拷贝、Python vs C++ 推理延迟对比，以及量化模型在 ONNX 中的部署实践。">
+<meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "ONNX Runtime 推理优化：从Python到C++", "description": "ONNX 模型导出常见坑（dynamic axes、opset版本）、ORT Session 配置、IOBinding 零拷贝、Python vs C++ 推理延迟对比，以及量化模型在 ONNX 中的部署实践。", "url": "https://m1niwa.com/blog/blog-19.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-19.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-08-10", "dateModified": "2025-08-10"}</script>
 </head>
 <body>
 <div class="container">
