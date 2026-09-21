@@ -160,13 +160,13 @@ body {
 <meta name="twitter:title" content="两周速成 FastAPI：4 个项目的真实踩坑记录">
 <meta name="twitter:description" content="从零开始用 FastAPI 构建了 4 个后端项目——REST API、WebSocket 服务、文件上传系统、认证服务。本文复盘每个项目踩到的坑和教训。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "两周速成 FastAPI：4 个项目的真实踩坑记录", "description": "从零开始用 FastAPI 构建了 4 个后端项目——REST API、WebSocket 服务、文件上传系统、认证服务。本文复盘每个项目踩到的坑和教训。", "url": "https://m1niwa.com/blog/blog-2.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-2.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "两周速成 FastAPI：4 个项目的真实踩坑记录", "description": "从零开始用 FastAPI 构建了 4 个后端项目——REST API、WebSocket 服务、文件上传系统、认证服务。本文复盘每个项目踩到的坑和教训。", "url": "https://m1niwa.com/blog/blog-2", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-2"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png"}</script>
 </head>
 <body>
 <div class="container">
 
   <nav class="blog-nav">
-    <a href="/index.html">← M1NIWA</a>
+    <a href="/">← M1NIWA</a>
     <span class="nav-blog-title">两周速成 FastAPI</span>
   </nav>
 
@@ -252,9 +252,42 @@ app.add_middleware(AuthMiddleware, ...)       # 最内层：认证</code></pre>
 
   </article>
 
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-3.html"><span class="related-date">2026-06-10</span><span class="related-name">FastAPI + WebSocket 实时仪表盘：从零到部署</span></a>
+      <a class="related-item" href="/blog/blog-23.html"><span class="related-date">2025-05-25</span><span class="related-name">FastAPI 依赖注入原理：从源码理解 Depends()</span></a>
+      <a class="related-item" href="/blog/blog-1.html"><span class="related-date">2026-07-05</span><span class="related-name">FastAPI + PostgreSQL 性能调优：索引策略与连接池优化</span></a>
+    </div>
+  </aside>
+
+
   <footer class="blog-footer">
     <p>© 2026 M1NIWA</p>
-    <p style="margin-top: 8px;"><a href="/index.html">← 返回首页</a></p>
+    <p style="margin-top: 8px;"><a href="/">← 返回首页</a></p>
   </footer>
 
 </div>

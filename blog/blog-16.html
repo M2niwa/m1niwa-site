@@ -177,14 +177,14 @@ body {
 <meta name="twitter:title" content="GitHub Actions CI/CD 实战：自动测试与部署流水线">
 <meta name="twitter:description" content="从零搭建 GitHub Actions 持续集成流水线，覆盖 matrix 并行测试、pip 缓存加速、secrets 管理以及 rsync 自动部署到 VPS 的完整方案。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "GitHub Actions CI/CD 实战：自动测试与部署流水线", "description": "从零搭建 GitHub Actions 持续集成流水线，覆盖 matrix 并行测试、pip 缓存加速、secrets 管理以及 rsync 自动部署到 VPS 的完整方案。", "url": "https://m1niwa.com/blog/blog-16.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-16.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-11-01", "dateModified": "2025-11-01"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "GitHub Actions CI/CD 实战：自动测试与部署流水线", "description": "从零搭建 GitHub Actions 持续集成流水线，覆盖 matrix 并行测试、pip 缓存加速、secrets 管理以及 rsync 自动部署到 VPS 的完整方案。", "url": "https://m1niwa.com/blog/blog-16", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-16"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-11-01", "dateModified": "2025-11-01"}</script>
 </head>
 <body>
 <div class="container">
 
   <!-- Top Navigation -->
   <nav class="blog-nav">
-    <a href="/index.html">← M1NIWA</a>
+    <a href="/">← M1NIWA</a>
     <span class="nav-blog-title">GitHub Actions CI/CD</span>
   </nav>
 
@@ -276,10 +276,43 @@ jobs:
 
   </article>
 
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-6.html"><span class="related-date">2026-04-28</span><span class="related-name">三应用合一：用 Docker Compose 把 AWS 账单从 $45 砍到 $8</span></a>
+      <a class="related-item" href="/blog/blog-33.html"><span class="related-date">2026-04-08</span><span class="related-name">个人站上 Cloudflare Pages：网络路径与 SPA 回退配置</span></a>
+      <a class="related-item" href="/blog/blog-21.html"><span class="related-date">2025-06-20</span><span class="related-name">Linux 性能调优笔记：perf、eBPF 与火焰图</span></a>
+    </div>
+  </aside>
+
+
   <!-- Footer -->
   <footer class="blog-footer">
     <p>© 2025 M1NIWA</p>
-    <p style="margin-top: 8px;"><a href="/index.html">← 返回首页</a></p>
+    <p style="margin-top: 8px;"><a href="/">← 返回首页</a></p>
   </footer>
 
 </div>

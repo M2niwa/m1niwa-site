@@ -163,13 +163,13 @@ body {
 <meta name="twitter:title" content="三应用合一：用 Docker Compose 把 AWS 账单从 $45 砍到 $8">
 <meta name="twitter:description" content="三个原本独立部署的小应用——API 服务、定时任务、静态站点——通过 Docker Compose 合并到一台 Lightsail 实例上，运维成本骤降。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "三应用合一：用 Docker Compose 把 AWS 账单从 $45 砍到 $8", "description": "三个原本独立部署的小应用——API 服务、定时任务、静态站点——通过 Docker Compose 合并到一台 Lightsail 实例上，运维成本骤降。", "url": "https://m1niwa.com/blog/blog-6.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-6.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-04-28", "dateModified": "2026-04-28"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "三应用合一：用 Docker Compose 把 AWS 账单从 $45 砍到 $8", "description": "三个原本独立部署的小应用——API 服务、定时任务、静态站点——通过 Docker Compose 合并到一台 Lightsail 实例上，运维成本骤降。", "url": "https://m1niwa.com/blog/blog-6", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-6"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-04-28", "dateModified": "2026-04-28"}</script>
 </head>
 <body>
 
 <nav class="blog-nav">
   <div class="blog-nav-inner">
-    <a href="/index.html" class="blog-nav-back">← M1NIWA</a>
+    <a href="/" class="blog-nav-back">← M1NIWA</a>
     <span class="blog-nav-title">三应用合一</span>
   </div>
 </nav>
@@ -316,10 +316,43 @@ services:
 
     <p>从 $45 到 $8，不只是一次账单优化，更是一次架构上的"返璞归真"。很多时候，我们下意识地用更多的服务器来换取心智安宁，却忘了<strong>简单本身就是最好的可靠性</strong>。如果你也有几个散落各处的小应用，不妨试试把它们塞进一台机器——你可能只需要一个下午的 docker-compose 时间。</p>
   </article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-4.html"><span class="related-date">2026-05-27</span><span class="related-name">Python 生产级 Docker 镜像：从 1.2GB 到 120MB</span></a>
+      <a class="related-item" href="/blog/blog-33.html"><span class="related-date">2026-04-08</span><span class="related-name">个人站上 Cloudflare Pages：网络路径与 SPA 回退配置</span></a>
+      <a class="related-item" href="/blog/blog-16.html"><span class="related-date">2025-11-01</span><span class="related-name">GitHub Actions CI/CD 实战：自动测试与部署流水线</span></a>
+    </div>
+  </aside>
+
 </div>
 
 <footer class="blog-footer">
-  <p>© 2026 M1NIWA · <a href="/index.html">返回首页</a></p>
+  <p>© 2026 M1NIWA · <a href="/">返回首页</a></p>
 </footer>
 
 </body>

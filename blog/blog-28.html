@@ -40,12 +40,12 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; ba
 <meta name="twitter:title" content="Linux生存指南：一个Windows用户的30天">
 <meta name="twitter:description" content="从安装 WSL2 到能独立在 Linux 上工作，这 30 天踩过的坑和真正有用的命令：chmod 数字权限、软硬链接的区别、tmux 拯救 SSH 断连、htop 替代任务管理器、grep+awk+sed 三件套。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Linux生存指南：一个Windows用户的30天", "description": "从安装 WSL2 到能独立在 Linux 上工作，这 30 天踩过的坑和真正有用的命令：chmod 数字权限、软硬链接的区别、tmux 拯救 SSH 断连、htop 替代任务管理器、grep+awk+sed 三件套。", "url": "https://m1niwa.com/blog/blog-28.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-28.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-01-25", "dateModified": "2026-01-25"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Linux生存指南：一个Windows用户的30天", "description": "从安装 WSL2 到能独立在 Linux 上工作，这 30 天踩过的坑和真正有用的命令：chmod 数字权限、软硬链接的区别、tmux 拯救 SSH 断连、htop 替代任务管理器、grep+awk+sed 三件套。", "url": "https://m1niwa.com/blog/blog-28", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-28"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-01-25", "dateModified": "2026-01-25"}</script>
 </head>
 <body>
 <div class="container">
 <nav class="blog-nav">
-<a href="/index.html">← M1NIWA</a>
+<a href="/">← M1NIWA</a>
 <span class="nav-blog-title">Linux 生存指南</span>
 </nav>
 <header class="article-header">
@@ -96,9 +96,42 @@ Ctrl+B D                   # 断开会话（进程继续跑）</code></pre>
 <p style="color:var(--text-tertiary);font-size:13px">--- 约 680 字</p>
 
 </article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-32.html"><span class="related-date">2025-07-08</span><span class="related-name">ComfyUI 本地部署：国内网络下的镜像源与模型复用</span></a>
+      <a class="related-item" href="/blog/blog-21.html"><span class="related-date">2025-06-20</span><span class="related-name">Linux 性能调优笔记：perf、eBPF 与火焰图</span></a>
+      <a class="related-item" href="/blog/blog-9.html"><span class="related-date">2026-03-19</span><span class="related-name">宠物面部识别边缘部署：RK3588 实测 48fps</span></a>
+    </div>
+  </aside>
+
 <footer class="blog-footer">
 <p>© 2026 M1NIWA</p>
-<p style="margin-top: 8px;"><a href="/index.html">← 返回首页</a></p>
+<p style="margin-top: 8px;"><a href="/">← 返回首页</a></p>
 </footer>
 </div>
 </body>

@@ -64,13 +64,13 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <meta name="twitter:title" content="宠物面部识别边缘部署：RK3588 实测 48fps">
 <meta name="twitter:description" content="在RK3588边缘设备上部署MobileNet-V3宠物面部识别模型，实测48fps推理速度，模型仅5.74MB。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "宠物面部识别边缘部署：RK3588 实测 48fps", "description": "在RK3588边缘设备上部署MobileNet-V3宠物面部识别模型，实测48fps推理速度，模型仅5.74MB。", "url": "https://m1niwa.com/blog/blog-9.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-9.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-03-19", "dateModified": "2026-03-19"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "宠物面部识别边缘部署：RK3588 实测 48fps", "description": "在RK3588边缘设备上部署MobileNet-V3宠物面部识别模型，实测48fps推理速度，模型仅5.74MB。", "url": "https://m1niwa.com/blog/blog-9", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-9"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-03-19", "dateModified": "2026-03-19"}</script>
 </head>
 <body>
 
 <nav class="blog-nav">
   <div class="blog-nav-inner">
-    <a href="/index.html" class="blog-nav-back">← M1NIWA</a>
+    <a href="/" class="blog-nav-back">← M1NIWA</a>
     <span class="blog-nav-title">边缘部署</span>
   </div>
 </nav>
@@ -117,10 +117,43 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
     <hr>
     <p>边缘部署不是把模型"塞进去"就完事了。从模型选型、量化策略、到 runtime 的内存管理，每一步都影响最终的用户体验。RK3588 + MobileNet-V3 的组合在宠物面部识别这个场景下，目前是我验证过性价比最高的方案。下一步计划探索多路视频流并发推理，让一台设备同时处理 4-8 路摄像头。</p>
   </article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-10.html"><span class="related-date">2026-02-28</span><span class="related-name">跨领域迁移学习：从CSOD到USOD的梯度解耦实践</span></a>
+      <a class="related-item" href="/blog/blog-11.html"><span class="related-date">2026-02-14</span><span class="related-name">轻量化水下检测网络：SG-JEDNet-Tiny 的设计与训练</span></a>
+      <a class="related-item" href="/blog/blog-12.html"><span class="related-date">2026-01-27</span><span class="related-name">多光谱RGBT数据融合：水下场景的另一种解法</span></a>
+    </div>
+  </aside>
+
 </div>
 
 <footer class="blog-footer">
-  <p>© 2026 M1NIWA · <a href="/index.html">返回首页</a> · 本文约 810 字</p>
+  <p>© 2026 M1NIWA · <a href="/">返回首页</a> · 本文约 810 字</p>
 </footer>
 
 </body>

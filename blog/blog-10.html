@@ -64,13 +64,13 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <meta name="twitter:title" content="跨领域迁移学习：从CSOD到USOD的梯度解耦实践">
 <meta name="twitter:description" content="将CSOD伪装目标检测的梯度解耦方法迁移到USOD水下显著性检测，DGNet架构改造与GGEM模块设计。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "跨领域迁移学习：从CSOD到USOD的梯度解耦实践", "description": "将CSOD伪装目标检测的梯度解耦方法迁移到USOD水下显著性检测，DGNet架构改造与GGEM模块设计。", "url": "https://m1niwa.com/blog/blog-10.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-10.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-02-28", "dateModified": "2026-02-28"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "跨领域迁移学习：从CSOD到USOD的梯度解耦实践", "description": "将CSOD伪装目标检测的梯度解耦方法迁移到USOD水下显著性检测，DGNet架构改造与GGEM模块设计。", "url": "https://m1niwa.com/blog/blog-10", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-10"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-02-28", "dateModified": "2026-02-28"}</script>
 </head>
 <body>
 
 <nav class="blog-nav">
   <div class="blog-nav-inner">
-    <a href="/index.html" class="blog-nav-back">← M1NIWA</a>
+    <a href="/" class="blog-nav-back">← M1NIWA</a>
     <span class="blog-nav-title">梯度解耦</span>
   </div>
 </nav>
@@ -105,10 +105,43 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
     <hr>
     <p>从 CSOD 到 USOD 的迁移不是简单的网络复制，而是对梯度信号传播机制的重新思考。GFM 和 GGEM 这两个模块的设计哲学可以概括为一句话：<strong>让网络学会"在哪里看得仔细，在哪里粗略扫过"</strong>——这正是梯度解耦的核心价值。</p>
   </article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-11.html"><span class="related-date">2026-02-14</span><span class="related-name">轻量化水下检测网络：SG-JEDNet-Tiny 的设计与训练</span></a>
+      <a class="related-item" href="/blog/blog-9.html"><span class="related-date">2026-03-19</span><span class="related-name">宠物面部识别边缘部署：RK3588 实测 48fps</span></a>
+      <a class="related-item" href="/blog/blog-26.html"><span class="related-date">2026-03-10</span><span class="related-name">从零学PyTorch：第一周的五个坑</span></a>
+    </div>
+  </aside>
+
 </div>
 
 <footer class="blog-footer">
-  <p>© 2026 M1NIWA · <a href="/index.html">返回首页</a> · 本文约 820 字</p>
+  <p>© 2026 M1NIWA · <a href="/">返回首页</a> · 本文约 820 字</p>
 </footer>
 
 </body>

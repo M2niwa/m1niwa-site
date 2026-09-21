@@ -177,14 +177,14 @@ body {
 <meta name="twitter:title" content="FastAPI + PostgreSQL 性能调优：索引策略与连接池优化">
 <meta name="twitter:description" content="在实际项目中，数据库往往是 API 的性能瓶颈。本文从索引设计、查询优化和连接池配置三个维度，拆解 FastAPI 项目中 PostgreSQL 性能调优的实战经验。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "FastAPI + PostgreSQL 性能调优：索引策略与连接池优化", "description": "在实际项目中，数据库往往是 API 的性能瓶颈。本文从索引设计、查询优化和连接池配置三个维度，拆解 FastAPI 项目中 PostgreSQL 性能调优的实战经验。", "url": "https://m1niwa.com/blog/blog-1.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-1.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-07-05", "dateModified": "2026-07-05"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "FastAPI + PostgreSQL 性能调优：索引策略与连接池优化", "description": "在实际项目中，数据库往往是 API 的性能瓶颈。本文从索引设计、查询优化和连接池配置三个维度，拆解 FastAPI 项目中 PostgreSQL 性能调优的实战经验。", "url": "https://m1niwa.com/blog/blog-1", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-1"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-07-05", "dateModified": "2026-07-05"}</script>
 </head>
 <body>
 <div class="container">
 
   <!-- Top Navigation -->
   <nav class="blog-nav">
-    <a href="/index.html">← M1NIWA</a>
+    <a href="/">← M1NIWA</a>
     <span class="nav-blog-title">FastAPI + PostgreSQL 性能调优</span>
   </nav>
 
@@ -284,10 +284,43 @@ engine = create_engine(
 
   </article>
 
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-2.html"><span class="related-date">2026-06-23</span><span class="related-name">两周速成 FastAPI：4个项目的真实踩坑记录</span></a>
+      <a class="related-item" href="/blog/blog-3.html"><span class="related-date">2026-06-10</span><span class="related-name">FastAPI + WebSocket 实时仪表盘：从零到部署</span></a>
+      <a class="related-item" href="/blog/blog-15.html"><span class="related-date">2025-11-18</span><span class="related-name">PyTorch 2.0 torch.compile：一行代码加速30%</span></a>
+    </div>
+  </aside>
+
+
   <!-- Footer -->
   <footer class="blog-footer">
     <p>© 2026 M1NIWA</p>
-    <p style="margin-top: 8px;"><a href="/index.html">← 返回首页</a></p>
+    <p style="margin-top: 8px;"><a href="/">← 返回首页</a></p>
   </footer>
 
 </div>

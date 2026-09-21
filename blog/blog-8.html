@@ -64,13 +64,13 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <meta name="twitter:title" content="React 组件样式管理：借鉴 React Native 的 StyleSheet 思维">
 <meta name="twitter:description" content="将 React Native 的声明式样式管理引入 Web 项目——useStyles hook 实现与 RSC 兼容性探讨。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "React 组件样式管理：借鉴 React Native 的 StyleSheet 思维", "description": "将 React Native 的声明式样式管理引入 Web 项目——useStyles hook 实现与 RSC 兼容性探讨。", "url": "https://m1niwa.com/blog/blog-8.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-8.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-04-01", "dateModified": "2026-04-01"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "React 组件样式管理：借鉴 React Native 的 StyleSheet 思维", "description": "将 React Native 的声明式样式管理引入 Web 项目——useStyles hook 实现与 RSC 兼容性探讨。", "url": "https://m1niwa.com/blog/blog-8", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-8"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-04-01", "dateModified": "2026-04-01"}</script>
 </head>
 <body>
 
 <nav class="blog-nav">
   <div class="blog-nav-inner">
-    <a href="/index.html" class="blog-nav-back">← M1NIWA</a>
+    <a href="/" class="blog-nav-back">← M1NIWA</a>
     <span class="blog-nav-title">React 样式管理</span>
   </div>
 </nav>
@@ -169,10 +169,43 @@ function Card({ title }: { title: string }) {
 
     <p>React Native 的 StyleSheet 不是一个"移动端的妥协方案"，而是一套<strong>经过千万级应用验证的组件样式方法论</strong>。在 React 生态被 Tailwind 全面笼罩的今天，重新审视这套 API 的设计哲学，或许能帮我们跳出"类名 vs CSS-in-JS"的二元对立，找到第三条路。</p>
   </article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-22.html"><span class="related-date">2025-06-05</span><span class="related-name">TypeScript 类型体操：从入门到放弃再到真香</span></a>
+      <a class="related-item" href="/blog/blog-4.html"><span class="related-date">2026-05-27</span><span class="related-name">Python 生产级 Docker 镜像：从 1.2GB 到 120MB</span></a>
+      <a class="related-item" href="/blog/blog-5.html"><span class="related-date">2026-05-12</span><span class="related-name">LLM 幻觉检测：零额外 token 开销的新思路</span></a>
+    </div>
+  </aside>
+
 </div>
 
 <footer class="blog-footer">
-  <p>© 2026 M1NIWA · <a href="/index.html">返回首页</a></p>
+  <p>© 2026 M1NIWA · <a href="/">返回首页</a></p>
 </footer>
 
 </body>

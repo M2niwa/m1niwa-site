@@ -49,10 +49,10 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <meta name="twitter:title" content="ComfyUI 本地部署：国内网络下的镜像源与模型复用">
 <meta name="twitter:description" content="在 RTX 3070 8GB 机器上装 ComfyUI 的踩坑实录：多 Python 环境与 CUDA torch 对齐、torchaudio DLL 兼容、Gitee 镜像与清华源，以及 hf-mirror/ModelScope 下载模型的格式陷阱和秋叶包模型复用。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "ComfyUI 本地部署：国内网络下的镜像源与模型复用", "description": "在 RTX 3070 8GB 机器上装 ComfyUI 的踩坑实录：多 Python 环境与 CUDA torch 对齐、torchaudio DLL 兼容、Gitee 镜像与清华源，以及 hf-mirror/ModelScope 下载模型的格式陷阱和秋叶包模型复用。", "url": "https://m1niwa.com/blog/blog-32.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-32.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-07-08", "dateModified": "2025-07-08"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "ComfyUI 本地部署：国内网络下的镜像源与模型复用", "description": "在 RTX 3070 8GB 机器上装 ComfyUI 的踩坑实录：多 Python 环境与 CUDA torch 对齐、torchaudio DLL 兼容、Gitee 镜像与清华源，以及 hf-mirror/ModelScope 下载模型的格式陷阱和秋叶包模型复用。", "url": "https://m1niwa.com/blog/blog-32", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-32"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-07-08", "dateModified": "2025-07-08"}</script>
 </head>
 <body>
-<nav class="blog-nav"><div class="blog-nav-inner"><a href="/index.html" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">ComfyUI 国内部署</span></div></nav>
+<nav class="blog-nav"><div class="blog-nav-inner"><a href="/" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">ComfyUI 国内部署</span></div></nav>
 <div class="blog-container">
 <header class="article-header"><h1 class="article-title">ComfyUI 本地部署：国内网络下的镜像源与模型复用</h1><p class="article-date">2025-07-08</p></header>
 <article class="article-body">
@@ -80,7 +80,40 @@ mv /d/comfy/ComfyUI/models/checkpoints/flux1-dev-bnb-nf4-v2.safetensors \
 <p>8GB 显存下 nf4 量化的 Flux dev 能稳定跑 20 步，动漫向用 Animagine XL 4.0 fp8。装完之后回头看，唯一的「硬知识」其实只有两条：torch 的 CUDA 版本必须全链对齐，以及 ComfyUI 对模型目录有严格要求——其余时间都花在等下载上了。</p>
 <p style="color:var(--text-tertiary);font-size:13px">--- 约 780 字</p>
 </article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-30.html"><span class="related-date">2025-11-28</span><span class="related-name">第一次读论文：如何高效啃AI学术文献</span></a>
+      <a class="related-item" href="/blog/blog-5.html"><span class="related-date">2026-05-12</span><span class="related-name">LLM 幻觉检测：零额外 token 开销的新思路</span></a>
+      <a class="related-item" href="/blog/blog-28.html"><span class="related-date">2026-01-25</span><span class="related-name">Linux生存指南：一个Windows用户的30天</span></a>
+    </div>
+  </aside>
+
 </div>
-<footer class="blog-footer"><p>© 2026 M1NIWA · <a href="/index.html">返回首页</a> · <a href="/blog/index.html">全部文章</a></p></footer>
+<footer class="blog-footer"><p>© 2026 M1NIWA · <a href="/">返回首页</a> · <a href="/blog/index.html">全部文章</a></p></footer>
 </body>
 </html>

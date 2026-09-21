@@ -11,8 +11,8 @@
 <meta name="twitter:title" content="建站记：从零搭建个人网站的每个选择">
 <meta name="twitter:description" content="个人网站搭建全决策复盘：为什么不用框架、为什么选 FastAPI 而非 Flask、暗色单强调色设计哲学，以及先上线再迭代的部署选择。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "建站记：从零搭建个人网站的每个选择", "description": "个人网站搭建全决策复盘：为什么不用框架、为什么选 FastAPI 而非 Flask、暗色单强调色设计哲学，以及先上线再迭代的部署选择。", "url": "https://m1niwa.com/blog/blog-25.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-25.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-05-10", "dateModified": "2025-05-10"}</script>
-</head><body><nav class="blog-nav"><div class="blog-nav-inner"><a href="/index.html" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">建站记</span></div></nav><div class="blog-container"><header class="article-header"><h1 class="article-title">建站记：从零搭建个人网站的每个选择</h1><p class="article-date">2025-05-10</p></header><article class="article-body"><p>这是本博客的第一篇文章。记录从"想有个个人网站"到真正部署上线的全过程，以及每个技术选择背后的考量。</p>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "建站记：从零搭建个人网站的每个选择", "description": "个人网站搭建全决策复盘：为什么不用框架、为什么选 FastAPI 而非 Flask、暗色单强调色设计哲学，以及先上线再迭代的部署选择。", "url": "https://m1niwa.com/blog/blog-25", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-25"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-05-10", "dateModified": "2025-05-10"}</script>
+</head><body><nav class="blog-nav"><div class="blog-nav-inner"><a href="/" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">建站记</span></div></nav><div class="blog-container"><header class="article-header"><h1 class="article-title">建站记：从零搭建个人网站的每个选择</h1><p class="article-date">2025-05-10</p></header><article class="article-body"><p>这是本博客的第一篇文章。记录从"想有个个人网站"到真正部署上线的全过程，以及每个技术选择背后的考量。</p>
 
 <h2>为什么不用框架</h2><p>第一个决定：<strong>纯 HTML + 内联 CSS + Vanilla JS</strong>。没有 React、没有 Vue、没有 Next.js。原因很简单——个人网站的交互复杂度不需要框架。一个单页滚动 + 几个 WebSocket 推送的仪表盘，原生 JS 足够。</p><p>用框架的隐性成本往往被低估：构建工具配置、依赖版本冲突、Bundle 体积膨胀、SEO 配置。对于一个只有自己维护的站点，这些成本远大于收益。</p>
 
@@ -20,4 +20,37 @@
 
 <h2>设计哲学</h2><p>网站的视觉风格参考了 Linear 和 dogfight360。核心原则三个：暗色底色（#1a1210 蓝黑，不刺眼）、单一强调色（#d4a040 蓝，不花哨）、系统字体（不快不慢）。</p><p>最开始 Amber Terminal 风格被评价"太丑"之后，我意识到一个道理：<strong>个人网站不需要炫技</strong>。访客是来看你的项目和技术能力的，不是来欣赏 CSS 动画。干净、清晰、信息密度高——比任何花哨效果都重要。</p>
 
-<h2>部署选择</h2><p>服务器是本机 Windows + Uvicorn。为什么不买云服务器？因为网站访问量不大（日均个位数），8GB 内存的本地机器绰绰有余。等访问量真的上来，迁移到 VPS 也就是改个 IP 的事。</p><p>回头看，建站最大的收获不是技术栈选择，而是一个信念：<strong>先上线，再迭代</strong>。完美的架构永远不存在，但一个能跑的网站今天就能帮你展示自己。</p><p style="color:var(--text-tertiary);font-size:13px">--- 约 650 字</p></article></div><footer class="blog-footer"><p>© 2026 M1NIWA · <a href="/index.html">返回首页</a> · <a href="/blog/index.html">全部文章</a></p></footer></body></html>
+<h2>部署选择</h2><p>服务器是本机 Windows + Uvicorn。为什么不买云服务器？因为网站访问量不大（日均个位数），8GB 内存的本地机器绰绰有余。等访问量真的上来，迁移到 VPS 也就是改个 IP 的事。</p><p>回头看，建站最大的收获不是技术栈选择，而是一个信念：<strong>先上线，再迭代</strong>。完美的架构永远不存在，但一个能跑的网站今天就能帮你展示自己。</p><p style="color:var(--text-tertiary);font-size:13px">--- 约 650 字</p></article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-23.html"><span class="related-date">2025-05-25</span><span class="related-name">FastAPI 依赖注入原理：从源码理解 Depends()</span></a>
+      <a class="related-item" href="/blog/blog-1.html"><span class="related-date">2026-07-05</span><span class="related-name">FastAPI + PostgreSQL 性能调优：索引策略与连接池优化</span></a>
+      <a class="related-item" href="/blog/blog-2.html"><span class="related-date">2026-06-23</span><span class="related-name">两周速成 FastAPI：4个项目的真实踩坑记录</span></a>
+    </div>
+  </aside>
+</div><footer class="blog-footer"><p>© 2026 M1NIWA · <a href="/">返回首页</a> · <a href="/blog/index.html">全部文章</a></p></footer></body></html>

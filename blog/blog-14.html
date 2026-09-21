@@ -177,14 +177,14 @@ body {
 <meta name="twitter:title" content="Python asyncio 深入：协程调度与事件循环">
 <meta name="twitter:description" content="深入理解 Python asyncio 的协程调度机制、事件循环原理，掌握 Task 与 Future 的区别，以及如何在 FastAPI 中正确选择 async def 与 def 路由。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Python asyncio 深入：协程调度与事件循环", "description": "深入理解 Python asyncio 的协程调度机制、事件循环原理，掌握 Task 与 Future 的区别，以及如何在 FastAPI 中正确选择 async def 与 def 路由。", "url": "https://m1niwa.com/blog/blog-14.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-14.html"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-12-05", "dateModified": "2025-12-05"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Python asyncio 深入：协程调度与事件循环", "description": "深入理解 Python asyncio 的协程调度机制、事件循环原理，掌握 Task 与 Future 的区别，以及如何在 FastAPI 中正确选择 async def 与 def 路由。", "url": "https://m1niwa.com/blog/blog-14", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-14"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2025-12-05", "dateModified": "2025-12-05"}</script>
 </head>
 <body>
 <div class="container">
 
   <!-- Top Navigation -->
   <nav class="blog-nav">
-    <a href="/index.html">← M1NIWA</a>
+    <a href="/">← M1NIWA</a>
     <span class="nav-blog-title">Python asyncio 深入</span>
   </nav>
 
@@ -259,10 +259,43 @@ async def main():
 
   </article>
 
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-4.html"><span class="related-date">2026-05-27</span><span class="related-name">Python 生产级 Docker 镜像：从 1.2GB 到 120MB</span></a>
+      <a class="related-item" href="/blog/blog-5.html"><span class="related-date">2026-05-12</span><span class="related-name">LLM 幻觉检测：零额外 token 开销的新思路</span></a>
+      <a class="related-item" href="/blog/blog-7.html"><span class="related-date">2026-04-15</span><span class="related-name">向量数据库在免费容器上挂了——基础设施复盘</span></a>
+    </div>
+  </aside>
+
+
   <!-- Footer -->
   <footer class="blog-footer">
     <p>© 2025 M1NIWA</p>
-    <p style="margin-top: 8px;"><a href="/index.html">← 返回首页</a></p>
+    <p style="margin-top: 8px;"><a href="/">← 返回首页</a></p>
   </footer>
 
 </div>
