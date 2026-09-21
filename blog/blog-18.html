@@ -184,7 +184,7 @@ body {
 
   <!-- Top Navigation -->
   <nav class="blog-nav">
-    <a href="/index.html">← M1NIWA</a>
+    <a href="/">← M1NIWA</a>
     <span class="nav-blog-title">Rust 入门</span>
   </nav>
 
@@ -265,10 +265,43 @@ result = multiply(3, 4)</code></pre>
 
   </article>
 
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-26"><span class="related-date">2026-03-10</span><span class="related-name">从零学PyTorch：第一周的五个坑</span></a>
+      <a class="related-item" href="/blog/blog-14"><span class="related-date">2025-12-05</span><span class="related-name">Python asyncio 深入：协程调度与事件循环</span></a>
+      <a class="related-item" href="/blog/blog-23"><span class="related-date">2025-05-25</span><span class="related-name">FastAPI 依赖注入原理：从源码理解 Depends()</span></a>
+    </div>
+  </aside>
+
+
   <!-- Footer -->
   <footer class="blog-footer">
     <p>© 2025 M1NIWA</p>
-    <p style="margin-top: 8px;"><a href="/index.html">← 返回首页</a></p>
+    <p style="margin-top: 8px;"><a href="/">← 返回首页</a></p>
   </footer>
 
 </div>
