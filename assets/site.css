@@ -1008,6 +1008,13 @@ body.hscroll-body { overflow: hidden; height: 100vh; }
   background: linear-gradient(140deg, var(--blue), var(--amber));
   color: #14100c;
   box-shadow: 0 0 32px var(--accent-glow, rgba(212,160,64,0.32));
+  overflow: hidden;                 /* 裁圆图片 */
+}
+.hero-side .hero-avatar picture { display: block; width: 100%; height: 100%; }
+.hero-side .hero-avatar img {
+  width: 100%; height: 100%; display: block;
+  object-fit: cover;
+  object-position: center 38%;       /* 脸部略偏上 */
 }
 .hero-side .lang-switch-wrap { margin: 0; }
 .hero-side .hero-name {
