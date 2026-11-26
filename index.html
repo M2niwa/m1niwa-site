@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>M1NIWA — AI 开发 / 游戏策划</title>
-<meta name="description" content="M1NIWA 的个人网站：AI 开发、游戏策划、嵌入式 DIY，含 30 篇技术博客与精选作品集。">
+<meta name="description" content="M1NIWA 的个人网站：AI 开发、游戏策划、嵌入式 DIY，含 37 篇技术博客与精选作品集。">
 <meta name="theme-color" content="#1a1210">
 <link rel="canonical" href="https://m1niwa.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a1210'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='700' text-anchor='middle' fill='%23d4a040' font-family='system-ui,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="M1NIWA">
 <meta property="og:title" content="M1NIWA — M1NIWA · AI 开发 & 游戏策划">
-<meta property="og:description" content="AI 开发、游戏策划、嵌入式 DIY 个人站，30 篇技术博客与精选作品集。">
+<meta property="og:description" content="AI 开发、游戏策划、嵌入式 DIY 个人站，37 篇技术博客与精选作品集。">
 <meta property="og:url" content="https://m1niwa.com/">
 <meta name="twitter:card" content="summary">
 <link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -274,7 +274,7 @@
       <!-- JS renders 4 featured posts -->
     </div>
     <div class="blog-more-wrap">
-      <a href="/blog/index.html" class="blog-more-btn" data-en="View all 33 posts →">查看全部 33 篇文章 →</a>
+      <a href="/blog/index.html" class="blog-more-btn" data-en="View all 37 posts →">查看全部 37 篇文章 →</a>
     </div>
   </div>
 </section>
@@ -655,17 +655,19 @@ renderWines();
 
 /* ===== TECH NOTES ===== */
 const techNotes = [
+  { title:'液态神经网络做 FPS 决策层：一个负结果与三个方法学错误', summary:'CfC 在 FPS 大战场决策层上没有可测优势。比结论更值钱的是三个差点让结论反向的方法学错误：参数量对齐、样本量、教师的时间依赖。', url:'/blog/blog-34.html', date:'2026-11-24', tags:['LNN','强化学习','方法论'] },
+  { title:'一个测不出问题的指标：3D 资产验收里的五轮对抗审计', summary:'99 万面扫描机甲拆 21 件接入游戏，五轮独立审计逐轮推翻上一轮结论。三种结构性失明的判据：参考物与被测物同源、接受别人给的配准偏移、以及一个永远返回 0% 的穿帮指标。', url:'/blog/blog-37.html', date:'2026-10-29', tags:['3D','验收','方法论'] },
+  { title:'NO_PROXY 被静默遮蔽：一次跨三套应用的模型链路排查', summary:'三套应用同时报 502 和 transport failed，换模型无效。根因是一个七字符的 Windows 用户变量把 .env 里的 NO_PROXY 整条盖掉，模型请求全走代理。', url:'/blog/blog-35.html', date:'2026-09-30', tags:['网络','排查','DevOps'] },
+  { title:'门禁全红但代码没错：沙箱里跑 Godot 的一次假失败', summary:'Godot 在受限沙箱里写不了 %APPDATA%，不报错而是直接 SIGSEGV——门禁全部假红、每份输出 0 字节。含 A/B 定位、判别口径，以及假红掩盖的一个真实缺陷。', url:'/blog/blog-36.html', date:'2026-08-26', tags:['Godot','测试','排查'] },
   { title:'FastAPI + PostgreSQL 性能调优：索引策略与连接池优化', summary:'从索引设计、查询优化和连接池配置三个维度，拆解 FastAPI 项目中 PostgreSQL 性能调优的实战经验。', url:'/blog/blog-1.html', date:'2026-07-05', tags:['FastAPI','PostgreSQL','性能'] },
-  { title:'个人站上 Cloudflare Pages：网络路径与 SPA 回退配置', summary:'从 GitHub Pages 迁到 Cloudflare Pages 的网络观察——Anycast 边缘节点、大陆可达性，以及 _redirects/_headers 里值得抄的两条静态站配置。', url:'/blog/blog-33.html', date:'2026-04-08', tags:['DevOps','建站','网络'] },
-  { title:'断线重连策略：从 3 秒轮询到指数退避', summary:'固定间隔重连为何伤害服务器；带抖动的指数退避公式、应用层心跳和 visibilitychange 处理——来自实时仪表盘的踩坑实录。', url:'/blog/blog-31.html', date:'2025-08-25', tags:['WebSocket','前端','网络'] },
-  { title:'ComfyUI 本地部署：国内网络下的镜像源与模型复用', summary:'多 Python 与 CUDA torch 对齐、torchaudio DLL 兼容、Gitee 镜像与清华源，以及模型下载的格式陷阱与秋叶包复用。', url:'/blog/blog-32.html', date:'2025-07-08', tags:['ComfyUI','AI','工具'] },
 ];
 
 const techNotesEn = [
+  { title:'Liquid Neural Nets for FPS Decision Layers: A Negative Result', summary:'CfC showed no measurable advantage as an FPS decision layer. Worth more than the result: three methodology errors that could each have flipped the conclusion.', url:'/blog/blog-34.html', date:'2026-11-24', tags:['LNN','RL','Methodology'] },
+  { title:'A Metric That Cannot Fail: Five Rounds of Adversarial Audits on a 3D Asset', summary:'A 990k-triangle scanned mech cut into 21 parts and hooked into a game engine, audited five times with each round overturning the last. Three structurally blind criteria: reference sharing the source mesh, an accepted registration offset, and an always-zero clipping metric.', url:'/blog/blog-37.html', date:'2026-10-29', tags:['3D','QA','Methodology'] },
+  { title:'Silently Shadowed NO_PROXY: Tracing a Model Link Across Three Apps', summary:'Three apps failed at once with 502 and transport errors; switching models did not help. A seven-character Windows user variable had been shadowing the long NO_PROXY list in .env.', url:'/blog/blog-35.html', date:'2026-09-30', tags:['Network','Debug','DevOps'] },
+  { title:'All-Red Test Gate, Clean Code: A False Failure Running Godot in a Sandbox', summary:'Godot cannot write %APPDATA% inside a restricted sandbox and dies with SIGSEGV instead of an error — every gate case falsely red, every output 0 bytes. The A/B, the tell-tale, and a real defect it was hiding.', url:'/blog/blog-36.html', date:'2026-08-26', tags:['Godot','Testing','Debug'] },
   { title:'FastAPI + PostgreSQL Performance: Indexing & Connection Pooling', summary:'Deep dive into PostgreSQL performance tuning for FastAPI — index design, query optimization, and connection pool configuration from real project experience.', url:'/blog/blog-1.html', date:'2026-07-05', tags:['FastAPI','PostgreSQL','Perf'] },
-  { title:'Moving to Cloudflare Pages: Network Path & SPA Fallback', summary:'From GitHub Pages to Cloudflare Pages — Anycast edges, mainland reachability, and two static-site configs worth stealing from _redirects/_headers.', url:'/blog/blog-33.html', date:'2026-04-08', tags:['DevOps','Hosting','Network'] },
-  { title:'Reconnect Strategy: From 3s Polling to Exponential Backoff', summary:'Why fixed-interval reconnects hurt your server; a jittered exponential backoff, app-level heartbeat, and visibilitychange handling from a live dashboard.', url:'/blog/blog-31.html', date:'2025-08-25', tags:['WebSocket','Frontend','Network'] },
-  { title:'ComfyUI on a Budget GPU: Mirrors & Model Reuse in China', summary:'Aligning multiple Pythons with CUDA torch, torchaudio DLL fixes, Gitee/tuna mirrors, and the model-format traps behind hf-mirror and ModelScope.', url:'/blog/blog-32.html', date:'2025-07-08', tags:['ComfyUI','AI','Tools'] },
 ];
 
 function renderTechNotes() {

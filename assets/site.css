@@ -323,6 +323,13 @@ body::after {
   font-size: 14px; color: var(--text-secondary);
   line-height: 1.55; margin-bottom: 14px;
 }
+.project-card p.card-note {
+  font-size: 12.5px; line-height: 1.5;
+  color: #c98a6a; margin-top: -6px;
+  padding: 6px 9px; border-radius: 5px;
+  background: rgba(201,138,106,0.08);
+  border-left: 2px solid rgba(201,138,106,0.45);
+}
 .project-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
 .project-link {
   display: inline-flex; align-items: center; gap: 4px;

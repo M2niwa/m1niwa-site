@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>液态神经网络做 FPS 决策层：一个负结果与三个方法学错误 — M1NIWA</title>
+<meta name="description" content="用 CfC 液态神经网络做 FPS 大战场决策层的完整负结果：行为克隆打平教师、决策频率漂移只惩罚无记忆模型、OOD 准确率纹丝不动。以及三个差点让结论反向的方法学错误：参数量对齐、样本量、教师的时间依赖。">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
+<style>
+:root{--bg:#1a1210;--bg-elevated:#241c16;--border:rgba(196,156,88,0.10);--text:#efe4cf;--text-secondary:#b8a080;--text-tertiary:#9c8465;--blue:#d4a040;--blue-hover:#e8c060;--radius:10px;--radius-sm:6px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(212,160,64,0.35);color:#fff}
+.blog-nav{position:sticky;top:0;z-index:100;background:rgba(26,18,16,0.88);backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--border)}
+.blog-nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1100px;margin:0 auto;padding:0 24px}
+.blog-nav-back{font-size:16px;font-weight:600;color:var(--blue);text-decoration:none}
+.blog-nav-back:hover{color:var(--blue-hover)}
+.blog-nav-title{font-size:14px;color:var(--text-secondary)}
+.blog-container{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+.article-header{margin-bottom:48px;padding-top:24px}
+.article-title{font-size:36px;font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:12px;color:var(--text)}
+.article-date{font-size:14px;color:var(--text-tertiary)}
+.article-body{font-size:17px;line-height:1.8}
+.article-body p{margin-bottom:20px}
+.article-body h2{font-size:24px;font-weight:700;margin:48px 0 16px;padding-left:16px;border-left:3px solid var(--blue)}
+.article-body ul,.article-body ol{margin-bottom:20px;padding-left:24px}
+.article-body li{margin-bottom:8px}
+.article-body strong{color:#fff;font-weight:600}
+.article-body a{color:var(--blue)}
+.article-body code{font-family:'JetBrains Mono',monospace;font-size:14px;background:rgba(212,160,64,0.10);color:var(--blue-hover);padding:2px 6px;border-radius:4px}
+.article-body pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;overflow-x:auto;font-size:13px;line-height:1.7;color:var(--text)}
+.article-body pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.article-body table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:15px}
+.article-body th,.article-body td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left}
+.article-body th{color:var(--text-secondary);font-weight:600;font-size:13px;letter-spacing:0.04em}
+.blog-footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
+.blog-footer p{font-size:13px;color:var(--text-tertiary)}
+.blog-footer a{color:var(--text-secondary);text-decoration:none}
+.blog-footer a:hover{color:var(--blue)}
+</style>
+<link rel="canonical" href="https://m1niwa.com/blog/blog-34">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="液态神经网络做 FPS 决策层：一个负结果与三个方法学错误">
+<meta property="og:description" content="用 CfC 液态神经网络做 FPS 大战场决策层的完整负结果，以及三个差点让结论反向的方法学错误。">
+<meta property="og:url" content="https://m1niwa.com/blog/blog-34">
+<meta property="og:image" content="https://m1niwa.com/assets/og-cover.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="液态神经网络做 FPS 决策层：一个负结果与三个方法学错误">
+<meta name="twitter:description" content="用 CfC 液态神经网络做 FPS 大战场决策层的完整负结果，以及三个差点让结论反向的方法学错误。">
+<meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "液态神经网络做 FPS 决策层：一个负结果与三个方法学错误", "description": "用 CfC 液态神经网络做 FPS 大战场决策层的完整负结果，以及三个差点让结论反向的方法学错误。", "url": "https://m1niwa.com/blog/blog-34", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-34"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-11-24", "dateModified": "2026-11-24"}</script>
+</head>
+<body>
+<nav class="blog-nav"><div class="blog-nav-inner"><a href="/" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">液态网络 · 负结果</span></div></nav>
+<div class="blog-container">
+<header class="article-header"><h1 class="article-title">液态神经网络做 FPS 决策层：一个负结果与三个方法学错误</h1><p class="article-date">2026-11-24</p></header>
+<article class="article-body">
+<p>我想验证液态神经网络（CfC）的连续时间归纳偏置在游戏 AI 上到底有没有用。靶子选的是 FPS 大战场：12v12、三个控制点、征服票数模式。结论是没用——但比结论更值得写下来的是三个方法学错误，每一个都足以让结论完全反向。</p>
+
+<h2>任务是怎么切的</h2>
+<p>只做<strong>决策层</strong>：给每个 AI 一份结构化战术态势，让它输出高层意图（去哪个战术节点、什么姿态、集火谁、要不要用技能），不含任何射击或移动的低层指令。执行层全是传统游戏工程——40 个战术节点预计算全场 Dijkstra 距离场，运行时 O(1) 梯度下降；Bresenham 视线；解析概率命中 = 基准 × 距离衰减 × 掩体 × 目标移动 × 压制 × 高地 × 姿态。</p>
+<p>竞技场 128×128 m、1 m/cell、程序化生成且 180° 旋转对称（建筑、岩石、高地、控制点、战术节点全部镜像）；20 Hz tick、5 Hz 感知、决策间隔可变 0.05–2.5 s，决策到生效约 220 ms 反应延迟。单核 900–1300 tick/s，150 秒一局三秒跑完——这个吞吐量是能把实验做下去的底线，否则一个 30 局的对照要跑一晚上。</p>
+<p>这么切的目的很明确：如果网络只负责"选哪个位"，时间就不是连续量，CfC 的立论（能处理不规则采样间隔）就没有着力点。</p>
+
+<h2>实验一：行为克隆的上限就是教师</h2>
+<p>教师是上一代 FSM bot。为了公平，固定编码器宽度 <code>hid=96</code>。</p>
+<table>
+<thead><tr><th>模型</th><th>参数</th><th>模仿精度</th><th>胜率</th><th>K/D</th></tr></thead>
+<tbody>
+<tr><td>CfC (LNN)</td><td>63.9k</td><td>0.834</td><td>0.50</td><td>1.01</td></tr>
+<tr><td>GRU</td><td>82.7k</td><td>0.864</td><td>0.33</td><td>1.02</td></tr>
+<tr><td>MLP（无记忆）</td><td>26.8k</td><td>0.828</td><td>0.50</td><td>1.05</td></tr>
+</tbody>
+</table>
+<p>三个模型都只是学会了教师，打平或略输。这一条本身不意外——模仿学习的天花板就是教师，K/D 全在 1.0 附近说明它们复刻的是一个均势策略。</p>
+
+<h2>实验二：频率漂移只惩罚无记忆模型</h2>
+<p>训练时决策间隔是 ~U(0.15, 1.0) s，测试时给三档分布外频率：</p>
+<table>
+<thead><tr><th>模型</th><th>fast (7–20Hz)</th><th>in (1–6.7Hz)</th><th>slow (0.4–1Hz)</th></tr></thead>
+<tbody>
+<tr><td>CfC</td><td>0.83</td><td>0.67 / 0.50*</td><td>0.50 / 0.50*</td></tr>
+<tr><td>GRU</td><td>0.83</td><td>0.50 / 0.33*</td><td>0.67 / 0.33*</td></tr>
+<tr><td>MLP</td><td><strong>0.33</strong></td><td>0.50</td><td><strong>0.17</strong></td></tr>
+</tbody>
+</table>
+<p style="color:var(--text-tertiary);font-size:14px">* 前者 6 局样本，后者 12 局；两个都列出来就是为了暴露方差。</p>
+<p>能读出来的只有一件事：<strong>决策频率漂移只惩罚无记忆模型</strong>（MLP 0.50 → 0.17），CfC 和 GRU 都不掉。记忆有用，但那是 RNN 的共性，不是 LNN 的特性。</p>
+<p>更硬的证据在离线侧：CfC 的 OOD 准确率在 fast / in / slow 三档分别是 <strong>0.824 / 0.834 / 0.836</strong>，几乎完全不变。也就是说模型根本没在用"经过了多少时间"这个输入——哪怕训练时 <code>dt</code> 是真的记进去的。</p>
+
+<h2>三个差点让结论反向的方法学错误</h2>
+<p><strong>1. 参数量对齐必须对齐感知编码宽度，不是对齐总数。</strong>第一版按总参数量做对齐搜索，结果 MLP 拿到 <code>hid=124</code>、CfC 只有 72——CfC 的参数被循环单元吃掉了，编码器反而更窄。修正对齐口径之后，CfC 的模仿精度从 0.62 追到 0.83。<strong>一个不公平的对比能让结论完全反向</strong>，而且它不会报错，只会让你得到一个干净漂亮的错误答案。</p>
+<p><strong>2. 8 局样本的胜率波动可达 ±0.25。</strong>同一个 CfC 在 8 局时是 0.75，扩到 16 局掉到 0.50。任何小于 0.2 的胜率差距，至少需要 30 局才谈得上显著。我一开始拿 8 局的结果下过结论，后来全部作废。</p>
+<p><strong>3. 教师不看时间，学生就不会学时间。</strong>用 RuleBot 当教师时 OOD 准确率纹丝不动；我特意换成带记忆有效期的 MemoryBot 当教师，OOD 仍然不掉——说明连教师本身对时间的依赖也太弱。要让学生学会某个变量，教师必须真的依赖它，光把它放进观测里没有用。</p>
+
+<h2>结论：范式错了，不是模型错了</h2>
+<p>FPS 战术决策的核心是<strong>当前可见信息 + 空间记忆（最后已知位置）</strong>，不是时间积分。把 CfC 放在"选哪个战术位"这一层，怎么调参都不会有差别。要检验连续时间网络，任务必须让时间成为有效自变量——敌人轨迹预测、需要外推的追击，或者信息有明确半衰期的场景。</p>
+<p>顺带一提，"类人"这件事在这个实验里完全没测。我只有一个代理指标：决策翻转率 0.04–0.27。拿它当"类人"的证据是自欺欺人。</p>
+
+<h2>后续：真正的瓶颈不在网络</h2>
+<p>往下挖队员层之后，发现更值钱的东西。这个决策网络的动作空间<strong>名义 8 个自由度，实际只有 3 个</strong>：开火头 100% 是 <code>fire=1</code>（死的）、<code>flank</code> 姿态在全部训练数据里出现 <strong>0 次</strong>、93.1% 的姿态标着 <code>advance</code>——而其中一半还是"站着不动 + advance"，既没移动，也没拿到 <code>hold</code> 的命中加成，姿态这一维等于纯浪费。补上 flank / retreat / fire=0 之后，四个输出头才全部活起来，换任务敏感性 83.8% → 85.3%。</p>
+<p>但更决定性的是一次消融：同一个模型、同一批种子，只把小队分配从"贪心分边点"换成"全员压中点"，对 rule 的胜率从 <strong>0.000 涨到 0.375</strong>，击杀 72.1 → 113.6。原因是它被派到了没有敌人的地方——实测它到最近敌人的距离中位 82–89 m，而对手只有 48–52 m，因为 8–10 个敌人全压中点，它却被分到了两个边点。</p>
+<p>所以在这个项目里，"网络选得好不好"排在很后面。排在前面的是：动作空间有没有表达力、观测里有没有那个变量、以及上层给的任务是不是合理。这三件事任何一个出问题，换模型都是白费。</p>
+<p style="color:var(--text-tertiary);font-size:13px">--- 约 1400 字</p>
+</article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-5"><span class="related-date">2026-05-12</span><span class="related-name">LLM 幻觉检测：零额外 token 开销的新思路</span></a>
+      <a class="related-item" href="/blog/blog-27"><span class="related-date">2026-02-20</span><span class="related-name">理解Transformer：手推一遍Self-Attention</span></a>
+      <a class="related-item" href="/blog/blog-26"><span class="related-date">2026-03-10</span><span class="related-name">从零学PyTorch：第一周的五个坑</span></a>
+    </div>
+  </aside>
+
+</div>
+<footer class="blog-footer"><p>© 2026 M1NIWA · <a href="/">返回首页</a> · <a href="/blog/index.html">全部文章</a></p></footer>
+</body>
+</html>

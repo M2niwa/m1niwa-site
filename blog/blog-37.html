@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一个测不出问题的指标：3D 资产验收里的五轮对抗审计 — M1NIWA</title>
+<meta name="description" content="把 99 万面扫描机甲拆成 21 件并接入游戏，五轮独立审计逐轮推翻上一轮结论。核心发现是三种结构性失明的验收判据：拿源模型渲染当"真值参考"、接受别人给的配准偏移、以及一个永远返回 0% 的穿帮指标。">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
+<style>
+:root{--bg:#1a1210;--bg-elevated:#241c16;--border:rgba(196,156,88,0.10);--text:#efe4cf;--text-secondary:#b8a080;--text-tertiary:#9c8465;--blue:#d4a040;--blue-hover:#e8c060;--radius:10px;--radius-sm:6px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(212,160,64,0.35);color:#fff}
+.blog-nav{position:sticky;top:0;z-index:100;background:rgba(26,18,16,0.88);backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--border)}
+.blog-nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1100px;margin:0 auto;padding:0 24px}
+.blog-nav-back{font-size:16px;font-weight:600;color:var(--blue);text-decoration:none}
+.blog-nav-back:hover{color:var(--blue-hover)}
+.blog-nav-title{font-size:14px;color:var(--text-secondary)}
+.blog-container{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+.article-header{margin-bottom:48px;padding-top:24px}
+.article-title{font-size:36px;font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:12px;color:var(--text)}
+.article-date{font-size:14px;color:var(--text-tertiary)}
+.article-body{font-size:17px;line-height:1.8}
+.article-body p{margin-bottom:20px}
+.article-body h2{font-size:24px;font-weight:700;margin:48px 0 16px;padding-left:16px;border-left:3px solid var(--blue)}
+.article-body ul,.article-body ol{margin-bottom:20px;padding-left:24px}
+.article-body li{margin-bottom:8px}
+.article-body strong{color:#fff;font-weight:600}
+.article-body a{color:var(--blue)}
+.article-body code{font-family:'JetBrains Mono',monospace;font-size:14px;background:rgba(212,160,64,0.10);color:var(--blue-hover);padding:2px 6px;border-radius:4px}
+.article-body pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;overflow-x:auto;font-size:13px;line-height:1.7;color:var(--text)}
+.article-body pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.article-body table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:15px}
+.article-body th,.article-body td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left}
+.article-body th{color:var(--text-secondary);font-weight:600;font-size:13px;letter-spacing:0.04em}
+.blog-footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
+.blog-footer p{font-size:13px;color:var(--text-tertiary)}
+.blog-footer a{color:var(--text-secondary);text-decoration:none}
+.blog-footer a:hover{color:var(--blue)}
+</style>
+<link rel="canonical" href="https://m1niwa.com/blog/blog-37">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="一个测不出问题的指标：3D 资产验收里的五轮对抗审计">
+<meta property="og:description" content="五轮独立审计逐轮推翻上一轮结论，暴露三种结构性失明的验收判据。">
+<meta property="og:url" content="https://m1niwa.com/blog/blog-37">
+<meta property="og:image" content="https://m1niwa.com/assets/og-cover.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="一个测不出问题的指标：3D 资产验收里的五轮对抗审计">
+<meta name="twitter:description" content="五轮独立审计逐轮推翻上一轮结论，暴露三种结构性失明的验收判据。">
+<meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "一个测不出问题的指标：3D 资产验收里的五轮对抗审计", "description": "五轮独立审计逐轮推翻上一轮结论，暴露三种结构性失明的验收判据。", "url": "https://m1niwa.com/blog/blog-37", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-37"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-10-29", "dateModified": "2026-10-29"}</script>
+</head>
+<body>
+<nav class="blog-nav"><div class="blog-nav-inner"><a href="/" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">3D 资产 · 对抗审计</span></div></nav>
+<div class="blog-container">
+<header class="article-header"><h1 class="article-title">一个测不出问题的指标：3D 资产验收里的五轮对抗审计</h1><p class="article-date">2026-10-29</p></header>
+<article class="article-body">
+<p>有一台 18 米高的扫描机甲（原始网格 99 万面），要拆成游戏能用的零件、挂骨骼、做 LOD、接进引擎。真正难的不是这些技术活，是<strong>判断"做完了没有"</strong>。这条线上一共跑了五轮独立审计，每一轮都被要求"不得采信前面的结论，自己量"。五轮下来，最有价值的产出不是修了什么，而是发现了三种<strong>结构性失明的验收判据</strong>——它们都返回一个漂亮的数字，然后什么也没测出来。</p>
+
+<h2>第一种：拿源模型渲染当"真值参考"</h2>
+<p>最初的验收方法是"正/侧正交轮廓 IoU"，被用户当场否掉：只看 2D 投影，3D 可能是方块堆，游戏里照样难看。这个批评是对的。</p>
+<p>于是方案改成：直接取原始扫描网格 → decimate 到 7 万面 → 按关节切分 → 挂关节导出。听起来是把"从零重建"换成了"改造原模型"，风险小多了。</p>
+<p>但第二轮审计翻出了这件事：那两张被当作"真值"的 <code>ortho_front.png</code> / <code>ortho_side.png</code>，<strong>根本不是用户给的产品图</strong>。它们是用 <code>ref_ortho_from_fbx.py</code> 把<strong>同一个源扫描 FBX</strong>、用<strong>同一台正交相机</strong>（ortho_scale 19.6、中心 (0,0,9)、900×1400）渲出来的。而交付件就是这个网格减面加切分的结果。</p>
+<p>所以那个 IoU 在结构上<strong>不可能失败</strong>。它只能证明"减面没把模型弄变形、切分没弄移位"，完全不能证明"像不像产品"。用户当初否定 2D IoU 是对的，而新方案只是把同一个毛病换了个包装——参考物和被测物同源，等于自己跟自己比。</p>
+<p>这条的教训不是"别用 IoU"，而是：<strong>先问参考物是哪来的。</strong>如果参考和被测共享同一个上游，任何相似度指标都必然高分，而高分不代表任何事。</p>
+
+<h2>第二种：接受别人给的配准偏移</h2>
+<p>第三轮审计碰上一个更隐蔽的问题。项目脚本量出的正面 IoU 是 <strong>0.8428</strong>，脚本里先把重建图左移了 <code>round(0.15×71.4286)=11 px</code>——理由是"参考图体轴不在画幅中心，偏了 0.15 m"。</p>
+<p>审计员没有直接采信这个偏移，而是对同一对图做了 ±30 px 的位移扫描：</p>
+<table>
+<thead><tr><th>位移</th><th>IoU</th></tr></thead>
+<tbody>
+<tr><td>−0.15 m（脚本口径）</td><td>0.8428</td></tr>
+<tr><td><strong>0（同相机同画幅）</strong></td><td><strong>0.9325</strong></td></tr>
+<tr><td>+0.15 m</td><td>0.8375</td></tr>
+<tr><td>±0.30 m</td><td>0.777 / 0.763</td></tr>
+</tbody>
+</table>
+<p>峰值精确落在 <code>dx=0, dy=0</code>。理由不是"这样分数更高"，而是几何本身对齐：重建是用剖面提取脚本从这两张正交图逐层提的，脚本里 <code>CX=450</code>（画幅中心），<code>profiles.json</code> 里的 x 就是画幅 x——<strong>0.15 是坐标系的换算，不是两张图之间的位移</strong>。只把重建左移 0.15 m，等于把同一个偏移扣了两次。</p>
+<p>更硬的旁证：参考正面与背视镜像在 dx=0 时 IoU = <strong>0.9994</strong>，说明两台相机在 x=0 上互为镜像，画幅中心就是世界 x=0。</p>
+<p>把偏移去掉之后，真实数字是正面 0.9325 / 侧面 0.9469，而不是 0.84。同时暴露出两个之前被掩盖的问题：重建高度 <strong>17.344 m</strong> 对参考 18.002 m（差 0.656 m，不过），以及左肩有一块 <strong>1.113 m² 的游离板</strong>。</p>
+<p>这条的教训：<strong>配准偏移必须自己扫出来，不能接受别人给的数。</strong>而且"分数变高"不能作为接受某个偏移的理由——要能说出那个偏移在几何上为什么成立。</p>
+
+<h2>第三种：一个永远返回 0% 的穿帮指标</h2>
+<p>这是五轮里最值得写的一条。前一轮审计提出硬指标：动画时"看到内壁/背面"的像素占比必须 ≤0.1%。项目方修完之后报出的数字是——各种姿势下 <strong>0.00% 到 0.07%</strong>，全过。</p>
+<p>终审审计员换了两种完全独立的方法复测：</p>
+<ul>
+<li><strong>背面着色图</strong>：Cycles 纯自发光材质，用 <code>Geometry→Backfacing</code> 混合，正面灰、背面纯红，透明底。红像素 ÷ 机体像素 = 看到背面的比例。先用对照组验证判据本身：法线朝外的立方体 0% 红，翻转绕序的立方体 100% 红。</li>
+<li><strong>几何射线</strong>：正交相机逐像素 <code>ray_cast</code>，记录第一击是否背面、第二击距离，按掠射修正 <code>eff = 距离 × |n·d|</code>。<code>eff≈2 cm</code> 说明是正常的 2 cm 闭合薄壳，<code>eff>8 cm</code> 才是真的透过开口看到内腔。</li>
+</ul>
+<p>结果：</p>
+<table>
+<thead><tr><th>姿势</th><th>背面可见 %（正/3-4）</th><th>真开孔 %（正/3-4）</th></tr></thead>
+<tbody>
+<tr><td>静止</td><td><strong>38.5 / 29.0</strong></td><td>1.31 / 0.16</td></tr>
+<tr><td>裙甲 35°</td><td>36.4 / 28.9</td><td>1.28 / 0.37</td></tr>
+<tr><td>屈肘 85°</td><td>39.4 / 28.1</td><td>1.24 / 0.24</td></tr>
+<tr><td>抬膝 60°</td><td>38.4 / 36.3</td><td>1.39 / 0.21</td></tr>
+<tr><td>全叠加</td><td>39.0 / 35.0</td><td>1.19 / <strong>1.60</strong></td></tr>
+</tbody>
+</table>
+<p>静止姿势就有 <strong>38.5% 的可见面是背面</strong>，而且动画几乎不改变这个数（36–40%）——说明这是<strong>静态法线反向</strong>，不是动画撕开的口子。开孔也超标十到二十倍。</p>
+<p>那个 0.00% 也复现出来了，而且<strong>数字是真的</strong>：Workbench 背面剔除开/关的 alpha 差确实是 0.00–0.07%。问题在于这个判据<strong>看不到问题</strong>——零件已经改成 2 cm 闭合薄壳，剔除掉近层背面之后，2 cm 后面的另一层把轮廓填满了，alpha 永远不空，差值必然为 0。它测的是"有没有空像素"，不是"看到的是不是内壁"。</p>
+<p>根因后来也查清了：网格里有 <strong>1,129 条非流形边</strong>，<code>normals_make_consistent(inside=False)</code> 在这种网格上判不出"外面"，于是逐岛方向随机。这个毛病不是最后一步引入的——三个版本的背面率分别是 39.0% / 31.5% / 37.3%，<strong>四轮里一直存在，只是之前没人量过背面</strong>。GLB 里也能独立看到：21 件里有 8 件签名体积为负。</p>
+
+<h2>顺带被推翻的两件事</h2>
+<p><strong>一，"21 件全部闭合"不成立。</strong>逐件查边界边，总共 514 条，而且每一条长度都<strong>恰好 0.02</strong>（总周长 10.28）——这是 Solidify 的 rim 没焊上的 2 cm 缝，不是大洞。真正的闭合件只有 2 个。</p>
+<p><strong>二，游戏截图不能当穿帮判据。</strong>四视图里机体只有约 150 px 高、头部不到 30 px，还叠着准星、MISSION START 横幅和挂载武器。这个分辨率下"看不出双影"没有任何信息量。另外侧视图背包后方有一簇疑似脱开的深色碎块，但按配置查，位置和形状都对得上挂载的弹舱/砍刀，<strong>当前证据无法确证</strong>——审计员把这条写成了"大概率是挂载件，但证据不足"，没有硬判。</p>
+
+<h2>结果与代价</h2>
+<p>终审结论是"还需 2 轮"，不是通过。但同时确认了三项真实进步：开孔从 2.04–2.82% 降到 0.16–1.60%；面数预算从"大腿 311 面 vs 躯干 11,656 面"（37 倍失衡）修到 0.29 的合理比；以及"截图早于最终 GLB"的时序缺口补上了——GLB 12:27:36 写入 → 12:27:47 重导入 → 12:27:57 出图 → 12:28:12 提交，链条闭合。</p>
+<p>形态那条也没过：头部缺面罩和 V 鳍，而那是整台机最认人的特征，只能算"同一族、不是同一台"。</p>
+<p>这套流程真正的成本不在算力，在<strong>每一轮都要重新建立"我怎么知道"</strong>。审计员要自己写 GLB 解析器、自己定掩膜口径、自己设计对照组验证判据本身。但换来的东西也很明确：三个"返回漂亮数字但什么也没测"的判据被逐个揪出来，其中一个（0.00% 穿帮率）如果没人复测，会一直躺在交付报告里当证据。</p>
+
+<h2>能带走的三条</h2>
+<p><strong>一，一个不可能失败的判据不是判据。</strong>参考物和被测物同源、或者判据的物理前提被改动消掉了（薄壳填满轮廓），指标就必然恒为最优值。设计判据时先问：<strong>什么情况下它会失败？</strong>答不出来就是没在设计判据。</p>
+<p><strong>二，自己扫参数，别接受别人给的偏移。</strong>0.15 m 的位移让分数从 0.93 掉到 0.84，而它被当成"正确的口径"写进了脚本。这种错误不会报错，只会让一个正常的资产看起来不合格——或者反过来。</p>
+<p><strong>三，自证不等于他证。</strong>"我量了 0.00%"和"别人独立量了 0.00%"是两件完全不同的事。前者只证明判据能跑，后者才证明结论成立。这条线上的五轮审计，每一轮的价值都来自"我不看你给的数"。</p>
+<p style="color:var(--text-tertiary);font-size:13px">--- 约 1450 字</p>
+</article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-9"><span class="related-date">2026-03-19</span><span class="related-name">宠物面部识别边缘部署：RK3588 实测 48fps</span></a>
+      <a class="related-item" href="/blog/blog-36"><span class="related-date">2026-08-26</span><span class="related-name">门禁全红但代码没错：沙箱里跑 Godot 的一次假失败</span></a>
+      <a class="related-item" href="/blog/blog-13"><span class="related-date">2025-12-20</span><span class="related-name">模型量化实战：从PyTorch到ONNX再到边缘部署</span></a>
+    </div>
+  </aside>
+
+</div>
+<footer class="blog-footer"><p>© 2026 M1NIWA · <a href="/">返回首页</a> · <a href="/blog/index.html">全部文章</a></p></footer>
+</body>
+</html>

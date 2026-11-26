@@ -45,6 +45,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://m1niwa.com/qingming/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://m1niwa.com/transatlantic/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://m1niwa.com/diy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -53,4 +65,9 @@
   <url><loc>https://m1niwa.com/blog/blog-31</loc><lastmod>2026-07-05</lastmod><priority>0.6</priority></url>
   <url><loc>https://m1niwa.com/blog/blog-32</loc><lastmod>2026-07-05</lastmod><priority>0.6</priority></url>
   <url><loc>https://m1niwa.com/blog/blog-33</loc><lastmod>2026-07-05</lastmod><priority>0.6</priority></url>
+  <url><loc>https://m1niwa.com/blog/blog-34</loc><lastmod>2026-11-24</lastmod><priority>0.6</priority></url>
+  <url><loc>https://m1niwa.com/blog/blog-35</loc><lastmod>2026-09-30</lastmod><priority>0.6</priority></url>
+  <url><loc>https://m1niwa.com/blog/blog-36</loc><lastmod>2026-08-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://m1niwa.com/blog/blog-37</loc><lastmod>2026-10-29</lastmod><priority>0.6</priority></url>
 </urlset>
+

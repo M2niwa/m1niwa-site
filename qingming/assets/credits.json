@@ -1,0 +1,422 @@
+[
+ {
+  "id": "bull_head",
+  "name": "Bull Head",
+  "authors": "Tina",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/bull_head"
+ },
+ {
+  "id": "horse_head",
+  "name": "Horse Head",
+  "authors": "Tina",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/horse_head"
+ },
+ {
+  "id": "Lantern_01",
+  "name": "Lantern 01",
+  "authors": "Rajil Jose Macatangay",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/Lantern_01"
+ },
+ {
+  "id": "brass_vase_03",
+  "name": "Brass Vase 03",
+  "authors": "Rico Cilliers",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/brass_vase_03"
+ },
+ {
+  "id": "brass_vase_04",
+  "name": "Brass Vase 04",
+  "authors": "Rico Cilliers",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/brass_vase_04"
+ },
+ {
+  "id": "antique_katana_01",
+  "name": "Antique Katana 01",
+  "authors": "Tal Swicegood",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/antique_katana_01"
+ },
+ {
+  "id": "food_pomegranate_01",
+  "name": "Food Pomegranate 01",
+  "authors": "Oliver Harries",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/food_pomegranate_01"
+ },
+ {
+  "id": "dandelion_01",
+  "name": "Dandelion 01",
+  "authors": "Rob Tuytel, Rico Cilliers",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/dandelion_01"
+ },
+ {
+  "id": "seadogs_compass",
+  "name": "Seadogs Compass",
+  "authors": "Benny Weimer",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/seadogs_compass"
+ },
+ {
+  "id": "antique_ceramic_vase_01",
+  "name": "Antique Ceramic Vase 01",
+  "authors": "James Ray Cock",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/antique_ceramic_vase_01"
+ },
+ {
+  "id": "ornate_medieval_dagger",
+  "name": "Ornate Medieval Dagger",
+  "authors": "Sofia Pahaoja",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/ornate_medieval_dagger"
+ },
+ {
+  "id": "chinese_screen_panels",
+  "name": "Chinese Screen Panels",
+  "authors": "Kirill Sannikov",
+  "license": "CC0 1.0",
+  "source": "https://polyhaven.com/a/chinese_screen_panels"
+ },
+ {
+  "id": "hooded_adventurer",
+  "name": "Hooded Adventurer",
+  "authors": "Quaternius",
+  "license": "CC0 1.0",
+  "source": "https://poly.pizza/m/y9KWOVG21R"
+ },
+ {
+  "id": "hood",
+  "name": "hood",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/hood.html"
+ },
+ {
+  "id": "knapsack",
+  "name": "knapsack",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/knapsack.html"
+ },
+ {
+  "id": "treasure-map",
+  "name": "treasure-map",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/treasure-map.html"
+ },
+ {
+  "id": "scroll-unfurled",
+  "name": "scroll-unfurled",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/scroll-unfurled.html"
+ },
+ {
+  "id": "crossed-swords",
+  "name": "crossed-swords",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/crossed-swords.html"
+ },
+ {
+  "id": "herbs-bundle",
+  "name": "herbs-bundle",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/herbs-bundle.html"
+ },
+ {
+  "id": "paper-lantern",
+  "name": "paper-lantern",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/paper-lantern.html"
+ },
+ {
+  "id": "skeleton-key",
+  "name": "skeleton-key",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/skeleton-key.html"
+ },
+ {
+  "id": "mortar",
+  "name": "mortar",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/mortar.html"
+ },
+ {
+  "id": "incense",
+  "name": "incense",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/incense.html"
+ },
+ {
+  "id": "padlock",
+  "name": "padlock",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/padlock.html"
+ },
+ {
+  "id": "locked-door",
+  "name": "locked-door",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/locked-door.html"
+ },
+ {
+  "id": "stairs",
+  "name": "stairs",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/stairs.html"
+ },
+ {
+  "id": "bull",
+  "name": "bull",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/bull.html"
+ },
+ {
+  "id": "horse-head",
+  "name": "horse-head",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/horse-head.html"
+ },
+ {
+  "id": "skull-crossed-bones",
+  "name": "skull-crossed-bones",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/skull-crossed-bones.html"
+ },
+ {
+  "id": "locked-chest",
+  "name": "locked-chest",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/locked-chest.html"
+ },
+ {
+  "id": "pagoda",
+  "name": "pagoda",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/pagoda.html"
+ },
+ {
+  "id": "heart-beats",
+  "name": "heart-beats",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/heart-beats.html"
+ },
+ {
+  "id": "virus",
+  "name": "virus",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/virus.html"
+ },
+ {
+  "id": "meditation",
+  "name": "meditation",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/meditation.html"
+ },
+ {
+  "id": "katana",
+  "name": "katana",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/katana.html"
+ },
+ {
+  "id": "cloak",
+  "name": "cloak",
+  "authors": "lucasms",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lucasms/cloak.html"
+ },
+ {
+  "id": "wax-seal",
+  "name": "wax-seal",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/wax-seal.html"
+ },
+ {
+  "id": "yin-yang",
+  "name": "yin-yang",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/yin-yang.html"
+ },
+ {
+  "id": "fist",
+  "name": "fist",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/fist.html"
+ },
+ {
+  "id": "sands-of-time",
+  "name": "sands-of-time",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/sands-of-time.html"
+ },
+ {
+  "id": "lotus",
+  "name": "lotus",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/lotus.html"
+ },
+ {
+  "id": "quill-ink",
+  "name": "quill-ink",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/quill-ink.html"
+ },
+ {
+  "id": "tied-scroll",
+  "name": "tied-scroll",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/tied-scroll.html"
+ },
+ {
+  "id": "magnifying-glass",
+  "name": "magnifying-glass",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/magnifying-glass.html"
+ },
+ {
+  "id": "compass",
+  "name": "compass",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/compass.html"
+ },
+ {
+  "id": "poison-bottle",
+  "name": "poison-bottle",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/poison-bottle.html"
+ },
+ {
+  "id": "footprint",
+  "name": "footprint",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/footprint.html"
+ },
+ {
+  "id": "drop",
+  "name": "drop",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/drop.html"
+ },
+ {
+  "id": "cowled",
+  "name": "cowled",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/cowled.html"
+ },
+ {
+  "id": "coins",
+  "name": "coins",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/coins.html"
+ },
+ {
+  "id": "leaf-swirl",
+  "name": "leaf-swirl",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/leaf-swirl.html"
+ },
+ {
+  "id": "old-lantern",
+  "name": "old-lantern",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/old-lantern.html"
+ },
+ {
+  "id": "ink-swirl",
+  "name": "ink-swirl",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/ink-swirl.html"
+ },
+ {
+  "id": "spider-web",
+  "name": "spider-web",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/spider-web.html"
+ },
+ {
+  "id": "broken-heart",
+  "name": "broken-heart",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/broken-heart.html"
+ },
+ {
+  "id": "stone-tablet",
+  "name": "stone-tablet",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/stone-tablet.html"
+ },
+ {
+  "id": "vortex",
+  "name": "vortex",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/vortex.html"
+ },
+ {
+  "id": "scroll-quill",
+  "name": "scroll-quill",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/scroll-quill.html"
+ },
+ {
+  "id": "candle-light",
+  "name": "candle-light",
+  "authors": "lorc",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/lorc/candle-light.html"
+ },
+ {
+  "id": "medicines",
+  "name": "medicines",
+  "authors": "delapouite",
+  "license": "CC BY 3.0",
+  "source": "https://game-icons.net/1x1/delapouite/medicines.html"
+ }
+]

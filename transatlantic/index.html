@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>横渡大西洋 · Transatlantic 1932</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Noto+Serif+SC:wght@500;700;900&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f3e6c8; --paper:#e9d9b4; --brass:#c9a45c; --brass2:#8f6f33; --navy:#101a30; --ink:#1a1612;
+  --red:#b3202a; --amber:#f0a030; --green:#58b368; --ice:#a8dcff;
+  --serif:'Noto Serif SC','Source Han Serif SC','Songti SC','STZhongsong','STSong','SimSun',serif;
+  --deco:'Limelight','Playfair Display',Georgia,serif;
+  --type:'Special Elite','Courier New',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#05070d;color:var(--cream);font-family:var(--serif);user-select:none;-webkit-user-select:none;overscroll-behavior:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block}
+#ui{position:fixed;inset:0;pointer-events:none}
+.hidden{display:none!important}
+.screen{position:absolute;inset:0;pointer-events:auto}
+kbd{display:inline-block;min-width:1.5em;padding:.05em .4em;margin:0 .1em;border:1px solid var(--brass);border-bottom-width:2px;border-radius:4px;background:#1b243acc;color:var(--cream);font:600 .85em var(--type);text-align:center;line-height:1.35}
+kbd.pad{border-radius:50%;min-width:1.55em;padding:.05em 0;background:#2a3350}
+kbd.tch{border-radius:1em;padding:.05em .7em;background:#c9a45c;color:#14100a;border-color:#f3e6c8;font-family:var(--serif)}
+
+/* ---------- 片头 ---------- */
+#title{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:9vh;text-align:center;
+  background:radial-gradient(ellipse at 50% 120%,#0008,transparent 60%),linear-gradient(#0000 45%,#05070dcc)}
+#title .kicker{font:400 clamp(12px,1.3vw,18px) var(--type);letter-spacing:.5em;color:var(--brass);text-shadow:0 2px 12px #000}
+#title h1{font:900 clamp(48px,8.4vw,128px)/1.05 var(--serif);letter-spacing:.14em;margin:.08em 0 .04em;color:var(--cream);
+  text-shadow:0 2px 0 #7a5a22,0 6px 30px #000c,0 0 80px #ffb86b55}
+#title h2{font:400 clamp(18px,2.6vw,40px) var(--deco);letter-spacing:.42em;color:var(--brass);text-shadow:0 2px 14px #000}
+#title .rule{width:min(520px,60vw);height:10px;margin:2.2vh auto;background:
+  linear-gradient(90deg,transparent,var(--brass) 20%,var(--brass) 80%,transparent) center/100% 1px no-repeat,
+  radial-gradient(circle,var(--brass) 3px,transparent 4px) center/14px 10px no-repeat}
+#title p.ded{font-size:clamp(13px,1.25vw,18px);opacity:.85;letter-spacing:.12em;text-shadow:0 1px 8px #000}
+#title .press{margin-top:4.5vh;font-size:clamp(14px,1.5vw,22px);letter-spacing:.3em;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* ---------- 机库 ---------- */
+#hangar{display:grid;grid-template-columns:minmax(340px,31vw) 1fr;grid-template-rows:1fr auto}
+.card{transform-origin:top left;margin:4vh 0 2vh 3vw;padding:26px 28px 22px;align-self:start;background:linear-gradient(160deg,#141d33ee,#0b1120f2);
+  border:1px solid #c9a45c66;box-shadow:0 0 0 4px #0b112088,0 0 0 5px #c9a45c33,0 30px 80px #000a;position:relative;backdrop-filter:blur(6px)}
+.card:before,.card:after{content:"";position:absolute;width:26px;height:26px;border:2px solid var(--brass)}
+.card:before{left:8px;top:8px;border-right:0;border-bottom:0}.card:after{right:8px;bottom:8px;border-left:0;border-top:0}
+.card .sec{font:400 12px var(--type);letter-spacing:.35em;color:var(--brass);margin-bottom:8px}
+.modes{display:flex;gap:8px;margin-bottom:20px}
+.mode{flex:1;padding:10px 2px;border:1px solid #c9a45c55;background:#0a0f1c;color:var(--cream);font:700 15px var(--serif);letter-spacing:.08em;cursor:pointer;transition:.15s;white-space:nowrap}
+#netBox{margin:-10px 0 18px;padding:10px 12px;border:1px solid #c9a45c44;background:#0a0f1ccc;font:13px/1.65 var(--type);color:var(--cream)}
+#netBox.hidden{display:none}
+.netBtns{display:flex;gap:8px;margin-bottom:8px}
+.netBtns button{flex:1;padding:7px 4px;border:1px solid #c9a45c88;background:#131a2c;color:var(--cream);font:700 14px var(--serif);letter-spacing:.06em;cursor:pointer}
+.netBtns button.on{background:linear-gradient(#c9a45c,#a17c38);color:#14100a;border-color:#f3e6c8}
+#netInfo b{color:#f0c060;user-select:all;word-break:break-all}
+#netInfo em{color:#58b368;font-style:normal;font-weight:700}
+#netNote{margin-top:8px;padding-top:8px;border-top:1px solid #b3202a55;color:#e8b0a0;font-size:12.5px;line-height:1.6}
+#netNote b{color:#ff8a7a;user-select:none}
+#netNote code{font-family:var(--type);background:#b3202a33;padding:1px 5px;border-radius:3px;color:#ffd0c8}
+#btnStart.wait{opacity:.35;pointer-events:none}
+.mode small{display:block;font:400 11px var(--type);letter-spacing:.1em;opacity:.6;margin-top:3px}
+.mode.on{background:linear-gradient(#c9a45c,#a17c38);color:#14100a;border-color:#f3e6c8;box-shadow:0 0 24px #c9a45c66}
+#acName{font:900 clamp(26px,2.6vw,40px) var(--serif);letter-spacing:.06em;line-height:1.15}
+#acEn{font:400 clamp(14px,1.25vw,19px) var(--deco);letter-spacing:.12em;color:var(--brass);margin:4px 0 2px}
+#acYear{font:400 12.5px var(--type);opacity:.75;letter-spacing:.05em}
+#acBlurb{font-size:14.5px;line-height:1.75;margin:14px 0 14px;opacity:.92;min-height:7.2em}
+.stat{display:grid;grid-template-columns:4.2em 1fr;align-items:center;gap:10px;margin:6px 0;font-size:13.5px;letter-spacing:.15em}
+.stat i{height:9px;background:#0007;border:1px solid #c9a45c55;position:relative;display:block}
+.stat i b{position:absolute;inset:1px auto 1px 1px;background:repeating-linear-gradient(90deg,var(--brass) 0 9px,transparent 9px 11px);transition:width .35s}
+#acPerk{margin-top:14px;padding:9px 12px;border-left:3px solid var(--brass);background:#c9a45c18;font-size:13.5px;line-height:1.6}
+#acRec{display:inline-block;margin-top:12px;padding:2px 10px;border:1px solid var(--brass);font:12px var(--type);letter-spacing:.2em;color:var(--brass)}
+.pick{grid-column:2;grid-row:1;position:relative}
+.arrow{position:absolute;top:50%;width:64px;height:64px;margin-top:-32px;border:1px solid #c9a45c88;background:#0b1120aa;color:var(--cream);font-size:30px;cursor:pointer;border-radius:50%;transition:.15s}
+.arrow:hover{background:var(--brass);color:#111}
+#acPrev{left:3vw}#acNext{right:3vw}
+.pick{cursor:grab;touch-action:none}.pick.grab{cursor:grabbing}
+#acDots{position:absolute;left:0;right:0;bottom:3vh;text-align:center}
+.chip{position:absolute;right:3vw;top:4vh;padding:8px 16px;border:1px solid #c9a45c88;background:#0b1120cc;color:var(--cream);font:14px var(--serif);letter-spacing:.14em;cursor:pointer;backdrop-filter:blur(4px)}
+.chip b{color:var(--brass)}.chip:hover{border-color:var(--cream)}
+#orbitHint{position:absolute;left:0;right:0;bottom:calc(3vh + 26px);text-align:center;font-size:12.5px;letter-spacing:.14em;opacity:.78;text-shadow:0 1px 6px #000;pointer-events:none}
+#acDots i{display:inline-block;width:9px;height:9px;margin:0 6px;transform:rotate(45deg);border:1px solid var(--brass)}
+#acDots i.on{background:var(--brass);box-shadow:0 0 12px var(--brass)}
+.dock{grid-column:1/3;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:0 3vw 3.2vh}
+#ctrlHelp{font-size:13px;line-height:2;opacity:.9;text-shadow:0 1px 6px #000}
+#ctrlHelp b{color:var(--brass);letter-spacing:.2em;margin-right:.6em}
+#padInfo{font:12px var(--type);color:var(--brass);letter-spacing:.1em;margin-top:4px}
+#btnStart{padding:16px 54px;font:900 24px var(--serif);letter-spacing:.5em;text-indent:.5em;color:#14100a;cursor:pointer;border:1px solid var(--cream);
+  background:linear-gradient(#e3c078,#b08a42);box-shadow:0 0 0 4px #0b1120,0 0 0 5px var(--brass),0 0 50px #c9a45c77;animation:pulse 2.2s ease-in-out infinite}
+#btnStart small{display:block;font:400 11px var(--type);letter-spacing:.25em;text-indent:.25em;margin-top:2px;opacity:.75}
+@keyframes pulse{50%{box-shadow:0 0 0 4px #0b1120,0 0 0 5px var(--brass),0 0 18px #c9a45c44}}
+
+/* ---------- HUD ---------- */
+#hud{position:absolute;inset:0}
+#route{position:absolute;left:50%;top:14px;width:min(620px,56vw);transform:translateX(-50%);text-align:center;text-shadow:0 1px 6px #000}
+#route .ends{display:flex;justify-content:space-between;font:12px var(--type);letter-spacing:.12em;opacity:.9}
+#route .bar{position:relative;height:12px;margin:5px 0 6px;border:1px solid var(--brass);background:#0b112099;border-radius:6px}
+#rtStorm{position:absolute;top:0;bottom:0;left:42%;width:26%;background:repeating-linear-gradient(-45deg,#8fa2c855 0 4px,transparent 4px 8px)}
+#rtFill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#c9a45c55,var(--brass));border-radius:6px}
+#rtPlane{position:absolute;top:50%;left:0;width:26px;height:26px;margin:-13px 0 0 -13px;font-size:20px;line-height:26px;filter:drop-shadow(0 0 6px #ffd58a)}
+#rtInfo{font:13px var(--type);letter-spacing:.08em}
+#toast{position:absolute;left:50%;top:92px;transform:translateX(-50%);max-width:70vw;padding:8px 22px;background:#0b1120d8;border:1px solid var(--brass);
+  font-size:16px;letter-spacing:.12em;opacity:0;transition:opacity .4s;white-space:nowrap}
+#toast.on{opacity:1}
+#toast.warn{border-color:var(--red);box-shadow:0 0 24px #b3202a88}
+#gauges{position:absolute;left:18px;bottom:16px;display:flex;gap:14px;align-items:flex-end;padding:12px 16px;background:linear-gradient(160deg,#141d33dd,#0b1120e6);
+  border:1px solid #c9a45c77;box-shadow:0 10px 40px #0009}
+.dial{position:relative;width:112px;height:112px;border-radius:50%;border:3px solid var(--brass);
+  background:radial-gradient(circle at 50% 50%,#0000 0 58%,#0b1120 59%),repeating-conic-gradient(from -135deg,#f3e6c8aa 0 1.2deg,transparent 1.2deg 27deg),radial-gradient(circle,#19233c,#0b1120);box-shadow:inset 0 0 14px #000,0 0 0 2px #0b1120}
+.dial:after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;border-radius:50%;background:var(--brass)}
+.needle{position:absolute;left:50%;bottom:50%;width:3px;height:44px;margin-left:-1.5px;background:linear-gradient(var(--red),#f3e6c8);transform-origin:50% 100%;border-radius:2px;transition:transform .12s linear}
+.dial .read{position:absolute;left:0;right:0;bottom:16px;text-align:center;font:700 15px var(--type)}
+.dial .read small{font-size:10px;opacity:.7;margin-left:2px}
+.dial .cap{position:absolute;left:0;right:0;top:20px;text-align:center;font-size:11px;letter-spacing:.3em;opacity:.75}
+.dial.sink{border-color:var(--red);animation:sinkP .7s ease-in-out infinite}
+@keyframes sinkP{50%{box-shadow:inset 0 0 14px #000,0 0 0 2px #0b1120,0 0 26px 6px #e0303a}}
+#vsI{position:absolute;right:-4px;top:-6px;width:26px;height:26px;border-radius:50%;background:#0b1120;border:1px solid var(--brass);text-align:center;line-height:24px;font-size:13px}
+.col{display:flex;flex-direction:column;gap:7px;min-width:228px}
+.row{display:grid;grid-template-columns:3.6em 1fr 3.2em;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.12em}
+.row i{display:block;height:10px;border:1px solid #c9a45c66;background:#0008;position:relative}
+.row i b{position:absolute;left:1px;top:1px;bottom:1px;width:50%;background:var(--brass);transition:width .2s}
+.row span{font:12px var(--type);text-align:right}
+.row.low i b{background:var(--red);animation:blink .7s infinite}
+#iceRow i b{background:var(--ice)}
+#course{position:relative;height:24px;border:1px solid #c9a45c66;background:#0008;overflow:hidden}
+#course:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--green);z-index:1}
+#crsBand{position:absolute;top:0;bottom:0;background:#f0a03040}
+#crsN{position:absolute;top:2px;bottom:2px;width:4px;margin-left:-2px;background:var(--cream);box-shadow:0 0 8px #fff;z-index:2}
+.crsCap{display:flex;justify-content:space-between;font-size:11.5px;letter-spacing:.14em;opacity:.9}
+#engRow{display:flex;gap:8px;align-items:center;font-size:12.5px;letter-spacing:.12em}
+.eng{width:22px;height:22px;border-radius:50%;border:2px solid var(--green);position:relative;animation:spin 1s linear infinite}
+.eng:before{content:"";position:absolute;left:50%;top:1px;bottom:1px;width:3px;margin-left:-1.5px;background:var(--green);border-radius:2px}
+.eng.rough{border-color:var(--amber);animation-duration:2.8s}.eng.rough:before{background:var(--amber)}
+.eng.fail{border-color:var(--red);animation:none}.eng.fail:before{background:var(--red)}
+@keyframes spin{to{transform:rotate(360deg)}}
+#hud.blackout #gauges .needle,#hud.blackout #crsN,#hud.blackout #altV{animation:flick .35s steps(2) infinite}
+#hud.blackout #gauges{filter:brightness(.55) saturate(.4)}
+@keyframes flick{50%{opacity:.08}}
+#alerts{position:absolute;right:16px;top:16px;width:min(300px,26vw);display:flex;flex-direction:column;gap:8px}
+.alert{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:center;padding:8px 12px 8px 8px;background:#0b1120dd;border:1px solid #c9a45c77;border-left:4px solid var(--amber);animation:slide .3s ease-out}
+.alert.crit{border-left-color:var(--red);box-shadow:0 0 18px #b3202a66}
+.alert .ic{width:38px;height:38px;border-radius:50%;background:var(--amber);color:#14100a;font:900 20px/38px var(--serif);text-align:center}
+.alert.crit .ic{background:var(--red);color:var(--cream);animation:blink .8s infinite}
+.alert b{display:block;font-size:15px;letter-spacing:.12em}
+.alert small{font-size:12px;opacity:.8;letter-spacing:.04em}
+@keyframes slide{from{transform:translateX(40px);opacity:0}}
+#hint{position:absolute;right:16px;bottom:14px;text-align:right;font-size:12.5px;line-height:2;opacity:.82;text-shadow:0 1px 6px #000}
+#takeoff{position:absolute;left:50%;top:104px;transform:translateX(-50%);padding:12px 30px;background:#0b1120dd;border:1px solid var(--brass);font-size:20px;letter-spacing:.2em;white-space:nowrap}
+#labels{position:absolute;inset:0;overflow:hidden}
+.lbl{position:absolute;left:0;top:0;transform:translate(-50%,-100%);white-space:nowrap;text-align:center;will-change:transform}
+.badge{width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--amber);border:2px solid #14100a;box-shadow:0 3px 10px #000a;animation:bob 1s ease-in-out infinite}
+.badge span{display:block;transform:rotate(45deg);font:900 17px/30px var(--serif);color:#14100a}
+.badge.crit{background:var(--red)}.badge.crit span{color:var(--cream)}
+.badge.ice{background:var(--ice)}
+@keyframes bob{50%{margin-top:-6px}}
+.prompt{padding:4px 10px;background:#0b1120e6;border:1px solid var(--brass);border-radius:3px;font-size:13.5px;letter-spacing:.08em;box-shadow:0 4px 14px #0009}
+.prompt.no{border-color:#777;color:#bbb}
+.prompt em{font-style:normal;color:var(--amber)}
+.ptag{font:700 12px var(--type);padding:0 6px;border-radius:8px;color:#14100a}
+.ring{width:54px;height:54px;border-radius:50%;position:relative;margin:0 auto 4px;box-shadow:0 2px 10px #000a}
+.ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:#0b1120f0}
+.ring .ndl{position:absolute;left:50%;bottom:50%;width:3px;height:27px;margin-left:-1.5px;background:#fff;transform-origin:50% 100%;z-index:2;border-radius:2px}
+.ring .cnt{position:absolute;inset:0;z-index:3;text-align:center;font:700 15px/54px var(--type)}
+
+/* ---------- 覆盖层 ---------- */
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#05070dbb;pointer-events:auto;backdrop-filter:blur(5px)}
+.panel{min-width:min(520px,86vw);max-width:680px;padding:34px 44px;text-align:center;background:linear-gradient(160deg,#141d33,#0b1120);border:1px solid var(--brass);box-shadow:0 0 0 5px #0b1120,0 0 0 6px #c9a45c55,0 40px 100px #000}
+.panel h3{font:900 40px var(--serif);letter-spacing:.3em;text-indent:.3em}
+.panel .sub{font:400 15px var(--deco);letter-spacing:.3em;color:var(--brass);margin:6px 0 18px}
+.panel .stars{font-size:38px;letter-spacing:.3em;color:var(--brass);margin:6px 0 10px;text-shadow:0 0 20px #c9a45c88}
+.panel .stars i{font-style:normal;opacity:.2}
+.panel table{margin:10px auto 14px;border-collapse:collapse;font-size:15px}
+.panel td{padding:5px 18px;border-bottom:1px dashed #c9a45c44;text-align:left;letter-spacing:.1em}
+.panel td:last-child{text-align:right;font-family:var(--type)}
+.panel blockquote{font-size:14.5px;line-height:1.9;opacity:.88;margin:12px 0 22px;font-style:italic}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{padding:11px 30px;border:1px solid var(--brass);background:#0a0f1c;color:var(--cream);font:700 17px var(--serif);letter-spacing:.3em;text-indent:.3em;cursor:pointer}
+.btn.sel,.btn:hover{background:linear-gradient(#e3c078,#b08a42);color:#14100a}
+#fade{position:absolute;inset:0;background:#05070d;opacity:1;transition:opacity .7s;pointer-events:none}
+#bars:before,#bars:after{content:"";position:absolute;left:0;right:0;height:0;background:#05070d;transition:height .8s ease}
+#bars:before{top:0}#bars:after{bottom:0}
+#bars.on:before,#bars.on:after{height:9vh}
+#caption{position:absolute;left:0;right:0;bottom:12vh;text-align:center;font-size:clamp(16px,1.8vw,26px);letter-spacing:.25em;text-shadow:0 2px 14px #000;opacity:0;transition:opacity 1s}
+#caption.on{opacity:1}
+#caption small{display:block;font:400 .62em var(--type);letter-spacing:.3em;color:var(--brass);margin-top:8px}
+#err{position:absolute;left:12px;bottom:12px;max-width:60vw;font:12px monospace;color:#ff8080;white-space:pre-wrap;pointer-events:none}
+
+/* ---------- 触屏操作：只在用手指操作的设备上、飞行界面里出现 ---------- */
+#touch{display:none;position:absolute;inset:0;pointer-events:none}
+body.touch #hud:not(.hidden) ~ #touch{display:block}
+#tZone{position:absolute;left:0;top:26%;bottom:0;width:46%;pointer-events:auto;touch-action:none}
+#tBase{position:absolute;left:calc(74px + env(safe-area-inset-left));top:calc(100% - 84px - env(safe-area-inset-bottom));width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;border:2px solid #f3e6c855;background:radial-gradient(circle,#0b112055,#0b112022);opacity:.55;pointer-events:none}
+#tBase.live{opacity:.95;border-color:#c9a45c}
+#tKnob{position:absolute;left:50%;top:50%;width:50px;height:50px;margin:-25px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3e6c8,#c9a45c 60%,#8f6f33);box-shadow:0 3px 10px #000a}
+.tbtn{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #f3e6c888;background:#0b1120aa;color:var(--cream);font:700 15px var(--serif);letter-spacing:.08em;pointer-events:auto;touch-action:none;box-shadow:0 4px 14px #0008}
+.tbtn.down{background:#c9a45c;color:#14100a;border-color:#fff;transform:scale(.94)}
+#tAct{right:calc(18px + env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom));width:82px;height:82px;font-size:18px;border-color:#c9a45c;background:#c9a45c44}
+#tAlt{right:calc(112px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));width:60px;height:60px}
+#tDash{right:calc(26px + env(safe-area-inset-right));bottom:calc(114px + env(safe-area-inset-bottom));width:60px;height:60px}
+#tPause{left:calc(8px + env(safe-area-inset-left));top:calc(8px + env(safe-area-inset-top));width:34px;height:34px;font:700 14px var(--type);border-width:1px;border-radius:6px}
+/* 竖着拿手机：提示横过来 */
+#rotate{display:none;position:absolute;inset:0;z-index:50;background:#05070df2;pointer-events:auto;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;font-size:18px;letter-spacing:.2em;padding:0 10vw}
+#rotate i{display:block;width:56px;height:96px;border:3px solid var(--brass);border-radius:10px;animation:rot 2.4s ease-in-out infinite}
+@keyframes rot{0%,20%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
+@media (orientation:portrait) and (pointer:coarse){#rotate{display:flex}}
+
+/* ---------- 矮屏幕（手机横屏）：紧凑布局 ---------- */
+@media (max-height:520px){
+  #route{top:6px;left:calc(50% + 34px);width:min(400px,44vw);zoom:.76}
+  #rtInfo{font-size:12px;white-space:nowrap}
+  #toast{top:46px;font-size:13px;white-space:normal;text-align:center;width:max-content;max-width:54vw;padding:5px 12px;letter-spacing:.06em}
+  #takeoff{top:52px;font-size:15px;padding:7px 16px;letter-spacing:.1em}
+  #gauges{left:8px;top:8px;bottom:auto;zoom:.58;padding:10px 12px;gap:12px}
+  body.touch #gauges{left:84px}
+  #gauges .col{min-width:216px;gap:5px}
+  #gauges .row,#gauges .row span,#engRow{font-size:16px}
+  #gauges .crsCap{font-size:14.5px}
+  .dial .read{font-size:19px}.dial .cap{font-size:13.5px}
+  #alerts{right:8px;top:8px;zoom:.68;width:252px;gap:6px}
+  .alert{padding:6px 10px 6px 6px}.alert b{font-size:16px}.alert small{font-size:13px}
+  #hint{display:none}
+  .panel{zoom:.6}
+  #caption{bottom:13vh}
+  #title{padding-bottom:6vh}
+  #title .rule{margin:1vh auto}
+  #title .press{margin-top:2.5vh}
+  #hangar{grid-template-columns:auto 1fr;grid-template-rows:1fr auto}
+  .card{grid-row:1/3;width:330px;margin:10px 0 0 10px;padding:18px 20px 16px}
+  .card .sec,#acBlurb,#acYear,#acRec{display:none}
+  .modes{margin-bottom:12px}
+  #netBox{margin:-4px 0 12px}
+  #acPerk{margin-top:8px}
+  #padInfo,#orbitHint{display:none}
+  .dock{grid-column:2;padding:0 12px 10px;gap:10px;align-items:flex-end}
+  #ctrlHelp{font-size:11px;line-height:1.6}
+  #btnStart{zoom:.62;flex:none}
+  .chip{zoom:.72;right:14px;top:12px}
+  .arrow{width:44px;height:44px;margin-top:-22px;font-size:22px}
+  #acDots{bottom:6px}
+}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="ui">
+  <div id="bars"></div>
+  <div id="caption"></div>
+
+  <div id="title" class="screen hidden">
+    <div class="kicker">HARBOUR GRACE · 20 MAY 1932 · 19:12</div>
+    <h1>横渡大西洋</h1>
+    <h2>TRANSATLANTIC</h2>
+    <div class="rule"></div>
+    <p class="ded">献给 Amelia Earhart，与黄金航空年代每一位向着海平线起飞的人</p>
+    <p class="press">按 <kbd>Enter</kbd> 或 <kbd class="pad">A</kbd> 进入机库</p>
+  </div>
+
+  <div id="hangar" class="screen hidden">
+    <div class="card">
+      <div class="sec">— 机组编制 —</div>
+      <div class="modes" id="modeBtns">
+        <button class="mode on" data-mode="1">单人飞行<small>SOLO · 一人包办</small></button>
+        <button class="mode" data-mode="2">双人机组<small>CO-OP · 同屏协作</small></button>
+        <button class="mode" data-mode="3">局域网联机<small>LAN · 各用一台设备</small></button>
+      </div>
+      <div id="netBox" class="hidden">
+        <div class="netBtns"><button id="netHost">开房 · 我当机长</button><button id="netJoin">加入 · 我当队友</button></div>
+        <div id="netInfo"></div>
+        <div id="netNote" class="hidden">本站为静态托管，<b>局域网联机不可用</b>（需要运行 <code>node server.js</code> 提供联机中转）。请选「单人飞行」或「双人机组 · 同屏」。本地版联机说明见随包 README。</div>
+      </div>
+      <div class="sec">— 座机 —</div>
+      <div id="acName"></div>
+      <div id="acEn"></div>
+      <div id="acYear"></div>
+      <div id="acBlurb"></div>
+      <div id="acStats"></div>
+      <div id="acPerk"></div>
+      <div id="acRec"></div>
+    </div>
+    <div class="pick">
+      <button class="arrow" id="acPrev">‹</button>
+      <button class="arrow" id="acNext">›</button>
+      <button class="chip" id="btnStyle"></button>
+      <div id="orbitHint">拖动旋转 · 滚轮缩放 · 双击复位　｜　<kbd>Z</kbd><kbd>C</kbd> 旋转　｜　手柄右摇杆旋转 · 扳机缩放</div>
+      <div id="acDots"></div>
+    </div>
+    <div class="dock">
+      <div>
+        <div id="ctrlHelp"></div>
+        <div id="padInfo"></div>
+      </div>
+      <button id="btnStart">起飞<small>TAKE OFF</small></button>
+    </div>
+  </div>
+
+  <div id="hud" class="hidden">
+    <div id="labels"></div>
+    <div id="route">
+      <div class="ends"><span>纽芬兰 · HARBOUR GRACE</span><span>DERRY · 爱尔兰</span></div>
+      <div class="bar"><div id="rtStorm"></div><div id="rtFill"></div><div id="rtPlane">✈</div></div>
+      <div id="rtInfo"></div>
+    </div>
+    <div id="toast"></div>
+    <div id="alerts"></div>
+    <div id="gauges">
+      <div class="dial" id="altDial"><div class="cap">高度</div><div class="needle" id="altN"></div><div class="read"><span id="altV">0</span><small>m</small></div><div id="vsI">–</div></div>
+      <div class="col">
+        <div class="crsCap"><span>◀ 偏北</span><span id="crsTxt">航向</span><span>偏南 ▶</span></div>
+        <div id="course"><div id="crsBand"></div><div id="crsN"></div></div>
+        <div class="row" id="fmRow"><em style="font-style:normal">主油箱</em><i><b id="fuelM"></b></i><span id="fuelMT"></span></div>
+        <div class="row"><em style="font-style:normal">备用油</em><i><b id="fuelR"></b></i><span id="fuelRT"></span></div>
+        <div class="row" id="hullRow"><em style="font-style:normal">机体</em><i><b id="hullB"></b></i><span id="hullT"></span></div>
+        <div class="row hidden" id="iceRow"><em style="font-style:normal">积冰</em><i><b id="iceB"></b></i><span id="iceT"></span></div>
+        <div id="engRow"></div>
+      </div>
+    </div>
+    <div id="hint"></div>
+    <div id="takeoff" class="hidden"></div>
+  </div>
+
+  <div id="touch">
+    <div id="tZone"><div id="tBase"><div id="tKnob"></div></div></div>
+    <button class="tbtn" id="tPause">Ⅱ</button>
+    <button class="tbtn" id="tAlt">拾取</button>
+    <button class="tbtn" id="tDash">冲刺</button>
+    <button class="tbtn" id="tAct">互动</button>
+  </div>
+
+  <div id="pause" class="overlay hidden">
+    <div class="panel">
+      <h3>暂 停</h3><div class="sub">PAUSED</div>
+      <div class="btns" style="flex-direction:column;align-items:center">
+        <button class="btn sel" id="pResume">继续飞行</button>
+        <button class="btn" id="pRestart">重新起飞</button>
+        <button class="btn" id="pHangar">返回机库</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="result" class="overlay hidden">
+    <div class="panel">
+      <h3 id="resTitle"></h3><div class="sub" id="resSub"></div>
+      <div class="stars" id="resStars"></div>
+      <table id="resStats"></table>
+      <blockquote id="resQuote"></blockquote>
+      <div class="btns">
+        <button class="btn sel" id="rAgain">再飞一次</button>
+        <button class="btn" id="rHangar">返回机库</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="rotate"><i></i>请把手机横过来<small style="opacity:.6;letter-spacing:.1em">这个游戏只支持横屏</small></div>
+  <div id="fade"></div>
+  <div id="err"></div>
+</div>
+
+<script>
+window.addEventListener('error', e => { const el = document.getElementById('err'); if (el) el.textContent += (e.message || e) + '  @' + (e.filename || '').split('/').pop() + ':' + e.lineno + '\n'; });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"
+        onerror="document.write('<script src=&quot;https://unpkg.com/three@0.160.0/build/three.min.js&quot;><\/script>')"></script>
+<script src="js/core.js"></script>
+<script src="js/gfx.js"></script>
+<script src="js/parts.js"></script>
+<script src="js/aircraft.js"></script>
+<script src="js/scenery.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

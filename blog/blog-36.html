@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>门禁全红但代码没错：沙箱里跑 Godot 的一次假失败 — M1NIWA</title>
+<meta name="description" content="Godot 4.7 在受限沙箱里启动时写不了 %APPDATA%，不报错而是直接 SIGSEGV，导致门禁 28 个用例全部假红、每份输出都是 0 字节。含 A/B 定位过程、判别口径，以及一个被 0 字节输出掩盖的真实 WIP 缺陷。">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
+<style>
+:root{--bg:#1a1210;--bg-elevated:#241c16;--border:rgba(196,156,88,0.10);--text:#efe4cf;--text-secondary:#b8a080;--text-tertiary:#9c8465;--blue:#d4a040;--blue-hover:#e8c060;--radius:10px;--radius-sm:6px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(212,160,64,0.35);color:#fff}
+.blog-nav{position:sticky;top:0;z-index:100;background:rgba(26,18,16,0.88);backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--border)}
+.blog-nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1100px;margin:0 auto;padding:0 24px}
+.blog-nav-back{font-size:16px;font-weight:600;color:var(--blue);text-decoration:none}
+.blog-nav-back:hover{color:var(--blue-hover)}
+.blog-nav-title{font-size:14px;color:var(--text-secondary)}
+.blog-container{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+.article-header{margin-bottom:48px;padding-top:24px}
+.article-title{font-size:36px;font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:12px;color:var(--text)}
+.article-date{font-size:14px;color:var(--text-tertiary)}
+.article-body{font-size:17px;line-height:1.8}
+.article-body p{margin-bottom:20px}
+.article-body h2{font-size:24px;font-weight:700;margin:48px 0 16px;padding-left:16px;border-left:3px solid var(--blue)}
+.article-body ul,.article-body ol{margin-bottom:20px;padding-left:24px}
+.article-body li{margin-bottom:8px}
+.article-body strong{color:#fff;font-weight:600}
+.article-body a{color:var(--blue)}
+.article-body code{font-family:'JetBrains Mono',monospace;font-size:14px;background:rgba(212,160,64,0.10);color:var(--blue-hover);padding:2px 6px;border-radius:4px}
+.article-body pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;overflow-x:auto;font-size:13px;line-height:1.7;color:var(--text)}
+.article-body pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.article-body table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:15px}
+.article-body th,.article-body td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left}
+.article-body th{color:var(--text-secondary);font-weight:600;font-size:13px;letter-spacing:0.04em}
+.blog-footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
+.blog-footer p{font-size:13px;color:var(--text-tertiary)}
+.blog-footer a{color:var(--text-secondary);text-decoration:none}
+.blog-footer a:hover{color:var(--blue)}
+</style>
+<link rel="canonical" href="https://m1niwa.com/blog/blog-36">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="门禁全红但代码没错：沙箱里跑 Godot 的一次假失败">
+<meta property="og:description" content="Godot 4.7 在受限沙箱里写不了 %APPDATA%，不报错而是直接 SIGSEGV，导致门禁全部假红、每份输出都是 0 字节。">
+<meta property="og:url" content="https://m1niwa.com/blog/blog-36">
+<meta property="og:image" content="https://m1niwa.com/assets/og-cover.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="门禁全红但代码没错：沙箱里跑 Godot 的一次假失败">
+<meta name="twitter:description" content="Godot 4.7 在受限沙箱里写不了 %APPDATA%，不报错而是直接 SIGSEGV，导致门禁全部假红、每份输出都是 0 字节。">
+<meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "门禁全红但代码没错：沙箱里跑 Godot 的一次假失败", "description": "Godot 4.7 在受限沙箱里写不了 %APPDATA%，不报错而是直接 SIGSEGV，导致门禁全部假红、每份输出都是 0 字节。", "url": "https://m1niwa.com/blog/blog-36", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-36"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-08-26", "dateModified": "2026-08-26"}</script>
+</head>
+<body>
+<nav class="blog-nav"><div class="blog-nav-inner"><a href="/" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">Godot · 测试门禁</span></div></nav>
+<div class="blog-container">
+<header class="article-header"><h1 class="article-title">门禁全红但代码没错：沙箱里跑 Godot 的一次假失败</h1><p class="article-date">2026-08-26</p></header>
+<article class="article-body">
+<p>一个 34 个用例的 Godot 测试门禁，跑完显示全部失败。逐个看输出文件——<strong>每一个都是 0 字节</strong>，第一个用例还超时。编辑器同时弹出"应用程序错误：指令引用了 0x…0058 内存"。这种场面最容易做的错事，是开始翻最近的代码改动找回归。</p>
+
+<h2>先看现象的形状，别先看代码</h2>
+<p>真实的测试失败有几种典型形态：断言不通过（输出里有 expected / actual）、脚本解析错（有行号和文件名）、超时（有部分输出）。这次一个都不是——<strong>失败是"没有输出"</strong>。0 字节意味着进程在打印任何东西之前就死了。</p>
+<p>而第一个用例的 <code>TIMEOUT</code> 说明它不是立刻死的，是卡住之后才死。加上那条 <code>signal 11</code>（SIGSEGV）的崩溃提示，这个组合指向的不是逻辑错误，是<strong>进程级的环境问题</strong>。</p>
+
+<h2>A/B 定位：只改一个变量</h2>
+<p>怀疑对象是写权限。Godot 启动时必须写 <code>user://</code> 目录——具体是 <code>%APPDATA%\Godot\app_userdata\&lt;项目&gt;\logs</code> 和 <code>vulkan\*.cache</code>。而当时的执行环境是受限沙箱，只允许写工作区和临时目录。</p>
+<p>于是做一次只改一个变量的 A/B：</p>
+<pre><code># A：保持真实 %APPDATA%
+$env:APPDATA 不变 → 门禁全红，signal 11
+
+# B：只把 APPDATA 指向临时目录
+$env:APPDATA = Join-Path $env:TEMP "godot-appdata"
+→ 门禁出 RETREAT_OK，全绿</code></pre>
+<p>同一条命令、同一份代码、只改了这一个环境变量，结果完全相反。<strong>与代码无关，已证。</strong></p>
+<p>根因也很清楚：Godot 4.7 在写 <code>%APPDATA%</code> 被拒的时候<strong>不报错退出，而是直接 SIGSEGV</strong>。它连一句"权限不足"都不给，所以从输出侧看就是"静默死掉"。</p>
+
+<h2>三条会重复踩的处置</h2>
+<p><strong>1. 凡是 agent 或脚本启动的 Godot，先改 <code>APPDATA</code>。</strong>门禁、探针、编辑器都算。启动编辑器时还要额外设 <code>UV_CACHE_DIR</code>——插件用 <code>uvx</code> 拉 MCP server，uv 缓存默认落在 <code>%LOCALAPPDATA%</code>，同样被拒，症状是 MCP 连不上而不是崩溃。</p>
+<p><strong>2. 编辑器必须挂在常驻后台任务里跑。</strong><code>Start-Process</code> 起 GUI 之后，工具调用一返回就会回收整棵进程树——表现是"编辑器起来 30 秒后连同 uvx/python 一起消失，日志里没有任何崩溃痕迹"。这个症状和权限问题完全不像，很容易被当成两个 bug。</p>
+<p><strong>3. "人跑的"和"agent 代跑的"必须分开看。</strong>用户从资源管理器亲自启动的编辑器不受影响（不过沙箱），所以"我这边能跑"和"你那边跑不了"可以同时为真。</p>
+
+<h2>省时间的判别口径</h2>
+<p>攒下来的口诀就一句：<strong>见到"门禁全红 + 每份输出都是 0 字节 + signal 11"，先去查 <code>APPDATA</code>，不要翻代码找回归。</strong></p>
+<p>这条口诀的价值不在于省了多少分钟，而在于它把"假红"和"真红"分开了。分不开的时候，人会做两件坏事：改本来正确的代码，以及不信任本来有效的测试。</p>
+
+<h2>同类的第二种假红：哈希比对</h2>
+<p>这个项目里还有一个形态完全不同的假红，值得并列记着。当时用整文件哈希比对来验证"输出没变"，结果报不相等，但逐行看完全一致。原因是换行符——仓库里的文件是 UTF-8 + CRLF，而某条命令产生的输出是 LF。用 <code>.NET ReadAllLines</code> 去读会自动识别 BOM 和行尾，<strong>行级比对看着完全正常</strong>，但字节数翻倍、<code>Get-FileHash</code> 必然不等。</p>
+<p>反过来也有坑：<code>2>&1</code> 把 stderr 混进输出再做整文件哈希，也一定是假红——因为混进去的是 PowerShell 的报错堆栈，不是内容差异。</p>
+<p>所以"逐位相同"这个判据要成立，前提是先钉死三件事：<strong>编码、行尾、以及输出里有没有夹带别的东西</strong>。否则验证本身比被测对象更容易出错。</p>
+
+<h2>最值钱的一次：假红掩盖了真红</h2>
+<p>假红最危险的地方不是浪费一轮排查，而是它会把真问题藏起来。这个项目里就发生过一次：一位协作者在改一个探针脚本时，插入函数体的编辑<strong>第一次就失败了</strong>（工具要求先 read 再 edit），但他只把调用点改上了，函数体没补。结果整个文件引用了不存在的函数，编译失败。</p>
+<p>而当时的门禁<strong>不编译 <code>tools/**</code></strong>——探针脚本属于工具目录，不在测试范围内。于是所有探针"表面能跑、数据全零"，看起来像"这轮改动没有效果"，实际是"测量工具根本没启动"。</p>
+<p>这个缺陷最后是被 0 字节的输出暴露的：<strong>一个测量脚本输出 0 字节，只可能是它自己坏了，不可能是被测对象恰好等于零。</strong>之后把工具目录的语法冒烟也接进了门禁。</p>
+
+<h2>三条通用规则</h2>
+<p><strong>一，输出为空比输出为错更值得怀疑自己。</strong>断言失败是信息，0 字节是"信息通道断了"。先确认通道，再读内容。</p>
+<p><strong>二，一个判据要成立，得先把它的前提钉死。</strong>整文件哈希、逐位相同、行级 diff——每一个都有自己的一套前提（编码、行尾、夹带内容）。不写清前提的验证方法，等于没有验证。</p>
+<p><strong>三，门禁的盲区比门禁的失败更贵。</strong>失败会被人看到，盲区不会。这个项目后来补了两类盲区：工具目录的语法、以及场景实例化的冒烟。补上之后，那个"探针从不启动"的缺陷立刻被抓住了。</p>
+<p style="color:var(--text-tertiary);font-size:13px">--- 约 1430 字</p>
+</article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-16"><span class="related-date">2025-11-01</span><span class="related-name">GitHub Actions CI/CD 实战：自动测试与部署流水线</span></a>
+      <a class="related-item" href="/blog/blog-7"><span class="related-date">2026-04-15</span><span class="related-name">向量数据库在免费容器上挂了——基础设施复盘</span></a>
+      <a class="related-item" href="/blog/blog-4"><span class="related-date">2026-05-27</span><span class="related-name">Python 生产级 Docker 镜像：从 1.2GB 到 120MB</span></a>
+    </div>
+  </aside>
+
+</div>
+<footer class="blog-footer"><p>© 2026 M1NIWA · <a href="/">返回首页</a> · <a href="/blog/index.html">全部文章</a></p></footer>
+</body>
+</html>

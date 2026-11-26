@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NO_PROXY 被静默遮蔽：一次跨三套应用的模型链路排查 — M1NIWA</title>
+<meta name="description" content="三套 DSH 同时报 502 和 transport failed，换模型无效。根因是一个早年留下的 Windows 用户环境变量把 .env 里的 NO_PROXY 整条盖掉，模型请求全部走 Clash。含取证方法、验证脚本和这次改动的真实代价。">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:200 800;font-style:normal;font-display:swap}</style>
+<style>
+:root{--bg:#1a1210;--bg-elevated:#241c16;--border:rgba(196,156,88,0.10);--text:#efe4cf;--text-secondary:#b8a080;--text-tertiary:#9c8465;--blue:#d4a040;--blue-hover:#e8c060;--radius:10px;--radius-sm:6px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(212,160,64,0.35);color:#fff}
+.blog-nav{position:sticky;top:0;z-index:100;background:rgba(26,18,16,0.88);backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--border)}
+.blog-nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1100px;margin:0 auto;padding:0 24px}
+.blog-nav-back{font-size:16px;font-weight:600;color:var(--blue);text-decoration:none}
+.blog-nav-back:hover{color:var(--blue-hover)}
+.blog-nav-title{font-size:14px;color:var(--text-secondary)}
+.blog-container{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+.article-header{margin-bottom:48px;padding-top:24px}
+.article-title{font-size:36px;font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:12px;color:var(--text)}
+.article-date{font-size:14px;color:var(--text-tertiary)}
+.article-body{font-size:17px;line-height:1.8}
+.article-body p{margin-bottom:20px}
+.article-body h2{font-size:24px;font-weight:700;margin:48px 0 16px;padding-left:16px;border-left:3px solid var(--blue)}
+.article-body ul,.article-body ol{margin-bottom:20px;padding-left:24px}
+.article-body li{margin-bottom:8px}
+.article-body strong{color:#fff;font-weight:600}
+.article-body a{color:var(--blue)}
+.article-body code{font-family:'JetBrains Mono',monospace;font-size:14px;background:rgba(212,160,64,0.10);color:var(--blue-hover);padding:2px 6px;border-radius:4px}
+.article-body pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;overflow-x:auto;font-size:13px;line-height:1.7;color:var(--text)}
+.article-body pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.article-body table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:15px}
+.article-body th,.article-body td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left}
+.article-body th{color:var(--text-secondary);font-weight:600;font-size:13px;letter-spacing:0.04em}
+.blog-footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
+.blog-footer p{font-size:13px;color:var(--text-tertiary)}
+.blog-footer a{color:var(--text-secondary);text-decoration:none}
+.blog-footer a:hover{color:var(--blue)}
+</style>
+<link rel="canonical" href="https://m1niwa.com/blog/blog-35">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="M1NIWA">
+<meta property="og:title" content="NO_PROXY 被静默遮蔽：一次跨三套应用的模型链路排查">
+<meta property="og:description" content="三套 DSH 同时报 502 和 transport failed，根因是一个 Windows 用户环境变量把 .env 里的 NO_PROXY 整条盖掉。">
+<meta property="og:url" content="https://m1niwa.com/blog/blog-35">
+<meta property="og:image" content="https://m1niwa.com/assets/og-cover.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NO_PROXY 被静默遮蔽：一次跨三套应用的模型链路排查">
+<meta name="twitter:description" content="三套 DSH 同时报 502 和 transport failed，根因是一个 Windows 用户环境变量把 .env 里的 NO_PROXY 整条盖掉。">
+<meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "NO_PROXY 被静默遮蔽：一次跨三套应用的模型链路排查", "description": "三套 DSH 同时报 502 和 transport failed，根因是一个 Windows 用户环境变量把 .env 里的 NO_PROXY 整条盖掉。", "url": "https://m1niwa.com/blog/blog-35", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://m1niwa.com/blog/blog-35"}, "author": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "publisher": {"@type": "Person", "name": "M1NIWA", "url": "https://m1niwa.com/"}, "inLanguage": "zh-CN", "image": "https://m1niwa.com/assets/og-cover.png", "datePublished": "2026-09-30", "dateModified": "2026-09-30"}</script>
+</head>
+<body>
+<nav class="blog-nav"><div class="blog-nav-inner"><a href="/" class="blog-nav-back">← M1NIWA</a><span class="blog-nav-title">网络排查 · 环境变量</span></div></nav>
+<div class="blog-container">
+<header class="article-header"><h1 class="article-title">NO_PROXY 被静默遮蔽：一次跨三套应用的模型链路排查</h1><p class="article-date">2026-09-30</p></header>
+<article class="article-body">
+<p>故障现象是这样的：本机三套 DSH（Desktop 主实例、一个独立 profile、以及被别的应用内嵌的那份）在使用任何模型时都会报 <code>502 status code (no body)</code> 或 <code>DeepSeek Messages transport failed</code>，重启后能恢复，但聊几轮又一起失效。三套一起坏，所以第一反应是"某个模型服务挂了"——但换模型没用。</p>
+
+<h2>第一步：把"成簇"这个特征当线索</h2>
+<p>翻会话日志发现失败不是随机的，是<strong>成簇</strong>的：04:13、15:30–16:20、19:40、20:40 各有一次集中爆发，每次都是五次重试后放弃。这个形态排除了"某个上游 API 坏了"，因为不同时间坏的可能是不同上游。</p>
+<p>真正定性的是一条对照：同一时段，另一个应用（走 <code>api.deepseek.com</code> 的 OpenAI 兼容端点、配自己的 key）能正常回话。于是有了一个看似矛盾的组合——DeepSeek 通，但 DSH 走 DeepSeek 不通。</p>
+<p>拆开看就通了：那个应用用的是 <code>/chat/completions</code> + API key，DSH 报错的两条是 <code>api.deepseek.com/anthropic</code>（Messages，走账户 OAuth 令牌）和一台美国 VPS 上的聚合层（明文 HTTP）。<strong>端点、鉴权、客户端代码三样都不同</strong>，所以"另一个应用能用"证明不了 DSH 的两条链路能用。</p>
+<p>最后是用户补的一句话把结论定死的：GLM 也不行。三个互不相干的目标——美国 VPS、DeepSeek 官方、智谱——域名、IP、运营商线路全不一样，同时出问题只有一种解释：<strong>DSH 自己出门的那一跳坏了</strong>。</p>
+
+<h2>第二步：两种报错其实是同一个原因</h2>
+<p>这是这次排查最省时间的一个认识：</p>
+<ul>
+<li><code>502 status code (no body)</code>：目标是明文 HTTP，代理节点一断，mihomo 回一个空 body 的 502</li>
+<li><code>DeepSeek Messages transport failed</code>：目标是 HTTPS，走 CONNECT 隧道，隧道被掐断就是这个报错</li>
+</ul>
+<p>两者都指向同一件事——<strong>请求根本没出去，而是被交给了本地代理，然后代理断了</strong>。三套 DSH 共用同一个 Clash，所以一起失效；重启只是丢掉旧连接池，所以能"恢复"几轮。</p>
+
+<h2>第三步：找到那个遮蔽源</h2>
+<p>配置文件 <code>~/.dsh/.env</code> 里明明写着一条很长的 <code>NO_PROXY</code>，包含 <code>.deepseek.com</code>、聚合层 IP、<code>.z.ai</code>、<code>open.bigmodel.cn</code>。但它从某天起就是<strong>无效</strong>的。</p>
+<p>原因是 Windows 用户环境变量里有一个早年留下的 <code>NO_PROXY=localhost,127.0.0.1</code>，而 DSH 的规则是<strong>进程里已有的变量优先于 <code>.env</code></strong>——整条长列表被这七个字符盖掉，DSH 只剩回环直连。</p>
+<p>验证方式不是推理，是直接量：</p>
+<pre><code># 1. 在 DSH 宿主进程派生的子进程里读实际生效值
+#    输出：NO_PROXY=localhost,127.0.0.1,::1,[::1]   ← 只有回环
+
+# 2. 看宿主进程的连接表，模型调用期间是否挂在代理端口上
+Get-NetTCPConnection -OwningProcess 25828 |
+  Where-Object { $_.RemotePort -eq 7897 -and $_.State -eq 'Established' }
+#    采样 15 次，15 次全中</code></pre>
+<p>两条证据合起来就够了：<code>.env</code> 里的长列表没生效，而模型请求 100% 走本地代理端口。</p>
+
+<h2>第四步：用产品自己的代码验证修复</h2>
+<p>改完之后我没有用 <code>curl</code> 之类的旁证，而是直接拿应用自己那份代理解析模块（在打包的 asar 里）去解析新的 <code>.env</code>：</p>
+<pre><code># 新状态：api.deepseek.com / 聚合层 IP / open.bigmodel.cn / mcp.linear.app 全部 DIRECT
+#         example.com 仍然 PROXY
+# 旧状态（同一份代码）：两者都 PROXY   ← 复现了故障</code></pre>
+<p>同一份代码、两个输入、结果相反——这比任何"改完好像好了"都可靠。再加一层 HTTP 层验证：把代理指向死端口 <code>127.0.0.1:9</code>，此时 <code>api.deepseek.com</code> 仍返回 401（说明真的直连出去了），聚合层仍返回 200，而 <code>example.com</code> 失败（说明网页抓取照旧走代理，没有误伤）。</p>
+
+<h2>这次改动真实付出的代价</h2>
+<p>修完我列了一份代价清单，因为"修好了"不等于"没有成本"：</p>
+<ol>
+<li><strong>其它程序 ≈ 0</strong>：被删掉的那个用户变量本来就没在起作用。实测系统代理是关的，机器级和用户级都没有 <code>HTTP_PROXY</code>，git/npm 也没配代理。全机只有 DSH 自己在用代理。</li>
+<li><strong>模型链路失去兜底</strong>：以前代理虽然惹祸，顺带也算一条备用通路。现在两条主线直连，万一某条直连被劣化，没有备胎。</li>
+<li><strong>依赖 Clash 保持当前模式</strong>：<code>enable_tun_mode=false</code>、<code>enable_system_proxy=false</code> 才有这个效果。哪天开了 TUN，直连在网络层又会被吞回隧道，<strong>而且 DSH 侧一切正常，不会有任何报错提示</strong>。这条我写进了 <code>.env</code> 注释。</li>
+<li><strong><code>.env</code> 变成单点</strong>：以后任何 Windows 环境变量里再出现 <code>NO_PROXY</code> 都会重新静默遮蔽它。现在靠注释加一个自检脚本兜着。</li>
+<li><strong>生效需要重启</strong>：当前会话会断（历史都在），Explorer 没吃到环境变更时可能还要注销重登。</li>
+</ol>
+<p>换来的是：Clash 再抖，只影响网页抓取，模型调用不再跟着一起死；失败也从"整片静默"变成脚本能报 FAIL。</p>
+
+<h2>留下的教训</h2>
+<p><strong>一，环境变量优先级是最容易被忘掉的一层。</strong>配置文件写得很漂亮、注释很详细，但一个七字符的用户变量就能让它整条失效，而且不报任何错。任何"配置明明写对了却不生效"的场合，第一件事是去实际生效的进程里读一遍值，不要读配置文件。</p>
+<p><strong>二，"另一个应用能用"不是有效对照。</strong>端点、鉴权、客户端代码三样任一不同，就不能互相当证据。这次差点因为这个对照把结论带向"上游 API 的问题"。</p>
+<p><strong>三，故障特征（成簇 vs 随机）比报错文本更有信息量。</strong>两种完全不同的报错文本，其实是同一个原因——只看文本会去找两个根因。</p>
+<p style="color:var(--text-tertiary);font-size:13px">--- 约 1450 字</p>
+</article>
+
+<style>
+  /* ===== 相关文章（内链）===== */
+  .related-posts { max-width: 720px; margin: 56px auto 0; padding: 0 24px; }
+  .related-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6f6250; margin-bottom: 16px;
+  }
+  .related-list { display: flex; flex-direction: column; gap: 10px; }
+  .related-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 13px 16px; border: 1px solid rgba(150,118,72,0.18);
+    border-radius: 10px; background: #fffdf8;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-item:hover { border-color: rgba(141,97,22,0.45); transform: translateX(3px); }
+  .related-date {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; color: #8a7a63; flex: 0 0 auto;
+  }
+  .related-name { font-size: 14.5px; color: #2c2118; line-height: 1.55; }
+</style>
+
+  <aside class="related-posts">
+    <div class="related-title">相关文章</div>
+    <div class="related-list">
+      <a class="related-item" href="/blog/blog-31"><span class="related-date">2025-08-25</span><span class="related-name">断线重连策略：从 3 秒轮询到指数退避</span></a>
+      <a class="related-item" href="/blog/blog-33"><span class="related-date">2026-04-08</span><span class="related-name">个人站上 Cloudflare Pages：网络路径与 SPA 回退配置</span></a>
+      <a class="related-item" href="/blog/blog-32"><span class="related-date">2025-07-08</span><span class="related-name">ComfyUI 本地部署：国内网络下的镜像源与模型复用</span></a>
+    </div>
+  </aside>
+
+</div>
+<footer class="blog-footer"><p>© 2026 M1NIWA · <a href="/">返回首页</a> · <a href="/blog/index.html">全部文章</a></p></footer>
+</body>
+</html>

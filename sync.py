@@ -36,7 +36,8 @@ PAGES = [
 ]
 
 # 目录级同步（整体覆盖）
-COPY_DIRS = ["assets", "sea-bazaar", "blog"]
+# qingming / transatlantic 是独立静态小游戏，整体原样拷贝（无动态内容需剥离）
+COPY_DIRS = ["assets", "sea-bazaar", "blog", "qingming", "transatlantic"]
 
 # 单文件同步
 COPY_FILES = ["robots.txt", "sitemap.xml", "portfolio.pdf", "f249af1c3be34ce6842478f8d1793890.txt"]

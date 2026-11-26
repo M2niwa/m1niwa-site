@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>青冥劫 · 行者菜单</title>
+<meta name="description" content="水墨暗金风格的生存恐怖角色菜单原型：格子行囊、舆图、行者与卷宗。Three.js 实时渲染，开源素材。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&family=Liu+Jian+Mao+Cao&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<canvas id="stage" aria-hidden="true"></canvas>
+<div id="glyph" aria-hidden="true">囊</div>
+<div class="veil" aria-hidden="true"></div>
+
+<div id="app">
+  <header class="top">
+    <div class="brand"><span class="seal">青冥</span><span class="brand-name">青冥劫 · 第二回</span></div>
+    <nav class="tabs" role="tablist" aria-label="菜单">
+      <kbd>Q</kbd>
+      <button class="tab" role="tab" data-view="hero" id="tab-hero">行者</button><i class="sep"></i>
+      <button class="tab" role="tab" data-view="bag" id="tab-bag">行囊</button><i class="sep"></i>
+      <button class="tab" role="tab" data-view="map" id="tab-map">舆图</button><i class="sep"></i>
+      <button class="tab" role="tab" data-view="files" id="tab-files">卷宗</button>
+      <kbd>E</kbd>
+    </nav>
+    <div class="meta">
+      <span class="time" id="clock">子时三刻</span>
+      <span class="incense" title="香火"><span id="incense-ic"></span><span id="incense">10,583</span></span>
+    </div>
+  </header>
+
+  <main>
+    <!-- 行者 -->
+    <section class="view" id="view-hero" role="tabpanel" aria-labelledby="tab-hero">
+      <div class="panel hero-left" id="hero-left"></div>
+      <div class="hero-stage">
+        <div class="stage-anchor" data-stage="hero" id="anchor-hero"><div class="stage-hint">拖动转身 · 轻点出刀</div></div>
+        <div class="caption" id="hero-caption">青冥寺 · 大雄宝殿</div>
+      </div>
+      <div class="panel hero-right" id="hero-right"></div>
+    </section>
+
+    <!-- 行囊 -->
+    <section class="view" id="view-bag" role="tabpanel" aria-labelledby="tab-bag">
+      <div class="panel bag-left">
+        <div class="cats" id="cats" role="toolbar" aria-label="分类"></div>
+        <div class="bag-head"><h2>行囊</h2><span class="cap" id="cap"></span></div>
+        <div class="grid" id="grid"></div>
+        <div class="bag-tools">
+          <button class="btn" id="btn-sort">整理</button>
+          <span>拖拽移动 · 拖拽时按 R 旋转 · 拖到可配伍之物上即合成</span>
+        </div>
+      </div>
+      <div class="panel detail" id="detail" aria-live="polite"></div>
+      <div class="bag-stage">
+        <div class="stage-anchor" data-stage="item" id="anchor-item"><div class="stage-hint">拖动检视 · 滚轮远近</div></div>
+        <div class="stage-foot">
+          <div class="pulse" id="pulse-bag"><span class="plabel">脉象</span><canvas></canvas><div class="pstate"></div></div>
+          <div class="quick" id="quick" aria-label="快捷"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 舆图 -->
+    <section class="view" id="view-map" role="tabpanel" aria-labelledby="tab-map">
+      <div class="map-top">
+        <div class="objective" id="objective"></div>
+        <div class="map-loc" id="map-loc"></div>
+      </div>
+      <div class="map-frame" id="map-frame">
+        <svg id="map-svg" role="img" aria-label="青冥寺舆图"></svg>
+        <div class="floors" id="floors"></div>
+        <div class="zoom">
+          <button id="zoom-in" aria-label="放大">＋</button>
+          <button id="zoom-out" aria-label="缩小">－</button>
+          <button id="zoom-me" aria-label="定位到行者">◎</button>
+        </div>
+      </div>
+      <div class="panel map-side" id="map-side"></div>
+      <div class="legend">
+        <span><i class="lg-items"></i>尚有遗物</span>
+        <span><i class="lg-clear"></i>已搜尽</span>
+        <span><i class="lg-unseen"></i>未踏足</span>
+        <span><i class="lg-safe"></i>净室</span>
+        <span><i class="lg-sealed"></i>封印</span>
+      </div>
+    </section>
+
+    <!-- 卷宗 -->
+    <section class="view" id="view-files" role="tabpanel" aria-labelledby="tab-files">
+      <div class="panel files-list" id="files-list"></div>
+      <div class="doc-wrap"><article class="doc" id="doc"></article></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <button class="linkbtn" id="btn-credits">素材与许可</button>
+    <div class="prompts" id="prompts"></div>
+  </footer>
+</div>
+
+<div id="loading">焚香候灯……</div>
+<div id="toast" role="status"></div>
+<div id="layer"></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

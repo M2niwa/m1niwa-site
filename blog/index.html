@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>技术博客 — M1NIWA</title>
-<meta name="description" content="33 篇工程笔记：AI 与深度学习、FastAPI 与后端、Docker 与运维、边缘部署与量化。记录项目里真实踩过的坑和解决过程。">
+<meta name="description" content="36 篇工程笔记：AI 与深度学习、FastAPI 与后端、Docker 与运维、边缘部署与量化。记录项目里真实踩过的坑和解决过程。">
 <style>
   /* ===== Reset & Base ===== */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -194,15 +194,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="M1NIWA">
 <meta property="og:title" content="技术博客 — M1NIWA">
-<meta property="og:description" content="33 篇工程笔记：AI 与深度学习、FastAPI 与后端、Docker 与运维、边缘部署与量化。记录项目里真实踩过的坑和解决过程。">
+<meta property="og:description" content="36 篇工程笔记：AI 与深度学习、FastAPI 与后端、Docker 与运维、边缘部署与量化。记录项目里真实踩过的坑和解决过程。">
 <meta property="og:url" content="https://m1niwa.com/blog/">
 <meta property="og:image" content="https://m1niwa.com/assets/og-cover.png">
 <meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="技术博客 — M1NIWA">
-<meta name="twitter:description" content="33 篇工程笔记：AI 与深度学习、FastAPI 与后端、Docker 与运维、边缘部署与量化。记录项目里真实踩过的坑和解决过程。">
+<meta name="twitter:description" content="36 篇工程笔记：AI 与深度学习、FastAPI 与后端、Docker 与运维、边缘部署与量化。记录项目里真实踩过的坑和解决过程。">
 <meta name="twitter:image" content="https://m1niwa.com/assets/og-cover.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "技术博客", "description": "33 篇工程笔记：AI 与深度学习、FastAPI 与后端、Docker 与运维、边缘部署与量化。记录项目里真实踩过的坑和解决过程。", "url": "https://m1niwa.com/blog/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "M1NIWA", "url": "https://m1niwa.com/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "技术博客", "description": "36 篇工程笔记：AI 与深度学习、FastAPI 与后端、Docker 与运维、边缘部署与量化。记录项目里真实踩过的坑和解决过程。", "url": "https://m1niwa.com/blog/", "inLanguage": "zh-CN", "isPartOf": {"@type": "WebSite", "name": "M1NIWA", "url": "https://m1niwa.com/"}}</script>
 </head>
 <body>
 
@@ -262,6 +262,10 @@
 (function() {
   // ===== Article Data =====
   const articles = [
+    { date: '2026-11-24', title: '液态神经网络做 FPS 决策层：一个负结果与三个方法学错误', titleEn: 'Liquid Neural Nets for FPS Decision Layers: A Negative Result', tags: ['LNN', '强化学习', '方法论'], url: '/blog/blog-34.html' },
+    { date: '2026-10-29', title: '一个测不出问题的指标：3D 资产验收里的五轮对抗审计', titleEn: 'A Metric That Cannot Fail: Five Rounds of Adversarial Audits on a 3D Asset', tags: ['3D', '验收', '方法论'], url: '/blog/blog-37.html' },
+    { date: '2026-09-30', title: 'NO_PROXY 被静默遮蔽：一次跨三套应用的模型链路排查', titleEn: 'Silently Shadowed NO_PROXY: Tracing a Model Link Across Three Apps', tags: ['网络', '排查', 'DevOps'], url: '/blog/blog-35.html' },
+    { date: '2026-08-26', title: '门禁全红但代码没错：沙箱里跑 Godot 的一次假失败', titleEn: 'All-Red Test Gate, Clean Code: A False Failure Running Godot in a Sandbox', tags: ['Godot', '测试', '排查'], url: '/blog/blog-36.html' },
     { date: '2026-07-05', title: 'FastAPI + PostgreSQL 性能调优：索引策略与连接池优化', titleEn: 'FastAPI + PostgreSQL Performance Tuning: Indexing and Connection Pooling', tags: ['FastAPI', 'PostgreSQL', '性能'], url: '/blog/blog-1.html' },
     { date: '2026-06-23', title: '两周速成 FastAPI：4个项目的真实踩坑记录', titleEn: 'FastAPI in Two Weeks: Real Pitfalls from Four Projects', tags: ['FastAPI', 'Python', 'WebSocket'], url: '/blog/blog-2.html' },
     { date: '2026-06-10', title: 'FastAPI + WebSocket 实时仪表盘：从零到部署', titleEn: 'FastAPI + WebSocket Real-Time Dashboard: Zero to Deployed', tags: ['FastAPI', 'WebSocket', '全栈'], url: '/blog/blog-3.html' },
