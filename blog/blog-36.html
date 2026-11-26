@@ -61,7 +61,7 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <article class="article-body">
 <p>那天跑完门禁，34 个用例全部失败。我盯着输出目录看了半分钟，每一个 out 文件都是 0 字节，第一个用例还挂了 TIMEOUT。编辑器同时弹了个窗，写着「应用程序错误：指令引用了 0x0058 内存」。这种情况最容易做的错事是去翻最近的改动找回归，我差点就这么干了。</p>
 
-<h2>先看失败长什么样</h2>
+<h2>失败的表现</h2>
 
 <p>真实的测试失败有几种固定形态，<a href="/blog/blog-7.html">博客 7</a> 那次容器 OOM 复盘里分过好几类。断言不通过，输出里有 expected 和 actual；脚本解析错，有行号和文件名；超时，至少还有半截输出。</p>
 
