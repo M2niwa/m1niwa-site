@@ -59,58 +59,48 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <div class="blog-container">
 <header class="article-header"><h1 class="article-title">NO_PROXY 被静默遮蔽：一次跨三套应用的模型链路排查</h1><p class="article-date">2026-09-30</p></header>
 <article class="article-body">
-<p>故障现象是这样的：本机三套 DSH（Desktop 主实例、一个独立 profile、以及被别的应用内嵌的那份）在使用任何模型时都会报 <code>502 status code (no body)</code> 或 <code>DeepSeek Messages transport failed</code>，重启后能恢复，但聊几轮又一起失效。三套一起坏，所以第一反应是"某个模型服务挂了"——但换模型没用。</p>
+<p>那天本机三套 dsh 一起坏了。用任何模型都报 502 status code (no body) 或 DeepSeek Messages transport failed，重启能恢复，但聊几轮又一起失效。三套一起坏，我第一反应是某个模型服务挂了，于是开始换模型试，没用。</p>
 
-<h2>第一步：把"成簇"这个特征当线索</h2>
-<p>翻会话日志发现失败不是随机的，是<strong>成簇</strong>的：04:13、15:30–16:20、19:40、20:40 各有一次集中爆发，每次都是五次重试后放弃。这个形态排除了"某个上游 API 坏了"，因为不同时间坏的可能是不同上游。</p>
-<p>真正定性的是一条对照：同一时段，另一个应用（走 <code>api.deepseek.com</code> 的 OpenAI 兼容端点、配自己的 key）能正常回话。于是有了一个看似矛盾的组合——DeepSeek 通，但 DSH 走 DeepSeek 不通。</p>
-<p>拆开看就通了：那个应用用的是 <code>/chat/completions</code> + API key，DSH 报错的两条是 <code>api.deepseek.com/anthropic</code>（Messages，走账户 OAuth 令牌）和一台美国 VPS 上的聚合层（明文 HTTP）。<strong>端点、鉴权、客户端代码三样都不同</strong>，所以"另一个应用能用"证明不了 DSH 的两条链路能用。</p>
-<p>最后是用户补的一句话把结论定死的：GLM 也不行。三个互不相干的目标——美国 VPS、DeepSeek 官方、智谱——域名、IP、运营商线路全不一样，同时出问题只有一种解释：<strong>DSH 自己出门的那一跳坏了</strong>。</p>
+<h2>失败是成簇的</h2>
 
-<h2>第二步：两种报错其实是同一个原因</h2>
-<p>这是这次排查最省时间的一个认识：</p>
-<ul>
-<li><code>502 status code (no body)</code>：目标是明文 HTTP，代理节点一断，mihomo 回一个空 body 的 502</li>
-<li><code>DeepSeek Messages transport failed</code>：目标是 HTTPS，走 CONNECT 隧道，隧道被掐断就是这个报错</li>
-</ul>
-<p>两者都指向同一件事——<strong>请求根本没出去，而是被交给了本地代理，然后代理断了</strong>。三套 DSH 共用同一个 Clash，所以一起失效；重启只是丢掉旧连接池，所以能"恢复"几轮。</p>
+<p>翻会话日志才发现，失败的时间点很集中。04:13、15:30 到 16:20、19:40、20:40 各有一次爆发，每次都是五次重试后放弃。这个形态直接排除了「某个上游 API 坏了」，因为不同时间坏的可能是不同上游。</p>
 
-<h2>第三步：找到那个遮蔽源</h2>
-<p>配置文件 <code>~/.dsh/.env</code> 里明明写着一条很长的 <code>NO_PROXY</code>，包含 <code>.deepseek.com</code>、聚合层 IP、<code>.z.ai</code>、<code>open.bigmodel.cn</code>。但它从某天起就是<strong>无效</strong>的。</p>
-<p>原因是 Windows 用户环境变量里有一个早年留下的 <code>NO_PROXY=localhost,127.0.0.1</code>，而 DSH 的规则是<strong>进程里已有的变量优先于 <code>.env</code></strong>——整条长列表被这七个字符盖掉，DSH 只剩回环直连。</p>
-<p>验证方式不是推理，是直接量：</p>
-<pre><code># 1. 在 DSH 宿主进程派生的子进程里读实际生效值
-#    输出：NO_PROXY=localhost,127.0.0.1,::1,[::1]   ← 只有回环
+<p>真正定性的是一条对照：同一时段另一个应用能正常回话，它走 api.deepseek.com 的 OpenAI 兼容端点、配自己的 key。于是出现了一个看着矛盾的组合，DeepSeek 通，但 dsh 走 DeepSeek 不通。</p>
 
-# 2. 看宿主进程的连接表，模型调用期间是否挂在代理端口上
-Get-NetTCPConnection -OwningProcess 25828 |
-  Where-Object { $_.RemotePort -eq 7897 -and $_.State -eq 'Established' }
-#    采样 15 次，15 次全中</code></pre>
-<p>两条证据合起来就够了：<code>.env</code> 里的长列表没生效，而模型请求 100% 走本地代理端口。</p>
+<p>拆开看就通了。那个应用用的是 /chat/completions 加 API key；dsh 报错的两条是 api.deepseek.com/anthropic（Messages，走账户 OAuth 令牌）和一台美国 VPS 上的聚合层（明文 HTTP）。端点、鉴权、客户端代码三样都不同，所以「另一个应用能用」证明不了 dsh 的两条链路能用。</p>
 
-<h2>第四步：用产品自己的代码验证修复</h2>
-<p>改完之后我没有用 <code>curl</code> 之类的旁证，而是直接拿应用自己那份代理解析模块（在打包的 asar 里）去解析新的 <code>.env</code>：</p>
-<pre><code># 新状态：api.deepseek.com / 聚合层 IP / open.bigmodel.cn / mcp.linear.app 全部 DIRECT
-#         example.com 仍然 PROXY
-# 旧状态（同一份代码）：两者都 PROXY   ← 复现了故障</code></pre>
-<p>同一份代码、两个输入、结果相反——这比任何"改完好像好了"都可靠。再加一层 HTTP 层验证：把代理指向死端口 <code>127.0.0.1:9</code>，此时 <code>api.deepseek.com</code> 仍返回 401（说明真的直连出去了），聚合层仍返回 200，而 <code>example.com</code> 失败（说明网页抓取照旧走代理，没有误伤）。</p>
+<p>最后是我自己补的一句话把结论定死的：GLM 也不行。三个互不相干的目标，美国 VPS、DeepSeek 官方、智谱，域名、IP、运营商线路全不一样，同时出问题只有一种解释，dsh 自己出门的那一跳坏了。</p>
 
-<h2>这次改动真实付出的代价</h2>
-<p>修完我列了一份代价清单，因为"修好了"不等于"没有成本"：</p>
-<ol>
-<li><strong>其它程序 ≈ 0</strong>：被删掉的那个用户变量本来就没在起作用。实测系统代理是关的，机器级和用户级都没有 <code>HTTP_PROXY</code>，git/npm 也没配代理。全机只有 DSH 自己在用代理。</li>
-<li><strong>模型链路失去兜底</strong>：以前代理虽然惹祸，顺带也算一条备用通路。现在两条主线直连，万一某条直连被劣化，没有备胎。</li>
-<li><strong>依赖 Clash 保持当前模式</strong>：<code>enable_tun_mode=false</code>、<code>enable_system_proxy=false</code> 才有这个效果。哪天开了 TUN，直连在网络层又会被吞回隧道，<strong>而且 DSH 侧一切正常，不会有任何报错提示</strong>。这条我写进了 <code>.env</code> 注释。</li>
-<li><strong><code>.env</code> 变成单点</strong>：以后任何 Windows 环境变量里再出现 <code>NO_PROXY</code> 都会重新静默遮蔽它。现在靠注释加一个自检脚本兜着。</li>
-<li><strong>生效需要重启</strong>：当前会话会断（历史都在），Explorer 没吃到环境变更时可能还要注销重登。</li>
-</ol>
-<p>换来的是：Clash 再抖，只影响网页抓取，模型调用不再跟着一起死；失败也从"整片静默"变成脚本能报 FAIL。</p>
+<h2>两种报错其实同源</h2>
 
-<h2>留下的教训</h2>
-<p><strong>一，环境变量优先级是最容易被忘掉的一层。</strong>配置文件写得很漂亮、注释很详细，但一个七字符的用户变量就能让它整条失效，而且不报任何错。任何"配置明明写对了却不生效"的场合，第一件事是去实际生效的进程里读一遍值，不要读配置文件。</p>
-<p><strong>二，"另一个应用能用"不是有效对照。</strong>端点、鉴权、客户端代码三样任一不同，就不能互相当证据。这次差点因为这个对照把结论带向"上游 API 的问题"。</p>
-<p><strong>三，故障特征（成簇 vs 随机）比报错文本更有信息量。</strong>两种完全不同的报错文本，其实是同一个原因——只看文本会去找两个根因。</p>
-<p style="color:var(--text-tertiary);font-size:13px">--- 约 1450 字</p>
+<p>这是整轮排查最省时间的一个认识。502 status code (no body) 对应的是明文 HTTP 目标，代理节点一断，mihomo 回一个空 body 的 502。DeepSeek Messages transport failed 对应的是 HTTPS，走 CONNECT 隧道，隧道被掐断就是这个报错。</p>
+
+<p>两者都指向同一件事，请求根本没出去，被交给了本地代理，然后代理断了。三套 dsh 共用同一个 Clash，所以一起失效；重启只是丢掉旧连接池，所以能「恢复」几轮。</p>
+
+<h2>找到那个遮蔽源</h2>
+
+<p>配置文件 ~/.dsh/.env 里明明写着一条很长的 NO_PROXY，包含 .deepseek.com、聚合层 IP、.z.ai、open.bigmodel.cn。但它从某天起就是无效的。</p>
+
+<p>原因是 Windows 用户环境变量里有一个早年留下的 NO_PROXY=localhost,127.0.0.1，而 dsh 的规则是「进程里已有的变量优先于 .env」。整条长列表被这七个字符盖掉，dsh 只剩回环直连。</p>
+
+<p>验证方式不是推理，是直接量，和 <a href="/blog/blog-31.html">断线重连那篇</a>里「别信配置、去看实际生效值」是同一个道理。一是在 dsh 宿主进程派生的子进程里读实际生效值，输出只有 localhost,127.0.0.1,::1,[::1]。二是看宿主进程的连接表，模型调用期间是否挂在代理端口上，采样 15 次，15 次全中。两条证据合起来就够了：.env 里的长列表没生效，而模型请求 100% 走本地代理。</p>
+
+<h2>用产品自己的代码验证</h2>
+
+<p>改完之后我没有用 curl 之类的旁证，而是直接拿应用自己那份代理解析模块（在打包的 asar 里）去解析新的 .env。新状态下 api.deepseek.com、聚合层 IP、open.bigmodel.cn、mcp.linear.app 全部 DIRECT，example.com 仍然 PROXY；同一份代码解析旧状态则两者都 PROXY，复现了故障。</p>
+
+<p>同一份代码、两个输入、结果相反，这比任何「改完好像好了」都可靠。再加一层 HTTP 层验证：把代理指向死端口 127.0.0.1:9，此时 api.deepseek.com 仍返回 401，聚合层仍返回 200，而 example.com 失败。说明模型流量真的直连出去了，网页抓取照旧走代理，没有误伤。</p>
+
+<h2>这次改动真实的代价</h2>
+
+<p>修完我列了一份代价清单，因为「修好了」不等于「没有成本」。被删掉的那个环境变量本来就没在起作用，所以其它程序的影响约等于零。实测系统代理是关的，机器级和用户级都没有 HTTP_PROXY，git 和 npm 也没配代理，全机只有 dsh 自己在用代理。</p>
+
+<p>但模型链路失去了兜底。以前代理虽然惹祸，顺带也算一条备用通路；现在两条主线直连，万一某条直连被劣化，没有备胎。而且这套修复依赖 Clash 保持当前模式，也就是 enable_tun_mode=false、enable_system_proxy=false。哪天我开了 TUN，直连在网络层又会被吞回隧道，而 dsh 侧一切正常，不会有任何报错提示。这条我写进了 .env 注释里。</p>
+
+<p>另外 .env 变成了单点。以后任何 Windows 环境变量里再出现 NO_PROXY 都会重新静默遮蔽它，现在靠注释加一个自检脚本兜着。换来的是，Clash 再抖只影响网页抓取，模型调用不再跟着一起死。</p>
+
+<p>这套判据本身的问题，我在 <a href="/blog/blog-37.html">3D 资产验收那篇</a>里又碰了一次。三件事记在这儿。环境变量优先级是最容易被忘掉的一层，配置文件写得再漂亮，一个七字符的用户变量就能让它整条失效，而且不报任何错；「另一个应用能用」不是有效对照，端点、鉴权、客户端代码三样任一不同就不能互相当证据；故障特征比报错文本更有信息量，两种完全不同的报错文本，其实是同一个原因。</p>
+<p style="color:var(--text-tertiary);font-size:13px">--- 约 1280 字</p>
 </article>
 
 <style>
